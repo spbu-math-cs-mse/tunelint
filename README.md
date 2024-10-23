@@ -1,1 +1,1 @@
-Tunelint is an opensource cross platform music sheet editor with exam function
+Tunelint is an opensource cross-platform music sheet editor with exam function
