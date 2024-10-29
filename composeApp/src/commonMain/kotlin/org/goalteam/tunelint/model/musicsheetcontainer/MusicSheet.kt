@@ -5,8 +5,16 @@ import org.goalteam.tunelint.model.musicsheetchangerequest.MusicSheetChangeReque
 import org.goalteam.tunelint.model.notifications.Notifiable
 import org.goalteam.tunelint.model.notifications.Subscribable
 
-interface MusicSheetContainer :
+interface MusicSheet :
     Subscribable<MusicSheetChangeInfo>,
     Notifiable<MusicSheetChangeRequest> {
-    // TODO: finish interface
+    fun contents(): Collection<Any>
+
+    fun save()
+
+    fun load()
+
+    fun modified(): Boolean
+
+    fun makeDirty()
 }
