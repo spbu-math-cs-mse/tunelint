@@ -7,16 +7,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import org.goalteam.tunelint.model.musicsheetchangeinfo.MusicSheetChangeInfo
 import org.goalteam.tunelint.model.musicsheetchangerequest.MusicSheetChangeRequestStub
-import org.goalteam.tunelint.model.musicsheetcontainer.MusicSheetContainer
+import org.goalteam.tunelint.model.musicsheetcontainer.MusicSheet
 import org.goalteam.tunelint.model.notifications.Notifiable
 
 class RedactorScreenViewModel(
-    private val container: MusicSheetContainer,
+    private val container: MusicSheet,
 ) : ViewModel() {
     // TODO: create RedactorScreenViewModel
 
     class MusicSheetChangeInfoAdapter(
-        container: MusicSheetContainer,
+        container: MusicSheet,
         private val viewModel: RedactorScreenViewModel,
     ) : Notifiable<MusicSheetChangeInfo> {
         init {
