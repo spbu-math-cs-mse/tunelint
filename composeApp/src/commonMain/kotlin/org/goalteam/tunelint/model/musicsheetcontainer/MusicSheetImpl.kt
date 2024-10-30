@@ -3,7 +3,6 @@ package org.goalteam.tunelint.model.musicsheetcontainer
 import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.core.Note
 import org.goalteam.tunelint.model.musicsheetchangeinfo.MusicSheetChangeInfo
-import org.goalteam.tunelint.model.musicsheetchangeinfo.MusicSheetChangeInfoStub
 import org.goalteam.tunelint.model.musicsheetchangerequest.MusicSheetChangeRequest
 import org.goalteam.tunelint.model.notifications.Notifiable
 import java.nio.file.Path
@@ -51,8 +50,7 @@ internal class MusicSheetImpl(
     }
 
     override fun notify(notificationInfo: MusicSheetChangeRequest) {
-        subscribers.forEach {
-            it.notify(MusicSheetChangeInfoStub("$notificationInfo"))
-        }
+        val resultInfo = notificationInfo.execute(notes)
+        subscribers.forEach { it.notify(resultInfo) }
     }
 }
