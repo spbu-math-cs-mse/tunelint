@@ -2,7 +2,6 @@ package org.goalteam.tunelint.model.musicsheetcontainer
 
 import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.core.Note
-import org.goalteam.tunelint.model.musicsheetchangeinfo.MusicSheetChangeInfo
 import org.goalteam.tunelint.model.musicsheetchangerequest.MusicSheetChangeRequest
 import org.goalteam.tunelint.model.notifications.Notifiable
 import java.nio.file.Path
@@ -13,7 +12,7 @@ import kotlin.io.path.writeText
 internal class MusicSheetImpl(
     private val path: Path,
 ) : MusicSheet {
-    private val subscribers = mutableListOf<Notifiable<MusicSheetChangeInfo>>()
+    private val subscribers = mutableListOf<Notifiable<MusicSheetChangeRequest>>()
     private val notes = LinkedList<Note>()
     private val commands = mutableListOf<MusicSheetChangeRequest>()
     private var modified = false
@@ -41,16 +40,18 @@ internal class MusicSheetImpl(
         modified = true
     }
 
-    override fun subscribe(subscriber: Notifiable<MusicSheetChangeInfo>) {
+    override fun subscribe(subscriber: Notifiable<MusicSheetChangeRequest>) {
         subscribers.add(subscriber)
     }
 
-    override fun unsubscribe(subscriber: Notifiable<MusicSheetChangeInfo>) {
+    override fun unsubscribe(subscriber: Notifiable<MusicSheetChangeRequest>) {
         subscribers.remove(subscriber)
     }
 
-    override fun notify(notificationInfo: MusicSheetChangeRequest) {
-        val resultInfo = notificationInfo.execute(notes)
-        subscribers.forEach { it.notify(resultInfo) }
+    override fun notify(notification: MusicSheetChangeRequest) {
+        notification.execute(notes)
+        makeDirty()
+        commands.add(notification)
+        subscribers.forEach { it.notify(notification) }
     }
 }
