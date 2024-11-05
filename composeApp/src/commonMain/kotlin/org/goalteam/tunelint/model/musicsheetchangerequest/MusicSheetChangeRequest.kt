@@ -2,5 +2,12 @@ package org.goalteam.tunelint.model.musicsheetchangerequest
 
 interface MusicSheetChangeRequest {
     override fun toString(): String
-    // TODO: create interface
+
+    fun execute()
+
+    fun isExecutable(): Boolean
+
+    fun revert()
+
+    fun isRevertible(): Boolean
 }
