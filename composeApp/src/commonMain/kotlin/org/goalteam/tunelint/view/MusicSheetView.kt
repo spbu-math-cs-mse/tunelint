@@ -21,7 +21,7 @@ import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
 fun Note.letter(): String {
     val letters = listOf("C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B")
-    return letters[value() % 12]
+    return letters[pitch() % 12]
 }
 
 @Composable
@@ -54,7 +54,7 @@ fun NoteView(note: Note) {
         Box(
             modifier =
                 Modifier
-                    .padding(top = 75.dp - note.value().dp * 10)
+                    .padding(top = 75.dp - note.pitch().dp * 10)
                     .size(width = 30.dp, height = 30.dp)
                     .clip(shape = RoundedCornerShape(10.dp))
                     .background(Color.Red),
@@ -93,9 +93,6 @@ fun MusicSheetView(vm: RedactorScreenViewModel) {
                     Modifier
                         .padding(10.dp),
             ) {
-                vm.state.forEach {
-                    NoteView(it)
-                }
             }
         }
         Button(onClick = { vm.interactionEvent() }) {

@@ -1,11 +1,12 @@
 package org.goalteam.tunelint.viewmodel
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
-import org.goalteam.tunelint.model.core.Note
-import org.goalteam.tunelint.model.core.NoteImpl
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import org.goalteam.tunelint.model.musicsheetchangerequest.MusicSheetChangeRequest
-import org.goalteam.tunelint.model.musicsheetchangerequest.MusicSheetChangeRequestStub
+import org.goalteam.tunelint.model.musicsheetcontainer.Commands
 import org.goalteam.tunelint.model.musicsheetcontainer.MusicSheet
 import org.goalteam.tunelint.model.notifications.Notifiable
 
@@ -23,21 +24,21 @@ class RedactorScreenViewModel(
         }
 
         override fun notify(notification: MusicSheetChangeRequest) {
-            viewModel.stateChange(notification)
+            viewModel.stateChange(notification.toString())
         }
     }
 
     private var count = 0
     private val adapter = MusicSheetChangeInfoAdapter(container, this)
-    private val _state = mutableStateListOf<Note>()
-    val state = _state
+    private val _state = MutableStateFlow("")
+    val state: StateFlow<String> = _state.asStateFlow()
 
     fun interactionEvent() {
-        container.notify(MusicSheetChangeRequestStub(NoteImpl(count)))
+        container.notify(Commands(container).addNote(0, 0, 0, 0f))
         count++
     }
 
-    fun stateChange(notification: MusicSheetChangeRequest) {
-        notification.execute(_state)
+    fun stateChange(newState: String) {
+        _state.update { newState }
     }
 }

@@ -1,11 +1,13 @@
 package org.goalteam.tunelint.model.musicsheetchangerequest
 
-import org.goalteam.tunelint.model.core.Note
-
 interface MusicSheetChangeRequest {
     override fun toString(): String
 
-    fun execute(list: MutableList<Note>): MutableList<Note>
+    fun execute()
 
-    fun revert(list: MutableList<Note>): MutableList<Note>
+    fun isExecutable(): Boolean
+
+    fun revert()
+
+    fun isRevertible(): Boolean
 }

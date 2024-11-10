@@ -1,7 +1,7 @@
 package org.goalteam.tunelint.model.musicsheetcontainer
 
+import org.goalteam.tunelint.model.core.Measure
 import org.goalteam.tunelint.model.core.MusicFactory
-import org.goalteam.tunelint.model.core.Note
 import org.goalteam.tunelint.model.musicsheetchangerequest.MusicSheetChangeRequest
 import org.goalteam.tunelint.model.notifications.Notifiable
 import java.nio.file.Path
@@ -13,24 +13,27 @@ internal class MusicSheetImpl(
     private val path: Path,
 ) : MusicSheet {
     private val subscribers = mutableListOf<Notifiable<MusicSheetChangeRequest>>()
-    private val notes = LinkedList<Note>()
+    private val measures = LinkedList<Measure>()
     private val commands = mutableListOf<MusicSheetChangeRequest>()
     private var modified = false
 
-    override fun contents(): Collection<Any> = notes
+    override fun contents(): Collection<Any> = measures
 
     override fun save() {
-        notes.joinToString(separator = System.lineSeparator()) { it.toString() }.run { path.writeText(this) }
+        measures.joinToString(separator = System.lineSeparator()) { it.toString() }.run { path.writeText(this) }
         modified = false
     }
 
     override fun load() {
-        notes.clear()
-        path
-            .readLines()
-            .map { it.toInt() }
-            .map { MusicFactory().createNote(it) }
-            .forEach { notes.add(it) }
+        measures.clear()
+        measures.add(
+            MusicFactory().createMeasure(
+                path
+                    .readLines()
+                    .map { it.toInt() }
+                    .map { MusicFactory().createNote(it, 1f) },
+            ),
+        )
         modified = false
     }
 
@@ -49,7 +52,12 @@ internal class MusicSheetImpl(
     }
 
     override fun notify(notification: MusicSheetChangeRequest) {
-        notification.execute(notes)
+        if (notification.isExecutable()) {
+            notification.execute()
+        } else {
+            println("bad request")
+            return
+        }
         makeDirty()
         commands.add(notification)
         subscribers.forEach { it.notify(notification) }
