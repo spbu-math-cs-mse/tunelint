@@ -1,16 +1,16 @@
 package org.goalteam.tunelint.model.core
 
-import org.goalteam.tunelint.model.core.impl.EmptyImpl
 import org.goalteam.tunelint.model.core.impl.MeasureImpl
 import org.goalteam.tunelint.model.core.impl.NoteImpl
+import org.goalteam.tunelint.model.core.impl.RestImpl
 
 class MusicFactory {
     fun createNote(
-        value: Int,
-        length: Float,
-    ): Note = NoteImpl(value, length)
+        pitch: Int,
+        value: Float,
+    ): Note = NoteImpl(pitch, value)
 
-    fun createEmpty(length: Float): Empty = EmptyImpl(length)
+    fun createEmpty(length: Float): Rest = RestImpl(length)
 
     fun createMeasure(): Measure = MeasureImpl(mutableListOf())
 

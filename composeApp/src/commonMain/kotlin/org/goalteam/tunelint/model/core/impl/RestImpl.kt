@@ -1,18 +1,14 @@
 package org.goalteam.tunelint.model.core.impl
 
-import org.goalteam.tunelint.model.core.Note
+import org.goalteam.tunelint.model.core.Rest
 
-internal class NoteImpl(
-    private val pitch: Int,
+class RestImpl(
     private val value: Float,
-) : Note {
-    override fun pitch() = pitch
-
+) : Rest {
     override fun value() = value
 
     override fun equals(other: Any?): Boolean =
         other != null &&
-            other is Note &&
-            other.pitch() == pitch &&
+            other is Rest &&
             other.value() == value
 }

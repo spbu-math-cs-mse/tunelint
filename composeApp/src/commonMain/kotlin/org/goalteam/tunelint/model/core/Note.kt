@@ -1,5 +1,5 @@
 package org.goalteam.tunelint.model.core
 
 interface Note : Symbol {
-    fun value(): Int
+    fun pitch(): Int
 }
