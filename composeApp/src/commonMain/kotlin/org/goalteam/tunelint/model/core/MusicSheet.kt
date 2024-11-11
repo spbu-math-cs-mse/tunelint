@@ -1,4 +1,4 @@
-package org.goalteam.tunelint.model.musicsheetcontainer
+package org.goalteam.tunelint.model.core
 
 import org.goalteam.tunelint.model.musicsheetchangerequest.MusicSheetChangeRequest
 import org.goalteam.tunelint.model.notifications.Notifiable

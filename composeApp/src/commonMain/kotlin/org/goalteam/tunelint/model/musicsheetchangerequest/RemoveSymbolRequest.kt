@@ -1,8 +1,8 @@
 package org.goalteam.tunelint.model.musicsheetchangerequest
 
 import org.goalteam.tunelint.model.core.Measure
+import org.goalteam.tunelint.model.core.MusicSheet
 import org.goalteam.tunelint.model.core.Symbol
-import org.goalteam.tunelint.model.musicsheetcontainer.MusicSheet
 
 class RemoveSymbolRequest(
     private val measure: Int,

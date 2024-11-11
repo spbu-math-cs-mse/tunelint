@@ -1,7 +1,8 @@
-package org.goalteam.tunelint.model.musicsheetcontainer
+package org.goalteam.tunelint.model.core.impl
 
 import org.goalteam.tunelint.model.core.Measure
 import org.goalteam.tunelint.model.core.MusicFactory
+import org.goalteam.tunelint.model.core.MusicSheet
 import org.goalteam.tunelint.model.musicsheetchangerequest.MusicSheetChangeRequest
 import org.goalteam.tunelint.model.notifications.Notifiable
 import java.nio.file.Path
@@ -31,7 +32,7 @@ internal class MusicSheetImpl(
                 path
                     .readLines()
                     .map { it.toInt() }
-                    .map { MusicFactory().createNote(it, 1f) },
+                    .map { MusicFactory().createNote(it, 1) },
             ),
         )
         modified = false
