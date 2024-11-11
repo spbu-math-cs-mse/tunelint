@@ -1,6 +1,5 @@
-package org.goalteam.tunelint.model.musicsheetcontainer
+package org.goalteam.tunelint.model.core
 
-import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.musicsheetchangerequest.AddSymbolRequest
 import org.goalteam.tunelint.model.musicsheetchangerequest.MusicSheetChangeRequest
 import org.goalteam.tunelint.model.musicsheetchangerequest.RemoveSymbolRequest
@@ -8,18 +7,11 @@ import org.goalteam.tunelint.model.musicsheetchangerequest.RemoveSymbolRequest
 class Commands(
     private val sheet: MusicSheet,
 ) {
-    fun addNote(
+    fun addSymbol(
         measure: Int,
         note: Int,
-        value: Int,
-        length: Float,
-    ): MusicSheetChangeRequest = AddSymbolRequest(measure, note, MusicFactory().createNote(value, length), sheet)
-
-    fun addEmpty(
-        measure: Int,
-        note: Int,
-        length: Float,
-    ): MusicSheetChangeRequest = AddSymbolRequest(measure, note, MusicFactory().createEmpty(length), sheet)
+        symbol: Symbol,
+    ): MusicSheetChangeRequest = AddSymbolRequest(measure, note, symbol, sheet)
 
     fun removeSymbol(
         measure: Int,

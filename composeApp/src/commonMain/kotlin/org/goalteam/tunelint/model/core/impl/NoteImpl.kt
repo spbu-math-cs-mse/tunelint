@@ -4,7 +4,7 @@ import org.goalteam.tunelint.model.core.Note
 
 internal class NoteImpl(
     private val pitch: Int,
-    private val value: Float,
+    private val value: Int,
 ) : Note {
     override fun pitch() = pitch
 

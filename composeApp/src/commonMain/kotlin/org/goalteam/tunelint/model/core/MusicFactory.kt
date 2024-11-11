@@ -7,7 +7,7 @@ import org.goalteam.tunelint.model.core.impl.RestImpl
 class MusicFactory {
     fun createNote(
         pitch: Int,
-        value: Float,
+        value: Int,
     ): Note = NoteImpl(pitch, value)
 
     fun createEmpty(length: Float): Rest = RestImpl(length)
