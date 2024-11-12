@@ -1,5 +1,5 @@
 package org.goalteam.tunelint.model.core
 
 interface Symbol {
-    fun value(): Number
+    fun value(): Int
 }

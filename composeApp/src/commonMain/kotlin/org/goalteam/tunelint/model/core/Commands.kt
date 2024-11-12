@@ -5,7 +5,7 @@ import org.goalteam.tunelint.model.musicsheetchangerequest.MusicSheetChangeReque
 import org.goalteam.tunelint.model.musicsheetchangerequest.RemoveSymbolRequest
 
 class Commands(
-    private val sheet: MusicSheet,
+    private val sheet: Melody,
 ) {
     fun addSymbol(
         measure: Int,

@@ -4,14 +4,10 @@ import org.goalteam.tunelint.model.musicsheetchangerequest.MusicSheetChangeReque
 import org.goalteam.tunelint.model.notifications.Notifiable
 import org.goalteam.tunelint.model.notifications.Subscribable
 
-interface MusicSheet :
+interface Melody :
     Subscribable<MusicSheetChangeRequest>,
     Notifiable<MusicSheetChangeRequest> {
-    fun contents(): Collection<Any>
-
-    fun save()
-
-    fun load()
+    fun contents(): MutableList<Measure>
 
     fun modified(): Boolean
 

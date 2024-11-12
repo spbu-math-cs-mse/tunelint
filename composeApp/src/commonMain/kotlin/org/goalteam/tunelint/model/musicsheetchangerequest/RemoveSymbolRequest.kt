@@ -1,13 +1,13 @@
 package org.goalteam.tunelint.model.musicsheetchangerequest
 
 import org.goalteam.tunelint.model.core.Measure
-import org.goalteam.tunelint.model.core.MusicSheet
+import org.goalteam.tunelint.model.core.Melody
 import org.goalteam.tunelint.model.core.Symbol
 
 class RemoveSymbolRequest(
     private val measure: Int,
     private val note: Int,
-    private val sheet: MusicSheet,
+    private val sheet: Melody,
 ) : MusicSheetChangeRequest {
     private var removed: Symbol? = null
 
