@@ -14,7 +14,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App() {
     MaterialTheme {
         // TODO: create main view
-        val container = MelodyImpl(listOf())
+        val container = MelodyImpl("", mutableListOf())
         val vm = RedactorScreenViewModel(container)
         Column {
             Text(text = "this is main ui stub")
