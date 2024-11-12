@@ -27,6 +27,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
+            implementation("org.jdom:jdom2:2.0.6") // xml-parser
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)

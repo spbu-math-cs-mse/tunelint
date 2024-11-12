@@ -1,14 +1,13 @@
 package org.goalteam.tunelint.model.musicsheetchangerequest
 
-import org.goalteam.tunelint.model.core.Measure
-import org.goalteam.tunelint.model.core.MusicSheet
+import org.goalteam.tunelint.model.core.Melody
 import org.goalteam.tunelint.model.core.Symbol
 
 class AddSymbolRequest(
     private val measure: Int,
     private val note: Int,
     private val symbol: Symbol,
-    private val sheet: MusicSheet,
+    private val sheet: Melody,
 ) : MusicSheetChangeRequest {
     override fun toString(): String = "add symbol $symbol at $note in $measure measure"
 
@@ -33,5 +32,4 @@ class AddSymbolRequest(
     private fun measures() =
         sheet
             .contents()
-            .filterIsInstance<Measure>()
 }
