@@ -15,7 +15,10 @@ class MusicFactory {
 
     fun createMeasure(): Measure = MeasureImpl(mutableListOf())
 
-    fun createMeasure(notes: List<Symbol>): Measure = MeasureImpl(notes.toMutableList())
+    fun createMeasure(notes: List<Symbol>): MutableMeasure = MeasureImpl(notes.toMutableList())
 
-    fun createMelody(measures: List<Measure>): Melody = MelodyImpl(measures)
+    fun createMelody(
+        name: String,
+        measures: List<MutableMeasure>,
+    ): MutableMelody = MelodyImpl(name, measures)
 }

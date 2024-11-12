@@ -1,15 +1,17 @@
 package org.goalteam.tunelint.model.core
 
-import org.goalteam.tunelint.model.musicsheetchangerequest.MusicSheetChangeRequest
+import org.goalteam.tunelint.model.changerequest.ChangeRequest
 import org.goalteam.tunelint.model.notifications.Notifiable
 import org.goalteam.tunelint.model.notifications.Subscribable
 
 interface Melody :
-    Subscribable<MusicSheetChangeRequest>,
-    Notifiable<MusicSheetChangeRequest> {
-    fun contents(): MutableList<Measure>
+    Subscribable<ChangeRequest<MutableMelody>>,
+    Notifiable<ChangeRequest<MutableMelody>> {
+    fun name(): String
 
-    fun modified(): Boolean
+    fun measures(): List<Measure>
 
-    fun makeDirty()
+    fun modified(): Boolean // TODO move to musicSheet
+
+    fun makeDirty() // TODO move to musicSheet
 }

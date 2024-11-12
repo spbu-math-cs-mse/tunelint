@@ -1,5 +1,8 @@
 package org.goalteam.tunelint.model.core
 
-interface Measure {
-    fun symbols(): MutableList<Symbol>
+import org.goalteam.tunelint.model.changerequest.ChangeRequest
+import org.goalteam.tunelint.model.notifications.Notifiable
+
+interface Measure : Notifiable<ChangeRequest<MutableMeasure>> {
+    fun symbols(): List<Symbol>
 }
