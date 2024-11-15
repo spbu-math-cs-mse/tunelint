@@ -1,16 +1,14 @@
 package org.goalteam.tunelint.model.changerequest.impl
 
 import org.goalteam.tunelint.model.changerequest.ChangeRequest
-import org.goalteam.tunelint.model.core.MutableMelody
-import org.goalteam.tunelint.model.core.Symbol
+import org.goalteam.tunelint.model.core.*
 
-class AddSymbolToMelodyRequest(
+class RemoveSymbolFromMelodyRequest(
     private val measure: Int,
     private val note: Int,
-    private val symbol: Symbol,
-    private val subject: MutableMelody,
+    private val sheet: MutableMelody,
 ) : ChangeRequest<MutableMelody> {
-    override fun toString(): String = "add symbol $symbol at $note in $measure measure"
+    override fun toString(): String = "remove note at $note in $measure measure"
 
     override fun execute() {
         measureRequest().execute()
@@ -24,7 +22,7 @@ class AddSymbolToMelodyRequest(
 
     override fun isRevertible(): Boolean = enoughMeasures() && measureRequest().isRevertible()
 
-    private fun enoughMeasures(): Boolean = subject.measuresMut().size > measure
+    private fun measureRequest(): ChangeRequest<MutableMeasure> = RemoveSymbolFromMeasureRequest(note, sheet.measuresMut()[measure])
 
-    private fun measureRequest(): AddSymbolToMeasureRequest = AddSymbolToMeasureRequest(note, symbol, subject.measuresMut()[measure])
+    private fun enoughMeasures(): Boolean = sheet.measures().size > measure
 }
