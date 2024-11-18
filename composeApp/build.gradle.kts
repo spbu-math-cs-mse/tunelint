@@ -96,3 +96,16 @@ compose.desktop {
         }
     }
 }
+
+dependencies {
+    // Основные зависимости проекта
+    implementation(kotlin("stdlib"))
+
+    // Зависимости для тестирования
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform() // Указывает использовать JUnit 5 для тестов
+}
