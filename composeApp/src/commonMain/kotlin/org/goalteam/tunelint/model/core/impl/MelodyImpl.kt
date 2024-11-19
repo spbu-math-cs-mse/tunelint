@@ -1,28 +1,57 @@
 package org.goalteam.tunelint.model.core.impl
 
-import org.goalteam.tunelint.model.changerequest.ChangeRequest
 import org.goalteam.tunelint.model.core.Measure
-import org.goalteam.tunelint.model.core.MutableMeasure
-import org.goalteam.tunelint.model.core.MutableMelody
+import org.goalteam.tunelint.model.core.Melody
+import org.goalteam.tunelint.model.core.TimeSignature
 
 internal class MelodyImpl(
-    private val name: String,
-    measures: List<MutableMeasure>,
-) : MutableMelody {
-    private val measures: MutableList<MutableMeasure> = measures.toMutableList()
+    name: String,
+    timeSignature: TimeSignature,
+    measures: Collection<Measure>,
+) : Melody {
+    private var _name = name
+    private var _timeSignature = timeSignature
+    private val _measures: MutableList<Measure> = measures.toMutableList()
 
-    override fun name(): String = this.name
+    override fun clone() =
+        MelodyImpl(
+            name,
+            timeSignature,
+            _measures.toList(),
+        )
 
-    override fun measures(): List<Measure> = measures
+    override val name get() = _name
+    override val timeSignature get() = _timeSignature
+    override val measures get() = _measures as List<Measure>
 
-    override fun measuresMut(): MutableList<MutableMeasure> = measures
-
-    override fun notify(notification: ChangeRequest<MutableMelody>) {
-        if (notification.isExecutable()) {
-            notification.execute()
-        } else {
-            println("bad request")
-            return
-        }
+    override fun setName(name: String) {
+        _name = name
     }
+
+    override fun addMeasure(
+        position: Int,
+        measure: Measure,
+    ) {
+        val measureCopy = measure.clone()
+        measureCopy.setTimeSignature(timeSignature)
+        _measures.add(position, measureCopy)
+    }
+
+    override fun removeMeasure(position: Int) {
+        _measures.removeAt(position)
+    }
+
+    override fun setMeasures(measures: Collection<Measure>) {
+        _measures.clear()
+        _measures.addAll(measures)
+        _measures.forEach { it.setTimeSignature(timeSignature) }
+    }
+
+    override fun setTimeSignature(timeSignature: TimeSignature) {
+        _timeSignature = timeSignature
+
+        _measures.forEach { it.setTimeSignature(timeSignature) }
+    }
+
+    override fun mutableMeasures(): List<Measure> = _measures
 }
