@@ -25,7 +25,7 @@ fun NoteView(
         modifier =
             Modifier
                 .size(
-                    width = geometryData.horizontalStep * (note.value() / PrimaryNoteValue.Quarter.value()),
+                    width = geometryData.horizontalStep * (note.value() / PrimaryNoteValue.Eighth.value()),
                     height = geometryData.fullHeight,
                 ),
         // .border( TODO REMOVE COMMENTED

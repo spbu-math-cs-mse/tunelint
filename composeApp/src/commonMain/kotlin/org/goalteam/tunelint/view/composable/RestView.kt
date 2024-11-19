@@ -21,7 +21,7 @@ fun RestView(
             Modifier
                 .size(
                     width =
-                        geometryData.horizontalStep * (rest.value() / PrimaryNoteValue.Quarter.value()),
+                        geometryData.horizontalStep * (rest.value() / PrimaryNoteValue.Eighth.value()),
                     height = geometryData.fullHeight,
                 ),
         // .border( TODO REMOVE COMMENTED
