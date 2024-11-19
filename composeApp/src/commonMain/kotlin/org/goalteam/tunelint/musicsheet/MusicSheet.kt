@@ -14,7 +14,7 @@ class MusicSheet(
     init {
         val parser = XMLParser()
         val musicFactory = MusicFactory()
-        melody = parser.readMusicXML(path).firstOrNull()
+        melody = parser.readMusic(path).firstOrNull()
             ?: musicFactory.createMelody("", TimeSignature.standardTime)
     }
 
@@ -22,6 +22,6 @@ class MusicSheet(
 
     fun save(format: String) {
         val parser = XMLParser()
-        parser.writeMusicXML(path, mutableListOf(melody))
+        parser.writeMusic(path, mutableListOf(melody))
     }
 }
