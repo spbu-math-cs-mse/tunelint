@@ -24,9 +24,9 @@ class MeasureImpl(
         _remainingValue = timeSignature.value() - occupiedValue
     }
 
-    override val symbols = _symbols as List<Symbol>
-    override val remainingValue = _remainingValue
-    override val timeSignature = _timeSignature
+    override val symbols get() = _symbols as List<Symbol>
+    override val remainingValue get() = _remainingValue
+    override val timeSignature get() = _timeSignature
 
     override fun addSymbol(
         position: Int,

@@ -20,9 +20,9 @@ internal class MelodyImpl(
             _measures.toList(),
         )
 
-    override val name = _name
-    override val timeSignature = _timeSignature
-    override val measures = _measures as List<Measure>
+    override val name get() = _name
+    override val timeSignature get() = _timeSignature
+    override val measures get() = _measures as List<Measure>
 
     override fun setName(name: String) {
         _name = name
