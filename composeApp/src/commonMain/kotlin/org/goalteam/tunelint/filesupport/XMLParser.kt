@@ -16,7 +16,7 @@ import org.jdom2.output.Format
 import org.jdom2.output.XMLOutputter
 import java.io.File
 
-class XMLParser {
+class XMLParser : Parser {
     private val musicFactory = MusicFactory()
 
     private fun readNote(note: Element): Symbol? {
@@ -71,7 +71,7 @@ class XMLParser {
         return musicFactory.createMelody(melodyId, TimeSignature.standardTime, measureList)
     }
 
-    fun readMusicXML(path: String): List<Melody> {
+    override fun readMusic(path: String): List<Melody> {
         val file = File(path)
         val saxBuilder = SAXBuilder()
         val document: Document = saxBuilder.build(file)
@@ -124,9 +124,9 @@ class XMLParser {
         return element
     }
 
-    fun writeMusicXML(
+    override fun writeMusic(
         path: String,
-        melodyList: MutableList<Melody>,
+        melodyList: List<Melody>,
     ) {
         val file = File(path)
         val scorePartwise = Element("score-partwise").setAttribute("version", "3.1")
@@ -136,7 +136,7 @@ class XMLParser {
         scorePartwise.addContent(work)
 
         val partList = Element("melody-list")
-        for (i in 0 until melodyList.size) {
+        for (i in melodyList.indices) {
             val scorePart = Element("score-part").setAttribute("id", "P${i + 1}")
             scorePart.addContent(Element("part-name").setText("part ${i + 1}"))
             partList.addContent(scorePart)
@@ -147,9 +147,7 @@ class XMLParser {
             scorePartwise.addContent(writeMelody(melody).setAttribute("id", "P${i + 1}"))
         }
 
-        val document = Document(scorePartwise)
-        val xmlOutputter = XMLOutputter(Format.getPrettyFormat())
-        xmlOutputter.output(document, file.writer())
+        XMLOutputter(Format.getPrettyFormat()).output(Document(scorePartwise), file.writer())
 
         println("XML-file created successfully in path: ${file.absolutePath}")
     }
