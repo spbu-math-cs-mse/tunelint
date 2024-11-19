@@ -1,46 +1,28 @@
 package org.goalteam.tunelint.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import org.goalteam.tunelint.model.changerequest.ChangeRequest
-import org.goalteam.tunelint.model.changerequest.MelodyChangeRequestFactory
-import org.goalteam.tunelint.model.core.Melody
-import org.goalteam.tunelint.model.core.MutableMelody
-import org.goalteam.tunelint.model.core.impl.NoteImpl
-import org.goalteam.tunelint.model.notifications.Notifiable
+import org.goalteam.tunelint.model.changerequest.impl.PushFrontEmptyMeasurePersistentRequest
+import org.goalteam.tunelint.model.changerequest.subscribeAndSynchronize
+import org.goalteam.tunelint.model.core.MusicFactory
+import org.goalteam.tunelint.model.core.TimeSignature
+import org.goalteam.tunelint.musicsheet.MusicSheet
+import org.goalteam.tunelint.view.viewable.MelodyViewable
+import org.goalteam.tunelint.view.viewable.ViewableMusicFactory
+import org.goalteam.tunelint.view.viewable.impl.MelodyViewableImpl
 
-class RedactorScreenViewModel(
-    private val container: Melody,
-) : ViewModel() {
-    // TODO: create RedactorScreenViewModel
+class RedactorScreenViewModel : ViewModel() {
+    val musicSheet = MusicSheet("music/test.xml")
+    val melody: MelodyViewable by mutableStateOf(
+        MelodyViewableImpl(
+            MusicFactory().createMelody("", TimeSignature.standardTime),
+        ),
+    )
 
-    class MusicSheetChangeInfoAdapter(
-        container: Melody,
-        private val viewModel: RedactorScreenViewModel,
-    ) : Notifiable<ChangeRequest<MutableMelody>> {
-        init {
-            container.subscribe(this)
-        }
-
-        override fun notify(notification: ChangeRequest<MutableMelody>) {
-            viewModel.stateChange(notification.toString())
-        }
-    }
-
-    private var count = 0
-    private val adapter = MusicSheetChangeInfoAdapter(container, this)
-    private val _state = MutableStateFlow("")
-    val state: StateFlow<String> = _state.asStateFlow()
-
-    fun interactionEvent() {
-        container.notify(MelodyChangeRequestFactory().addSymbol(0, 0, NoteImpl(0, 0)))
-        count++
-    }
-
-    fun stateChange(newState: String) {
-        _state.update { newState }
+    init {
+        val viewable = ViewableMusicFactory().melody(melody)
+        musicSheet.persistenceManager.subscribableMelody.subscribeAndSynchronize(viewable)
+        musicSheet.persistenceManager.notify(PushFrontEmptyMeasurePersistentRequest())
     }
 }

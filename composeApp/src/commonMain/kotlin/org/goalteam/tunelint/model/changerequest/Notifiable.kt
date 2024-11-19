@@ -1,4 +1,4 @@
-package org.goalteam.tunelint.model.notifications
+package org.goalteam.tunelint.model.changerequest
 
 interface Notifiable<in T> {
     fun notify(notification: T)

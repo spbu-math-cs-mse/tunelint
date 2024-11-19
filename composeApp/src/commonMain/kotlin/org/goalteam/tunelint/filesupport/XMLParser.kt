@@ -1,6 +1,14 @@
 package org.goalteam.tunelint.filesupport
 
-import org.goalteam.tunelint.model.core.*
+import org.goalteam.tunelint.model.core.ImmutableMeasure
+import org.goalteam.tunelint.model.core.ImmutableMelody
+import org.goalteam.tunelint.model.core.Measure
+import org.goalteam.tunelint.model.core.Melody
+import org.goalteam.tunelint.model.core.MusicFactory
+import org.goalteam.tunelint.model.core.Note
+import org.goalteam.tunelint.model.core.PrimaryNoteValue
+import org.goalteam.tunelint.model.core.Symbol
+import org.goalteam.tunelint.model.core.TimeSignature
 import org.jdom2.Document
 import org.jdom2.Element
 import org.jdom2.input.SAXBuilder
@@ -15,13 +23,13 @@ class XMLParser : Parser {
         val pitch = note.getChildText("pitch").toIntOrNull()
         val value = note.getChildText("value").toIntOrNull() ?: return null
         return if (pitch == null) {
-            musicFactory.createRest(value)
+            musicFactory.createRest(PrimaryNoteValue(value))
         } else {
-            musicFactory.createNote(pitch, value)
+            musicFactory.createNote(pitch, PrimaryNoteValue(value))
         }
     }
 
-    private fun readMeasure(measure: Element): MutableMeasure? {
+    private fun readMeasure(measure: Element): Measure? {
         val measureNumber = measure.getAttributeValue("number")
         println("  Measure number: $measureNumber")
 
@@ -39,14 +47,14 @@ class XMLParser : Parser {
                 return null
             }
         }
-        return musicFactory.createMeasure(noteList)
+        return musicFactory.createMeasure(TimeSignature.standardTime, noteList)
     }
 
-    private fun readMelody(melody: Element): MutableMelody? {
+    private fun readMelody(melody: Element): Melody? {
         val melodyId = melody.getAttributeValue("id")
         println("Processing melody: $melodyId")
 
-        val measureList = mutableListOf<MutableMeasure>()
+        val measureList = mutableListOf<Measure>()
 
         val measures = melody.getChildren("measure")
         measures.forEach { measure ->
@@ -60,7 +68,7 @@ class XMLParser : Parser {
                 return null
             }
         }
-        return musicFactory.createMelody(melodyId, measureList)
+        return musicFactory.createMelody(melodyId, TimeSignature.standardTime, measureList)
     }
 
     override fun readMusic(path: String): List<Melody> {
@@ -93,24 +101,24 @@ class XMLParser : Parser {
         val value = Element("value").setText(symbol.value().toString())
         element.addContent(value)
         if (symbol is Note) {
-            val pitch = Element("pitch").setText(symbol.pitch().toString())
+            val pitch = Element("pitch").setText(symbol.stage().toString())
             element.addContent(pitch)
         }
 
         return element
     }
 
-    private fun writeMeasure(measure: Measure): Element {
+    private fun writeMeasure(measure: ImmutableMeasure): Element {
         val element = Element("measure")
-        measure.symbols().forEach { symbol ->
+        measure.symbols.forEach { symbol ->
             element.addContent(writeNote(symbol))
         }
         return element
     }
 
-    private fun writeMelody(melody: Melody): Element {
+    private fun writeMelody(melody: ImmutableMelody): Element {
         val element = Element("melody")
-        melody.measures().forEachIndexed { i, measure ->
+        melody.measures.forEachIndexed { i, measure ->
             element.addContent(writeMeasure(measure).setAttribute("number", "${i + 1}"))
         }
         return element
