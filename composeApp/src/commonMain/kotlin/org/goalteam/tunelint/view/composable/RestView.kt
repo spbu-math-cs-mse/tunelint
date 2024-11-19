@@ -1,4 +1,4 @@
-package org.goalteam.tunelint.view
+package org.goalteam.tunelint.view.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -7,7 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import org.goalteam.tunelint.model.core.PrimaryNoteValue
 import org.goalteam.tunelint.model.core.Rest
+import org.goalteam.tunelint.view.GeometryData
 
 @Composable
 fun RestView(
@@ -19,10 +21,10 @@ fun RestView(
             Modifier
                 .size(
                     width =
-                        geometryData.horizontalStep * rest.value().toInt(),
+                        geometryData.horizontalStep * (rest.value() / PrimaryNoteValue.Quarter.value()),
                     height = geometryData.fullHeight,
                 ),
-        // .border(
+        // .border( TODO REMOVE COMMENTED
         //    width = 2.dp,
         //    color = Color.Black,
         //    shape = RectangleShape,
@@ -41,16 +43,4 @@ fun RestView(
                     ),
         )
     }
-}
-
-class RestViewable(
-    rest: Rest,
-) : SymbolViewable,
-    Rest by rest {
-    @Composable
-    override fun view() =
-        RestView(
-            this,
-            GeometryData(20, 20, 50, 50),
-        )
 }

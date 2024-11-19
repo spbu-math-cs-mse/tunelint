@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import org.goalteam.tunelint.model.core.impl.MelodyImpl
 import org.goalteam.tunelint.view.MusicSheetView
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -20,8 +19,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App() {
     MaterialTheme {
         // TODO: create main view
-        val container = MelodyImpl("", mutableListOf())
-        val vm = RedactorScreenViewModel(container)
+
+        val vm = RedactorScreenViewModel()
         Column {
             Text(text = "this is main ui stub")
             Box(

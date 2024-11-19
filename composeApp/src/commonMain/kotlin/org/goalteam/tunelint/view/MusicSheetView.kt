@@ -5,57 +5,48 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import org.goalteam.tunelint.model.changerequest.PersistentRequest
+import org.goalteam.tunelint.model.changerequest.PersistentRequestFactory
 import org.goalteam.tunelint.model.core.MusicFactory
+import org.goalteam.tunelint.model.core.PrimaryNoteValue
+import org.goalteam.tunelint.model.core.Symbol
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import kotlin.random.Random
 
 fun randomPitch() = Random.nextInt(0, 9)
 
-fun randomSymbol(): SymbolViewable {
-    val isNote = Random.nextInt(0, 4) != 0
+fun randomNote() = MusicFactory().createNote(randomPitch(), PrimaryNoteValue(-2))
 
-    if (isNote) return NoteViewable(MusicFactory().createNote(randomPitch(), 2))
+fun randomRest() = MusicFactory().createRest(PrimaryNoteValue(-2))
 
-    return RestViewable(MusicFactory().createRest(2))
+fun randomSymbol(): Symbol {
+    val isRest = Random.nextInt(0, 4) == 0
+
+    if (isRest) return randomRest()
+
+    return randomNote()
 }
 
-fun randomMeasure() =
-    MeasureViewable(
-        MusicFactory().createMeasure(
-            listOf(
-                randomSymbol(),
-                randomSymbol(),
-                randomSymbol(),
-                randomSymbol(),
-            ),
-        ),
-    )
-
-fun randomMelody(): MelodyViewable =
-    MelodyViewable(
-        MusicFactory().createMelody(
-            "swag like ohio",
-            listOf(
-                randomMeasure(),
-                randomMeasure(),
-                randomMeasure(),
-            ),
-        ),
-    )
+fun randomRequest(): PersistentRequest =
+    PersistentRequestFactory()
+        .addSymbol(0, 0, randomSymbol())
 
 @Composable
 fun MusicSheetView(vm: RedactorScreenViewModel) {
-    var ms by remember { mutableStateOf(randomMelody()) }
+    val melody = vm.melody
 
     Column {
-        ms.view()
-        Button(
-            onClick = { ms = randomMelody() },
-        ) {
-            Text("generate random")
+        melody.snapshot.view()
+        Button(onClick = {
+            vm.musicSheet.persistenceManager.notify(randomRequest())
+            println(
+                melody.measures
+                    .first()
+                    .symbols.size,
+            )
+        }) {
+            Text("RANDOM")
         }
     }
 }

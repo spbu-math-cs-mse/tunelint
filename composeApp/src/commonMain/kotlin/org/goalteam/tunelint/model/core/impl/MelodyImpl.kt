@@ -1,50 +1,57 @@
 package org.goalteam.tunelint.model.core.impl
 
-import org.goalteam.tunelint.model.changerequest.ChangeRequest
 import org.goalteam.tunelint.model.core.Measure
-import org.goalteam.tunelint.model.core.MutableMeasure
-import org.goalteam.tunelint.model.core.MutableMelody
-import org.goalteam.tunelint.model.notifications.Notifiable
+import org.goalteam.tunelint.model.core.Melody
+import org.goalteam.tunelint.model.core.TimeSignature
 
 internal class MelodyImpl(
-    private val name: String,
-    measures: List<MutableMeasure>,
-) : MutableMelody {
-    private val measures: MutableList<MutableMeasure> = measures.toMutableList()
-    private val subscribers = mutableListOf<Notifiable<ChangeRequest<MutableMelody>>>()
+    name: String,
+    timeSignature: TimeSignature,
+    measures: Collection<Measure>,
+) : Melody {
+    private var _name = name
+    private var _timeSignature = timeSignature
+    private val _measures: MutableList<Measure> = measures.toMutableList()
 
-    private val commands = mutableListOf<ChangeRequest<MutableMelody>>()
-    private var modified = false
+    override fun clone() =
+        MelodyImpl(
+            name,
+            timeSignature,
+            _measures.toList(),
+        )
 
-    override fun name(): String = this.name
+    override val name = _name
+    override val timeSignature = _timeSignature
+    override val measures = _measures as List<Measure>
 
-    override fun measures(): List<Measure> = measures
-
-    override fun measuresMut(): MutableList<MutableMeasure> = measures
-
-    override fun modified() = modified
-
-    override fun makeDirty() {
-        modified = true
+    override fun setName(name: String) {
+        _name = name
     }
 
-    override fun subscribe(subscriber: Notifiable<ChangeRequest<MutableMelody>>) {
-        subscribers.add(subscriber)
+    override fun addMeasure(
+        position: Int,
+        measure: Measure,
+    ) {
+        val measureCopy = measure.clone()
+        measureCopy.setTimeSignature(timeSignature)
+        _measures.add(position, measureCopy)
     }
 
-    override fun unsubscribe(subscriber: Notifiable<ChangeRequest<MutableMelody>>) {
-        subscribers.remove(subscriber)
+    override fun removeMeasure(position: Int) {
+        _measures.removeAt(position)
     }
 
-    override fun notify(notification: ChangeRequest<MutableMelody>) {
-        if (notification.isExecutable()) {
-            notification.execute(this as MutableMelody)
-        } else {
-            println("bad request")
-            return
-        }
-        makeDirty()
-        commands.add(notification)
-        subscribers.forEach { it.notify(notification) }
+    override fun setMeasures(measures: Collection<Measure>) {
+        _measures.clear()
+        _measures.addAll(measures)
+        _measures.forEach { it.setTimeSignature(timeSignature) }
     }
+
+    override fun setTimeSignature(timeSignature: TimeSignature) {
+        _timeSignature = timeSignature
+
+        _measures.forEach { it.setTimeSignature(timeSignature) }
+    }
+
+    override fun mutableMeasures(): List<Measure> = _measures
 }

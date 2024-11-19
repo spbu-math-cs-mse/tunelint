@@ -1,4 +1,4 @@
-package org.goalteam.tunelint.view
+package org.goalteam.tunelint.view.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import org.goalteam.tunelint.model.core.Note
+import org.goalteam.tunelint.model.core.PrimaryNoteValue
+import org.goalteam.tunelint.view.GeometryData
 
 @Composable
 fun NoteView(
@@ -16,17 +18,17 @@ fun NoteView(
 ) {
     val topOffset =
         geometryData.firstLineOffset -
-            geometryData.verticalStep * note.pitch() / 2 -
+            geometryData.verticalStep * note.stage() / 2 -
             geometryData.verticalStep
 
     Box(
         modifier =
             Modifier
                 .size(
-                    width = geometryData.horizontalStep * note.value().toInt(),
+                    width = geometryData.horizontalStep * (note.value() / PrimaryNoteValue.Quarter.value()),
                     height = geometryData.fullHeight,
                 ),
-        // .border(
+        // .border( TODO REMOVE COMMENTED
         //    width = 2.dp,
         //    color = Color.Black,
         //    shape = RectangleShape,
@@ -40,17 +42,4 @@ fun NoteView(
                     .background(color = Color.Red),
         )
     }
-}
-
-class NoteViewable(
-    note: Note,
-) : SymbolViewable,
-    Note by note,
-    Viewable {
-    @Composable
-    override fun view() =
-        NoteView(
-            this,
-            GeometryData(20, 20, 50, 50),
-        )
 }

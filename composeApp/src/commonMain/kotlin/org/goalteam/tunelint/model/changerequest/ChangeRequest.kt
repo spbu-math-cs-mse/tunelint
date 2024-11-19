@@ -1,13 +1,9 @@
 package org.goalteam.tunelint.model.changerequest
 
-interface ChangeRequest<in SubjectType> {
+import org.goalteam.tunelint.model.core.Melody
+
+interface ChangeRequest {
     override fun toString(): String
 
-    fun execute(subject: SubjectType)
-
-    fun isExecutable(): Boolean
-
-    fun revert(subject: SubjectType)
-
-    fun isRevertible(): Boolean
+    fun execute(melody: Melody)
 }

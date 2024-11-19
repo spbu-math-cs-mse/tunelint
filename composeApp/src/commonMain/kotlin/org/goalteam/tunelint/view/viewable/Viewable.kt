@@ -1,4 +1,4 @@
-package org.goalteam.tunelint.view
+package org.goalteam.tunelint.view.viewable
 
 import androidx.compose.runtime.Composable
 

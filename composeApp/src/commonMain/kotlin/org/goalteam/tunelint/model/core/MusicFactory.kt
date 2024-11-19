@@ -7,18 +7,31 @@ import org.goalteam.tunelint.model.core.impl.RestImpl
 
 class MusicFactory {
     fun createNote(
-        pitch: Int,
-        value: Int,
-    ): Note = NoteImpl(pitch, value)
+        stage: Int,
+        primaryValue: PrimaryNoteValue,
+    ): Note = NoteImpl(stage, primaryValue)
 
-    fun createRest(length: Int): Rest = RestImpl(length)
+    fun createRest(primaryValue: PrimaryNoteValue): Rest = RestImpl(primaryValue)
 
-    fun createMeasure(): Measure = MeasureImpl(mutableListOf())
+    fun createMeasure(timeSignature: TimeSignature): Measure =
+        MeasureImpl(
+            timeSignature,
+            mutableListOf(),
+        )
 
-    fun createMeasure(notes: List<Symbol>): MutableMeasure = MeasureImpl(notes.toMutableList())
+    fun createMeasure(
+        timeSignature: TimeSignature,
+        notes: Collection<Symbol>,
+    ): Measure = MeasureImpl(timeSignature, notes)
 
     fun createMelody(
         name: String,
-        measures: List<MutableMeasure>,
-    ): MutableMelody = MelodyImpl(name, measures)
+        timeSignature: TimeSignature,
+    ): Melody = MelodyImpl(name, timeSignature, listOf())
+
+    fun createMelody(
+        name: String,
+        timeSignature: TimeSignature,
+        measures: Collection<Measure>,
+    ): Melody = MelodyImpl(name, timeSignature, measures)
 }

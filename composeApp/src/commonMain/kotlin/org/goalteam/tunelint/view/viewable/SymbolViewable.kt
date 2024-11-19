@@ -1,4 +1,4 @@
-package org.goalteam.tunelint.view
+package org.goalteam.tunelint.view.viewable
 
 import org.goalteam.tunelint.model.core.Symbol
 

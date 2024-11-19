@@ -1,8 +1,22 @@
 package org.goalteam.tunelint.model.core
 
-import org.goalteam.tunelint.model.changerequest.ChangeRequest
-import org.goalteam.tunelint.model.notifications.Notifiable
+interface Measure :
+    ImmutableMeasure,
+    MutableMeasure,
+    Cloneable {
+    public override fun clone(): Measure
+}
 
-interface Measure : Notifiable<ChangeRequest<MutableMeasure>> {
-    fun symbols(): List<Symbol>
+fun Measure.pushBackSymbol(symbol: Symbol) = addSymbol(symbols.count(), symbol)
+
+fun Measure.fillRemainingWithPauses() {
+    var currentValue = PrimaryNoteValue.Double
+
+    while (remainingValue > NoteValue.Nil) {
+        if (remainingValue >= currentValue.value()) {
+            pushBackSymbol(MusicFactory().createRest(currentValue))
+        } else {
+            currentValue = currentValue.prev()
+        }
+    }
 }
