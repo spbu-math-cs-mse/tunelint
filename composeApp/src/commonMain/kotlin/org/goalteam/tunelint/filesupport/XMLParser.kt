@@ -1,10 +1,6 @@
 package org.goalteam.tunelint.filesupport
 
-import org.goalteam.tunelint.model.core.Measure
-import org.goalteam.tunelint.model.core.Melody
-import org.goalteam.tunelint.model.core.MusicFactory
-import org.goalteam.tunelint.model.core.Note
-import org.goalteam.tunelint.model.core.Symbol
+import org.goalteam.tunelint.model.core.*
 import org.jdom2.Document
 import org.jdom2.Element
 import org.jdom2.input.SAXBuilder
@@ -12,7 +8,7 @@ import org.jdom2.output.Format
 import org.jdom2.output.XMLOutputter
 import java.io.File
 
-class XMLParser {
+class XMLParser : Parser {
     private val musicFactory = MusicFactory()
 
     private fun readNote(note: Element): Symbol? {
@@ -25,7 +21,7 @@ class XMLParser {
         }
     }
 
-    private fun readMeasure(measure: Element): Measure? {
+    private fun readMeasure(measure: Element): MutableMeasure? {
         val measureNumber = measure.getAttributeValue("number")
         println("  Measure number: $measureNumber")
 
@@ -46,11 +42,11 @@ class XMLParser {
         return musicFactory.createMeasure(noteList)
     }
 
-    private fun readMelody(melody: Element): Melody? {
+    private fun readMelody(melody: Element): MutableMelody? {
         val melodyId = melody.getAttributeValue("id")
         println("Processing melody: $melodyId")
 
-        val measureList = mutableListOf<Measure>()
+        val measureList = mutableListOf<MutableMeasure>()
 
         val measures = melody.getChildren("measure")
         measures.forEach { measure ->
@@ -64,10 +60,11 @@ class XMLParser {
                 return null
             }
         }
-        return musicFactory.createMelody(measureList)
+        return musicFactory.createMelody(melodyId, measureList)
     }
 
-    fun readMusicXML(file: File): List<Melody> {
+    override fun readMusic(path: String): List<Melody> {
+        val file = File(path)
         val saxBuilder = SAXBuilder()
         val document: Document = saxBuilder.build(file)
         val rootElement: Element = document.rootElement
@@ -113,16 +110,17 @@ class XMLParser {
 
     private fun writeMelody(melody: Melody): Element {
         val element = Element("melody")
-        melody.contents().forEachIndexed { i, measure ->
+        melody.measures().forEachIndexed { i, measure ->
             element.addContent(writeMeasure(measure).setAttribute("number", "${i + 1}"))
         }
         return element
     }
 
-    fun writeMusicXML(
-        file: File,
-        melodyList: MutableList<Melody>,
+    override fun writeMusic(
+        path: String,
+        melodyList: List<Melody>,
     ) {
+        val file = File(path)
         val scorePartwise = Element("score-partwise").setAttribute("version", "3.1")
 
         val work = Element(file.nameWithoutExtension)
@@ -130,7 +128,7 @@ class XMLParser {
         scorePartwise.addContent(work)
 
         val partList = Element("melody-list")
-        for (i in 0 until melodyList.size) {
+        for (i in melodyList.indices) {
             val scorePart = Element("score-part").setAttribute("id", "P${i + 1}")
             scorePart.addContent(Element("part-name").setText("part ${i + 1}"))
             partList.addContent(scorePart)
@@ -141,9 +139,7 @@ class XMLParser {
             scorePartwise.addContent(writeMelody(melody).setAttribute("id", "P${i + 1}"))
         }
 
-        val document = Document(scorePartwise)
-        val xmlOutputter = XMLOutputter(Format.getPrettyFormat())
-        xmlOutputter.output(document, file.writer())
+        XMLOutputter(Format.getPrettyFormat()).output(Document(scorePartwise), file.writer())
 
         println("XML-file created successfully in path: ${file.absolutePath}")
     }

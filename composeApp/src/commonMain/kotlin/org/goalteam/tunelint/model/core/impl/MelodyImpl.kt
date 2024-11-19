@@ -1,43 +1,28 @@
 package org.goalteam.tunelint.model.core.impl
 
+import org.goalteam.tunelint.model.changerequest.ChangeRequest
 import org.goalteam.tunelint.model.core.Measure
-import org.goalteam.tunelint.model.core.Melody
-import org.goalteam.tunelint.model.musicsheetchangerequest.MusicSheetChangeRequest
-import org.goalteam.tunelint.model.notifications.Notifiable
+import org.goalteam.tunelint.model.core.MutableMeasure
+import org.goalteam.tunelint.model.core.MutableMelody
 
 internal class MelodyImpl(
-    private val measures: List<Measure>,
-) : Melody {
-    private val subscribers = mutableListOf<Notifiable<MusicSheetChangeRequest>>()
+    private val name: String,
+    measures: List<MutableMeasure>,
+) : MutableMelody {
+    private val measures: MutableList<MutableMeasure> = measures.toMutableList()
 
-    private val commands = mutableListOf<MusicSheetChangeRequest>()
-    private var modified = false
+    override fun name(): String = this.name
 
-    override fun contents(): MutableList<Measure> = measures.toMutableList()
+    override fun measures(): List<Measure> = measures
 
-    override fun modified() = modified
+    override fun measuresMut(): MutableList<MutableMeasure> = measures
 
-    override fun makeDirty() {
-        modified = true
-    }
-
-    override fun subscribe(subscriber: Notifiable<MusicSheetChangeRequest>) {
-        subscribers.add(subscriber)
-    }
-
-    override fun unsubscribe(subscriber: Notifiable<MusicSheetChangeRequest>) {
-        subscribers.remove(subscriber)
-    }
-
-    override fun notify(notification: MusicSheetChangeRequest) {
+    override fun notify(notification: ChangeRequest<MutableMelody>) {
         if (notification.isExecutable()) {
             notification.execute()
         } else {
             println("bad request")
             return
         }
-        makeDirty()
-        commands.add(notification)
-        subscribers.forEach { it.notify(notification) }
     }
 }

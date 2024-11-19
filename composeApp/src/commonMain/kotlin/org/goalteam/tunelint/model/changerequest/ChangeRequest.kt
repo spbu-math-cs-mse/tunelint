@@ -1,6 +1,6 @@
-package org.goalteam.tunelint.model.musicsheetchangerequest
+package org.goalteam.tunelint.model.changerequest
 
-interface MusicSheetChangeRequest {
+interface ChangeRequest<in SubjectType> {
     override fun toString(): String
 
     fun execute()
