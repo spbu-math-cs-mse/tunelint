@@ -3,6 +3,8 @@ package org.goalteam.tunelint.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import org.goalteam.tunelint.interaction.impl.ReceiverImpl
+import org.goalteam.tunelint.interaction.impl.RedactorConfigurationImpl
 import org.goalteam.tunelint.model.changerequest.impl.PushFrontEmptyMeasurePersistentRequest
 import org.goalteam.tunelint.model.changerequest.subscribeAndSynchronize
 import org.goalteam.tunelint.model.core.MusicFactory
@@ -19,6 +21,8 @@ class RedactorScreenViewModel : ViewModel() {
             MusicFactory().createMelody("", TimeSignature.standardTime),
         ),
     )
+    val mode = RedactorConfigurationImpl()
+    val interactor = ReceiverImpl(mode, musicSheet.persistenceManager) // TODO make factories
 
     init {
         val viewable = ViewableMusicFactory().melody(melody)
