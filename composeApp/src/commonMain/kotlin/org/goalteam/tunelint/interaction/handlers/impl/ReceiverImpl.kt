@@ -7,6 +7,7 @@ import org.goalteam.tunelint.model.changerequest.PersistenceManager
 import org.goalteam.tunelint.model.changerequest.PersistentRequest
 import org.goalteam.tunelint.model.changerequest.PersistentRequestFactory
 import org.goalteam.tunelint.model.core.MusicFactory
+import org.goalteam.tunelint.model.core.PointerFactory
 
 class ReceiverImpl(
     private val configuration: RedactorConfiguration,
@@ -14,6 +15,7 @@ class ReceiverImpl(
 ) : Receiver {
     private val requestFactory = PersistentRequestFactory()
     private val musicFactory = MusicFactory()
+    private val pointerFactory = PointerFactory()
 
     override fun handleButton(button: CommandButtonInteractionData) {
         if (button.command() == CommandType.Undo) {
@@ -25,26 +27,25 @@ class ReceiverImpl(
     }
 
     override fun handleAction(action: StaffInteractionData) {
-        val note = musicFactory.createNote(action.stage(), configuration.getValue())
-        val request = requestFactory.addSymbol(action.measure(), action.position(), note)
+        val request = createRequest(action)
         persistenceManager.notify(request)
     }
 
     private fun createRequest(action: StaffInteractionData): PersistentRequest {
+        val note = musicFactory.createNote(action.stage(), configuration.getValue())
+        val pointer = pointerFactory.createNotePointerSimple(action.measure(), action.position())
         if (action.action() == Action.Move) {
             TODO("Preview is not supported yet")
         }
         if (configuration.getMode() == Mode.Write) {
-            val note = musicFactory.createNote(action.stage(), configuration.getValue())
             if (action.side() == Side.Right) {
                 return requestFactory.addSymbol(
-                    action.measure(),
-                    action.position() + 1,
+                    pointer.next(),
                     note,
                 ) // TODO Change +1 to call of some method
             }
-            return requestFactory.addSymbol(action.measure(), action.position(), note)
+            return requestFactory.addSymbol(pointer, note)
         }
-        return requestFactory.removeSymbol(action.measure(), action.position())
+        return requestFactory.removeSymbol(pointer)
     }
 }

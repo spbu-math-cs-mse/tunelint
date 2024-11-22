@@ -4,11 +4,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import org.goalteam.tunelint.model.changerequest.PersistentRequest
 import org.goalteam.tunelint.model.changerequest.PersistentRequestFactory
 import org.goalteam.tunelint.model.core.MusicFactory
+import org.goalteam.tunelint.model.core.PointerFactory
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 import org.goalteam.tunelint.model.core.Symbol
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
@@ -30,7 +29,7 @@ fun randomSymbol(): Symbol {
 
 fun randomRequest(): PersistentRequest =
     PersistentRequestFactory()
-        .addSymbol(0, 0, randomSymbol())
+        .addSymbol(PointerFactory().createNotePointerSimple(0, 0), randomSymbol())
 
 @Composable
 fun MusicSheetView(vm: RedactorScreenViewModel) {
