@@ -40,5 +40,13 @@ fun UnleveredNoteView(
         if (note.primaryValue() <= PrimaryNoteValue.Quarter) {
             BlackNoteHead()
         }
+
+        if (note.primaryValue() <= PrimaryNoteValue.Eighth) {
+            if (note.stage() > 3) {
+                BottomNoteFlag(geometryData, 0)
+            } else {
+                TopNoteFlag(geometryData, 0)
+            }
+        }
     }
 }

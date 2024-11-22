@@ -21,10 +21,10 @@ class MelodyViewableImpl(
         by mutableStateOf(ImmutableMelodyViewableImpl(this))
 
     @Composable
-    override fun view() =
+    override fun view(geometryData: GeometryData) =
         MelodyView(
             snapshot,
-            GeometryData(20, 20, 50, 50),
+            geometryData,
         )
 
     override fun clone() = MelodyViewableImpl(melody.clone())

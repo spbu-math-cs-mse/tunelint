@@ -11,9 +11,9 @@ class RestViewableImpl(
 ) : RestViewable,
     Rest by rest {
     @Composable
-    override fun view() =
+    override fun view(geometryData: GeometryData) =
         RestView(
             this,
-            GeometryData(20, 20, 50, 50),
+            geometryData,
         )
 }

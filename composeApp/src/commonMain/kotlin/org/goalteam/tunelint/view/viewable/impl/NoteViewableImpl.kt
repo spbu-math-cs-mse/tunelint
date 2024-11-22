@@ -13,9 +13,9 @@ class NoteViewableImpl(
     Note by note,
     Viewable {
     @Composable
-    override fun view() =
+    override fun view(geometryData: GeometryData) =
         NoteView(
             this,
-            GeometryData(20, 20, 50, 50),
+            geometryData,
         )
 }

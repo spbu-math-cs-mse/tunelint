@@ -42,16 +42,19 @@ fun randomRequest(): PersistentRequest =
     PersistentRequestFactory()
         .addSymbol(0, 0, randomSymbol())
 
+fun someEighth(stage: Int): Symbol = MusicFactory().createNote(stage, PrimaryNoteValue.Eighth)
+
 @Composable
 fun MusicSheetView(vm: RedactorScreenViewModel) {
     val melody = vm.melody
 
     vm.musicSheet.persistenceManager.notify(requestOf(randomHalf()))
     vm.musicSheet.persistenceManager.notify(requestOf(randomQuarter()))
-    vm.musicSheet.persistenceManager.notify(requestOf(randomRest()))
+    vm.musicSheet.persistenceManager.notify(requestOf(someEighth(1)))
+    vm.musicSheet.persistenceManager.notify(requestOf(someEighth(5)))
 
     Column {
-        melody.view()
+        melody.view(GeometryData(20, 30, 50, 50))
         Button(onClick = {
             vm.musicSheet.persistenceManager.notify(randomRequest())
             println(

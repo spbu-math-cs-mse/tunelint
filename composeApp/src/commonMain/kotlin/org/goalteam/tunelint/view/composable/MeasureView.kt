@@ -26,7 +26,7 @@ fun MeasureView(
                 ),
     ) {
         Row {
-            measure.symbols.forEach { (it as SymbolViewable).view() }
+            measure.symbols.forEach { (it as SymbolViewable).view(geometryData) }
         }
     }
 }

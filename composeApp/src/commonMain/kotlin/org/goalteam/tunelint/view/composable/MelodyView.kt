@@ -36,7 +36,7 @@ fun MelodyView(
                 .measures
                 .forEach {
                     (it as Viewable)
-                        .view()
+                        .view(geometryData)
                     MeasureLine(geometryData, 5.dp)
                 }
         }
