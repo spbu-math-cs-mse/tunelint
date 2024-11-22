@@ -1,4 +1,4 @@
-package org.goalteam.tunelint.interaction
+package org.goalteam.tunelint.interaction.events
 
 interface CommandButtonInteractionData {
     fun command(): CommandType

@@ -1,6 +1,10 @@
-package org.goalteam.tunelint.interaction.impl
+package org.goalteam.tunelint.interaction.handlers.impl
 
-import org.goalteam.tunelint.interaction.*
+import org.goalteam.tunelint.interaction.events.CommandButtonInteractionData
+import org.goalteam.tunelint.interaction.events.CommandType
+import org.goalteam.tunelint.interaction.events.StaffInteractionData
+import org.goalteam.tunelint.interaction.handlers.Receiver
+import org.goalteam.tunelint.interaction.handlers.RedactorConfiguration
 import org.goalteam.tunelint.model.changerequest.PersistenceManager
 import org.goalteam.tunelint.model.changerequest.PersistentRequestFactory
 import org.goalteam.tunelint.model.core.MusicFactory

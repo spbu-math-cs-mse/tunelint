@@ -1,4 +1,4 @@
-package org.goalteam.tunelint.interaction
+package org.goalteam.tunelint.interaction.events
 
 interface StaffInteractionData {
     fun stage(): Int
