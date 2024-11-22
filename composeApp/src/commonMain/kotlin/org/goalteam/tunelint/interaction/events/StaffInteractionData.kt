@@ -7,5 +7,7 @@ interface StaffInteractionData {
 
     fun measure(): Int
 
+    fun side(): Side
+
     fun action(): Action
 }

@@ -31,9 +31,10 @@ class Interactor(
         stage: Int,
         position: Int,
         measure: Int,
+        side: Side,
         action: Action,
     ) {
-        val event = EventFactory().createStaffInteractionData(stage, position, measure, action)
+        val event = EventFactory().createStaffInteractionData(stage, position, measure, side, action)
         receiver.handleAction(event)
     }
 }

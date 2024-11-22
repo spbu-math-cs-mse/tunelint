@@ -8,8 +8,9 @@ class EventFactory {
         stage: Int,
         position: Int,
         measure: Int,
+        side: Side,
         action: Action,
-    ): StaffInteractionData = StaffInteractionDataImpl(stage, position, measure, action)
+    ): StaffInteractionData = StaffInteractionDataImpl(stage, position, measure, side, action)
 
     fun createCommandButtonInteractionData(command: CommandType): CommandButtonInteractionData = CommandButtonInteractionDataImpl(command)
 }
