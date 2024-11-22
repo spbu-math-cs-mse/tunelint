@@ -16,7 +16,7 @@ fun MeasureView(
     measure: ImmutableMeasureViewable,
     geometryData: GeometryData,
 ) {
-    val stepWidth = measure.totalValue / PrimaryNoteValue.Eighth.value()
+    val stepWidth = measure.totalValue / PrimaryNoteValue.Eighth.value() * 2
     Box(
         modifier =
             Modifier

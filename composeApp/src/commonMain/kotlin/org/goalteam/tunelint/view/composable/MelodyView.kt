@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.goalteam.tunelint.model.core.PrimaryNoteValue
 import org.goalteam.tunelint.view.GeometryData
 import org.goalteam.tunelint.view.viewable.ImmutableMelodyViewable
 import org.goalteam.tunelint.view.viewable.Viewable
@@ -15,7 +16,9 @@ fun MelodyView(
     melody: ImmutableMelodyViewable,
     geometryData: GeometryData,
 ) {
-    val horizontalSize = melody.measures.size * 9 + 1
+    val horizontalSize =
+        melody.measures.size *
+            (melody.timeSignature.value() / PrimaryNoteValue.Eighth.value() * 2 + 1) + 1
 
     Box(
         modifier =
@@ -25,20 +28,16 @@ fun MelodyView(
                     height = geometryData.fullHeight,
                 ),
     ) {
-        Staff(geometryData, 5.dp)
+        Staff(geometryData, 3.dp)
 
         Row {
-            Box(
-                modifier =
-                    Modifier
-                        .size(width = 20.dp, height = 150.dp),
-            )
+            FullHeightBox(geometryData, 1) {}
             melody
                 .measures
                 .forEach {
                     (it as Viewable)
                         .view()
-                    MeasureLine(geometryData, 10.dp)
+                    MeasureLine(geometryData, 5.dp)
                 }
         }
     }
