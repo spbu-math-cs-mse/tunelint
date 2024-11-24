@@ -22,7 +22,7 @@ fun UnleveredNoteView(
                 ),
     ) {
         if (note.primaryValue() < PrimaryNoteValue.Whole) {
-            if (note.stage() > 3) {
+            if (note.stage().value > 3) {
                 BottomNoteStem(geometryData)
             } else {
                 TopNoteStem(geometryData)
@@ -42,7 +42,7 @@ fun UnleveredNoteView(
         }
 
         if (note.primaryValue() <= PrimaryNoteValue.Eighth) {
-            if (note.stage() > 3) {
+            if (note.stage().value > 3) {
                 BottomNoteFlag(geometryData, 0)
             } else {
                 TopNoteFlag(geometryData, 0)
