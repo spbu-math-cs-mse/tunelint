@@ -1,14 +1,14 @@
 package org.goalteam.tunelint.model.changerequest.impl
 
 import org.goalteam.tunelint.model.changerequest.PersistentRequest
+import org.goalteam.tunelint.model.core.NotePointer
 import org.goalteam.tunelint.model.core.Symbol
 
 class AddSymbolPersistentRequest(
-    measure: Int,
-    position: Int,
+    notePointer: NotePointer,
     symbol: Symbol,
 ) : PersistentRequest {
-    override val directRequest = AddSymbolRequest(measure, position, symbol)
+    override val directRequest = AddSymbolRequest(notePointer, symbol)
 
-    override val reverseRequest = RemoveSymbolRequest(measure, position)
+    override val reverseRequest = RemoveSymbolRequest(notePointer)
 }
