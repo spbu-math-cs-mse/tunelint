@@ -7,7 +7,7 @@ import org.goalteam.tunelint.model.core.impl.RestImpl
 
 class MusicFactory {
     fun createNote(
-        stage: Int,
+        stage: NoteOffset,
         primaryValue: PrimaryNoteValue,
     ): Note = NoteImpl(stage, primaryValue)
 

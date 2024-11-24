@@ -1,10 +1,11 @@
 package org.goalteam.tunelint.model.core.impl
 
 import org.goalteam.tunelint.model.core.Note
+import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 
 internal class NoteImpl(
-    private val stage: Int,
+    private val stage: NoteOffset,
     private val primaryValue: PrimaryNoteValue,
 ) : Note {
     override fun stage() = stage
