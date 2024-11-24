@@ -3,6 +3,7 @@ package org.goalteam.tunelint.interaction
 import org.goalteam.tunelint.interaction.events.*
 import org.goalteam.tunelint.interaction.handlers.InteractionHandlerFactory
 import org.goalteam.tunelint.model.changerequest.PersistenceManager
+import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 
 /**
@@ -28,7 +29,7 @@ class Interactor(
     }
 
     fun handleAction(
-        stage: Int,
+        stage: NoteOffset,
         position: Int,
         measure: Int,
         side: Side,

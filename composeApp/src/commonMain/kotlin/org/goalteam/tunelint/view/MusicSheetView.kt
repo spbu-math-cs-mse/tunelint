@@ -7,13 +7,14 @@ import androidx.compose.runtime.Composable
 import org.goalteam.tunelint.model.changerequest.PersistentRequest
 import org.goalteam.tunelint.model.changerequest.PersistentRequestFactory
 import org.goalteam.tunelint.model.core.MusicFactory
+import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.model.core.PointerFactory
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 import org.goalteam.tunelint.model.core.Symbol
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import kotlin.random.Random
 
-fun randomPitch() = Random.nextInt(0, 9)
+fun randomPitch() = NoteOffset(Random.nextInt(0, 9))
 
 fun randomNote() = MusicFactory().createNote(randomPitch(), PrimaryNoteValue(-2))
 

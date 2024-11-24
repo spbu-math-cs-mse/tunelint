@@ -6,6 +6,7 @@ import org.goalteam.tunelint.model.core.Measure
 import org.goalteam.tunelint.model.core.Melody
 import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.core.Note
+import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 import org.goalteam.tunelint.model.core.Symbol
 import org.goalteam.tunelint.model.core.TimeSignature
@@ -25,7 +26,7 @@ class XMLParser : Parser {
         return if (pitch == null) {
             musicFactory.createRest(PrimaryNoteValue(value))
         } else {
-            musicFactory.createNote(pitch, PrimaryNoteValue(value))
+            musicFactory.createNote(NoteOffset(pitch), PrimaryNoteValue(value))
         }
     }
 

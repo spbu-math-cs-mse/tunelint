@@ -2,10 +2,11 @@ package org.goalteam.tunelint.interaction.events
 
 import org.goalteam.tunelint.interaction.events.impl.CommandButtonInteractionDataImpl
 import org.goalteam.tunelint.interaction.events.impl.StaffInteractionDataImpl
+import org.goalteam.tunelint.model.core.NoteOffset
 
 class EventFactory {
     fun createStaffInteractionData(
-        stage: Int,
+        stage: NoteOffset,
         position: Int,
         measure: Int,
         side: Side,
