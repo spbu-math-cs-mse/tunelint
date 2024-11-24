@@ -9,13 +9,13 @@ class MeasureTests {
     @Test
     fun `addition success`() {
         val measure = MeasureImpl(TimeSignature.standardTime, listOf())
-        val symbol = NoteImpl(0, PrimaryNoteValue(0))
+        val symbol = NoteImpl(NoteOffset(0), PrimaryNoteValue(0))
 
         measure.addSymbol(0, symbol)
         val expected =
             MeasureImpl(
                 TimeSignature.standardTime,
-                listOf(NoteImpl(0, PrimaryNoteValue(0))),
+                listOf(NoteImpl(NoteOffset(0), PrimaryNoteValue(0))),
             )
 
         assertEquals(expected, measure, "should be equal")
@@ -24,7 +24,7 @@ class MeasureTests {
     @Test
     fun `addition fail`() {
         val measure = MeasureImpl(TimeSignature.standardTime, listOf())
-        val symbol = NoteImpl(0, PrimaryNoteValue(2))
+        val symbol = NoteImpl(NoteOffset(0), PrimaryNoteValue(2))
 
         measure.addSymbol(0, symbol)
         val expected = MeasureImpl(TimeSignature.standardTime, listOf())
