@@ -18,7 +18,7 @@ fun NoteView(
 ) {
     val topOffset =
         geometryData.firstLineOffset -
-            geometryData.verticalStep * note.stage() / 2 -
+            geometryData.verticalStep * note.stage().value / 2 -
             geometryData.verticalStep
 
     Box(

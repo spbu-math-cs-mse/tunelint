@@ -1,3 +1,4 @@
+
 package org.goalteam.tunelint.model.core
 
 interface ImmutableMeasure : Cloneable {

@@ -1,7 +1,9 @@
 package org.goalteam.tunelint.interaction.events
 
+import org.goalteam.tunelint.model.core.NoteOffset
+
 interface StaffInteractionData {
-    fun stage(): Int
+    fun stage(): NoteOffset
 
     fun position(): Int
 
