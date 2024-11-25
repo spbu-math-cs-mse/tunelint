@@ -4,19 +4,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import org.goalteam.tunelint.model.changerequest.PersistentRequest
 import org.goalteam.tunelint.model.changerequest.PersistentRequestFactory
 import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.core.NoteOffset
-import org.goalteam.tunelint.model.core.PointerFactory
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 import org.goalteam.tunelint.model.core.Symbol
+import org.goalteam.tunelint.model.core.impl.NotePointerMelodyEnd
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import kotlin.random.Random
 
+fun randomLength() = PrimaryNoteValue(Random.nextInt(-2, 1))
+
 fun randomPitch() = NoteOffset(Random.nextInt(0, 9))
 
-fun randomNote() = MusicFactory().createNote(randomPitch(), PrimaryNoteValue(-2))
+fun randomNote() = MusicFactory().createNote(randomPitch(), randomLength())
 
 fun randomRest() = MusicFactory().createRest(PrimaryNoteValue(-2))
 
@@ -28,18 +29,31 @@ fun randomSymbol(): Symbol {
     return randomNote()
 }
 
-fun randomRequest(): PersistentRequest =
+fun randomWhole() = MusicFactory().createNote(randomPitch(), PrimaryNoteValue(0))
+
+fun randomHalf() = MusicFactory().createNote(randomPitch(), PrimaryNoteValue(-1))
+
+fun randomQuarter() = MusicFactory().createNote(randomPitch(), PrimaryNoteValue(-2))
+
+fun requestOf(symbol: Symbol) =
     PersistentRequestFactory()
-        .addSymbol(PointerFactory().createNotePointerSimple(0, 0), randomSymbol())
+        .addSymbol(NotePointerMelodyEnd(), symbol)
+
+fun someEighth(stage: Int): Symbol = MusicFactory().createNote(NoteOffset(stage), PrimaryNoteValue.Eighth)
 
 @Composable
 fun MusicSheetView(vm: RedactorScreenViewModel) {
     val melody = vm.melody
 
+    vm.musicSheet.persistenceManager.notify(requestOf(randomHalf()))
+    vm.musicSheet.persistenceManager.notify(requestOf(randomQuarter()))
+    vm.musicSheet.persistenceManager.notify(requestOf(someEighth(1)))
+    vm.musicSheet.persistenceManager.notify(requestOf(someEighth(5)))
+
     Column {
-        melody.snapshot.view()
+        melody.view(GeometryData(20, 30, 50, 50))
         Button(onClick = {
-            vm.musicSheet.persistenceManager.notify(randomRequest())
+            vm.musicSheet.persistenceManager.notify(requestOf(randomSymbol()))
             println(
                 melody.measures
                     .first()

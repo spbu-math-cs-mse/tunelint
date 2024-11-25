@@ -1,46 +1,31 @@
 package org.goalteam.tunelint.view.composable
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import org.goalteam.tunelint.model.core.PrimaryNoteValue
-import org.goalteam.tunelint.model.core.Rest
 import org.goalteam.tunelint.view.GeometryData
+import org.goalteam.tunelint.view.viewable.RestViewable
+import org.jetbrains.compose.resources.painterResource
+import tunelint.composeapp.generated.resources.Res
+import tunelint.composeapp.generated.resources.quarterrest
 
 @Composable
 fun RestView(
-    rest: Rest,
+    rest: RestViewable,
     geometryData: GeometryData,
 ) {
-    Box(
-        modifier =
-            Modifier
-                .size(
-                    width =
-                        geometryData.horizontalStep * (rest.value() / PrimaryNoteValue.Eighth.value()),
-                    height = geometryData.fullHeight,
-                ),
-        // .border( TODO REMOVE COMMENTED
-        //    width = 2.dp,
-        //    color = Color.Black,
-        //    shape = RectangleShape,
-        // ),
-    ) {
-        Box(
+    FullHeightBox(geometryData, rest.horizontalSteps()) {
+        Image(
+            painter = painterResource(Res.drawable.quarterrest),
+            contentDescription = null,
             modifier =
                 Modifier
-                    .size(
-                        width = geometryData.horizontalStep,
-                        height = geometryData.verticalStep * 2,
-                    ).background(
-                        Color.Blue,
-                    ).align(
-                        Alignment.Center,
-                    ),
+                    .offset(y = geometryData.topMargin)
+                    .size(height = geometryData.staffHeight, width = geometryData.horizontalStep * 2)
+                    .align(Alignment.TopCenter),
         )
     }
 }

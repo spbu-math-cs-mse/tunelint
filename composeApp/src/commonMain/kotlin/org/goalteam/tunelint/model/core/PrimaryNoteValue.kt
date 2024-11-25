@@ -29,7 +29,7 @@ class PrimaryNoteValue(
         if (order > 0) {
             throw
             UnsupportedOperationException(
-                "cannot take denominator of operators, more than a full note",
+                "cannot take denominator of primary note value more, than a full note",
             )
         }
 
@@ -37,4 +37,11 @@ class PrimaryNoteValue(
     }
 
     override fun compareTo(other: PrimaryNoteValue) = order.compareTo(other.order)
+
+    override fun equals(other: Any?) =
+        other != null &&
+            other is PrimaryNoteValue &&
+            compareTo(other) == 0
+
+    override fun hashCode() = order.hashCode()
 }

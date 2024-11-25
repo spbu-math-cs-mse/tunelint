@@ -15,7 +15,8 @@ fun MelodyView(
     melody: ImmutableMelodyViewable,
     geometryData: GeometryData,
 ) {
-    val horizontalSize = melody.measures.size * 9 + 1
+    val horizontalSize =
+        melody.measures.size * (melody.measureHorizontalSteps() + 3)
 
     Box(
         modifier =
@@ -25,20 +26,15 @@ fun MelodyView(
                     height = geometryData.fullHeight,
                 ),
     ) {
-        Staff(geometryData, 5.dp)
+        Staff(geometryData, 3.dp)
 
         Row {
-            Box(
-                modifier =
-                    Modifier
-                        .size(width = 20.dp, height = 150.dp),
-            )
+            FullHeightBox(geometryData, 1) {}
             melody
                 .measures
                 .forEach {
-                    (it as Viewable)
-                        .view()
-                    MeasureLine(geometryData, 10.dp)
+                    (it as Viewable).view(geometryData)
+                    MeasureLine(geometryData, 5.dp)
                 }
         }
     }

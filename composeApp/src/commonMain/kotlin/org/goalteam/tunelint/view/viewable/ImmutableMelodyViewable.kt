@@ -4,4 +4,6 @@ import org.goalteam.tunelint.model.core.ImmutableMelody
 
 interface ImmutableMelodyViewable :
     ImmutableMelody,
-    Viewable
+    Viewable {
+    fun measureHorizontalSteps(): Int
+}
