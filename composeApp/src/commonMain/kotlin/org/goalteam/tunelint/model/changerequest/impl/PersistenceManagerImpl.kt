@@ -27,7 +27,7 @@ class PersistenceManagerImpl(
     override fun undo() {
         val lastExecuted = executed.peek()
         executed.pop()
-        //requestableMelody.notify(lastExecuted.reverseRequest)
+        requestableMelody.notify(lastExecuted.reverseRequest)
         reverted.push(lastExecuted)
         sendUndoRedoNotification()
     }
@@ -37,7 +37,7 @@ class PersistenceManagerImpl(
     override fun redo() {
         val lastReverted = reverted.peek()
         reverted.pop()
-        //requestableMelody.notify(lastReverted.directRequest)
+        requestableMelody.notify(lastReverted.directRequest)
         executed.push(lastReverted)
         sendUndoRedoNotification()
     }
