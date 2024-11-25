@@ -5,5 +5,9 @@ interface PersistenceManager : Notifiable<PersistentRequest> {
 
     fun undo()
 
+    fun undoAvailable(): Boolean
+
     fun redo()
+
+    fun redoAvailable(): Boolean
 }
