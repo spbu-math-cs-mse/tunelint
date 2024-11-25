@@ -21,12 +21,16 @@ class PersistenceManagerImpl(
         reverted.push(lastExecuted)
     }
 
+    override fun undoAvailable(): Boolean = executed.isEmpty()
+
     override fun redo() {
         val lastReverted = reverted.peek()
         reverted.pop()
         requestableMelody.notify(lastReverted.directRequest)
         executed.push(lastReverted)
     }
+
+    override fun redoAvailable(): Boolean = reverted.isEmpty()
 
     override fun notify(notification: PersistentRequest) {
         reverted.clear()
