@@ -16,6 +16,7 @@ import org.jdom2.input.SAXBuilder
 import org.jdom2.output.Format
 import org.jdom2.output.XMLOutputter
 import java.io.File
+import kotlin.math.log2
 
 class XMLParser : Parser {
     private val musicFactory = MusicFactory()
@@ -48,7 +49,7 @@ class XMLParser : Parser {
                 return null
             }
         }
-        return musicFactory.createMeasure(TimeSignature.standardTime, noteList)
+        return musicFactory.createMeasure(TimeSignature(2, PrimaryNoteValue.Whole), noteList)
     }
 
     private fun readMelody(melody: Element): Melody? {
@@ -87,7 +88,7 @@ class XMLParser : Parser {
 
         val melodyList = mutableListOf<Melody>()
 
-        val melodies = rootElement.getChildren("melody")
+        val melodies = rootElement.getChildren("part")
         melodies.forEach { melody ->
             val melodyModel = readMelody(melody)
             if (melodyModel != null) {
@@ -99,13 +100,12 @@ class XMLParser : Parser {
 
     private fun writeNote(symbol: Symbol): Element {
         val element = Element("note")
-        val value = Element("value").setText(symbol.value().toString())
-        element.addContent(value)
         if (symbol is Note) {
-            val pitch = Element("pitch").setText(symbol.stage().toString())
+            val pitch = Element("pitch").setText(symbol.stage().value.toString())
             element.addContent(pitch)
         }
-
+        val value = Element("value").setText((log2(symbol.value().value.toDouble()).toInt() - 8).toString())
+        element.addContent(value)
         return element
     }
 
@@ -118,7 +118,7 @@ class XMLParser : Parser {
     }
 
     private fun writeMelody(melody: ImmutableMelody): Element {
-        val element = Element("melody")
+        val element = Element("part")
         melody.measures.forEachIndexed { i, measure ->
             element.addContent(writeMeasure(measure).setAttribute("number", "${i + 1}"))
         }
@@ -136,7 +136,7 @@ class XMLParser : Parser {
         work.addContent(Element("work-title").setText(file.nameWithoutExtension))
         scorePartwise.addContent(work)
 
-        val partList = Element("melody-list")
+        val partList = Element("part-list")
         for (i in melodyList.indices) {
             val scorePart = Element("score-part").setAttribute("id", "P${i + 1}")
             scorePart.addContent(Element("part-name").setText("part ${i + 1}"))
