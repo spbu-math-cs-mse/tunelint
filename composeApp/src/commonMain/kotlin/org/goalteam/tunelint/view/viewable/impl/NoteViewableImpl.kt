@@ -18,4 +18,6 @@ class NoteViewableImpl(
             this,
             geometryData,
         )
+
+    override fun horizontalSteps() = 3
 }

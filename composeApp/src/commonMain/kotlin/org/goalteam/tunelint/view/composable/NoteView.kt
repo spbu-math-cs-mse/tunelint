@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.goalteam.tunelint.model.core.PrimaryNoteValue
 import org.goalteam.tunelint.view.GeometryData
 import org.goalteam.tunelint.view.viewable.NoteViewable
 
@@ -17,8 +16,7 @@ fun NoteView(
         geometryData.firstLineOffset -
             geometryData.verticalStep * note.stage().value / 2 -
             geometryData.verticalStep
-    val steps = note.value() / PrimaryNoteValue.Eighth.value() * 2
-    FullHeightBox(geometryData, steps) {
+    FullHeightBox(geometryData, note.horizontalSteps()) {
         Box(
             modifier =
                 Modifier

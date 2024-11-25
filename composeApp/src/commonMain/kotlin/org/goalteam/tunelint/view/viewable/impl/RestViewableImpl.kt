@@ -16,4 +16,6 @@ class RestViewableImpl(
             this,
             geometryData,
         )
+
+    override fun horizontalSteps() = 2
 }

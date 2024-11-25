@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.goalteam.tunelint.model.core.PrimaryNoteValue
 import org.goalteam.tunelint.view.GeometryData
 import org.goalteam.tunelint.view.viewable.RestViewable
 import org.jetbrains.compose.resources.painterResource
@@ -18,8 +17,7 @@ fun RestView(
     rest: RestViewable,
     geometryData: GeometryData,
 ) {
-    val steps = rest.value() / PrimaryNoteValue.Eighth.value() * 2
-    FullHeightBox(geometryData, steps) {
+    FullHeightBox(geometryData, rest.horizontalSteps()) {
         Image(
             painter = painterResource(Res.drawable.quarterrest),
             contentDescription = null,

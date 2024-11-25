@@ -11,6 +11,7 @@ import org.goalteam.tunelint.model.core.TimeSignature
 import org.goalteam.tunelint.view.GeometryData
 import org.goalteam.tunelint.view.composable.MelodyView
 import org.goalteam.tunelint.view.viewable.ImmutableMelodyViewable
+import org.goalteam.tunelint.view.viewable.MeasureViewable
 import org.goalteam.tunelint.view.viewable.MelodyViewable
 
 class MelodyViewableImpl(
@@ -28,6 +29,11 @@ class MelodyViewableImpl(
         )
 
     override fun clone() = MelodyViewableImpl(melody.clone())
+
+    override fun measureHorizontalSteps() =
+        measures.maxOf {
+            (it as MeasureViewable).horizontalSteps()
+        }
 
     override fun setName(name: String) {
         melody.setName(name)
