@@ -37,15 +37,19 @@ class ReceiverImpl(
         if (action.action() == Action.Move) {
             TODO("Preview is not supported yet")
         }
-        if (configuration.getMode() == Mode.Write) {
-            if (action.side() == Side.Right) {
-                return requestFactory.addSymbol(
-                    pointer.next(),
-                    note,
-                ) // TODO Change +1 to call of some method
+        when (configuration.getMode()) {
+            Mode.Add -> {
+                if (action.side() == Side.Right) {
+                    return requestFactory.addSymbol(
+                        pointer.next(),
+                        note,
+                    ) // TODO Change +1 to call of some method
+                }
+
+                return requestFactory.addSymbol(pointer, note)
             }
-            return requestFactory.addSymbol(pointer, note)
+            Mode.Insert -> TODO("Insert is not supported yet")
+            Mode.Delete -> return requestFactory.removeSymbol(pointer)
         }
-        return requestFactory.removeSymbol(pointer)
     }
 }
