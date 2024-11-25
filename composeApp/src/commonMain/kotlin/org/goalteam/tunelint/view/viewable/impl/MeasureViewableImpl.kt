@@ -24,11 +24,13 @@ class MeasureViewableImpl(
         by mutableStateOf(ImmutableMeasureViewableImpl(this))
 
     @Composable
-    override fun view() =
+    override fun view(geometryData: GeometryData) =
         MeasureView(
             snapshot,
-            GeometryData(20, 20, 50, 50),
+            geometryData,
         )
+
+    override fun horizontalSteps() = symbols.sumOf { (it as SymbolViewable).horizontalSteps() }
 
     override fun clone() = MeasureViewableImpl(measure.clone())
 

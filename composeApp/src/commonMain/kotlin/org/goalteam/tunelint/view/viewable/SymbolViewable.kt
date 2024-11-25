@@ -4,4 +4,6 @@ import org.goalteam.tunelint.model.core.Symbol
 
 interface SymbolViewable :
     Symbol,
-    Viewable
+    Viewable {
+    fun horizontalSteps(): Int
+}

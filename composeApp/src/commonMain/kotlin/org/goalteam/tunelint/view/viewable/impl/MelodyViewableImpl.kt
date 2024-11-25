@@ -11,6 +11,7 @@ import org.goalteam.tunelint.model.core.TimeSignature
 import org.goalteam.tunelint.view.GeometryData
 import org.goalteam.tunelint.view.composable.MelodyView
 import org.goalteam.tunelint.view.viewable.ImmutableMelodyViewable
+import org.goalteam.tunelint.view.viewable.MeasureViewable
 import org.goalteam.tunelint.view.viewable.MelodyViewable
 
 class MelodyViewableImpl(
@@ -21,13 +22,18 @@ class MelodyViewableImpl(
         by mutableStateOf(ImmutableMelodyViewableImpl(this))
 
     @Composable
-    override fun view() =
+    override fun view(geometryData: GeometryData) =
         MelodyView(
             snapshot,
-            GeometryData(20, 20, 50, 50),
+            geometryData,
         )
 
     override fun clone() = MelodyViewableImpl(melody.clone())
+
+    override fun measureHorizontalSteps() =
+        measures.maxOf {
+            (it as MeasureViewable).horizontalSteps()
+        }
 
     override fun setName(name: String) {
         melody.setName(name)

@@ -4,4 +4,6 @@ import org.goalteam.tunelint.model.core.ImmutableMeasure
 
 interface ImmutableMeasureViewable :
     ImmutableMeasure,
-    Viewable
+    Viewable {
+    fun horizontalSteps(): Int
+}
