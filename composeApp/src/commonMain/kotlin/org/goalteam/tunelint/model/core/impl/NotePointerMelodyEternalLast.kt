@@ -3,7 +3,7 @@ package org.goalteam.tunelint.model.core.impl
 import org.goalteam.tunelint.model.core.Melody
 import org.goalteam.tunelint.model.core.NotePointer
 
-class NotePointerLastMelody : NotePointer {
+class NotePointerMelodyEternalLast : NotePointer {
     override fun measure(melody: Melody): Int = melody.measures.lastIndex
 
     override fun position(melody: Melody): Int =
