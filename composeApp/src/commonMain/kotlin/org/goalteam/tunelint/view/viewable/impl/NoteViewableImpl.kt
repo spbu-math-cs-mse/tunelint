@@ -19,5 +19,5 @@ class NoteViewableImpl(
             geometryData,
         )
 
-    override fun horizontalSteps() = 3
+    override fun horizontalSteps() = 3 // TODO magic number
 }
