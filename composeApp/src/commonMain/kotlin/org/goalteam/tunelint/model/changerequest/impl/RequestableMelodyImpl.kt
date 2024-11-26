@@ -23,8 +23,11 @@ class RequestableMelodyImpl(
         caller.notify(ChangeRequestFactory().synchronizationRequest(melody))
     }
 
-    override fun notify(notification: ChangeRequest) {
-        notification.execute(melody)
-        subscribers.forEach { it.notify(notification) }
+    override fun notify(notification: ChangeRequest): Boolean {
+        val success = notification.execute(melody)
+        if (success) {
+            subscribers.forEach { it.notify(notification) }
+        }
+        return success
     }
 }

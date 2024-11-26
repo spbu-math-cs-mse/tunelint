@@ -28,8 +28,9 @@ fun HorizontalToolbarView(vm: RedactorScreenViewModel) {
     var currentMode: Mode by remember { mutableStateOf(Mode.Add) }
 
     val modeListener = object : Notifiable<CurrentMode> {
-        override fun notify(notification: CurrentMode) {
+        override fun notify(notification: CurrentMode): Boolean {
             currentMode = notification.mode
+            return true
         }
     }
 

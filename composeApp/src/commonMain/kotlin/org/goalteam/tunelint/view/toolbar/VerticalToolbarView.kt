@@ -32,15 +32,17 @@ fun VerticalToolbarView(vm: RedactorScreenViewModel) {
     var currentMode: Mode by remember { mutableStateOf(Mode.Add) }
 
     val availabilityListener = object : Notifiable<UndoRedoAvailable> {
-        override fun notify(notification: UndoRedoAvailable) {
+        override fun notify(notification: UndoRedoAvailable): Boolean {
             enableUndo = notification.undoAvailable
             enableRedo = notification.redoAvailable
+            return true
         }
     }
 
     val modeListener = object : Notifiable<CurrentMode> {
-        override fun notify(notification: CurrentMode) {
+        override fun notify(notification: CurrentMode): Boolean {
             currentMode = notification.mode
+            return true
         }
     }
 

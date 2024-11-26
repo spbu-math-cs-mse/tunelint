@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import org.goalteam.tunelint.view.MusicSheetView
+import org.goalteam.tunelint.view.musicsheet.MusicSheetView
 import org.goalteam.tunelint.view.toolbar.HorizontalToolbarView
 import org.goalteam.tunelint.view.toolbar.VerticalToolbarView
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
