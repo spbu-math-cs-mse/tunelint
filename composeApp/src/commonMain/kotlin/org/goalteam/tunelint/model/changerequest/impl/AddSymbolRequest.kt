@@ -11,7 +11,7 @@ class AddSymbolRequest(
 ) : ChangeRequest {
     override fun toString(): String = "add symbol $symbol on position $notePointer}"
 
-    override fun execute(melody: Melody) =
+    override fun execute(melody: Melody): Boolean =
         melody
             .mutableMeasures()[notePointer.measure(melody)]
             .addSymbol(notePointer.position(melody), symbol)

@@ -37,8 +37,12 @@ internal class MelodyImpl(
         _measures.add(position, measureCopy)
     }
 
-    override fun removeMeasure(position: Int) {
+    override fun removeMeasure(position: Int): Boolean {
+        if (position < 0 || position >= _measures.size) {
+            return false
+        }
         _measures.removeAt(position)
+        return true
     }
 
     override fun setMeasures(measures: Collection<Measure>) {

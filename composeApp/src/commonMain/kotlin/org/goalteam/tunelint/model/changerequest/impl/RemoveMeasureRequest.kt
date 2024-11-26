@@ -8,5 +8,5 @@ class RemoveMeasureRequest(
 ) : ChangeRequest {
     override fun toString() = "remove measure from position $position"
 
-    override fun execute(melody: Melody) = melody.removeMeasure(position)
+    override fun execute(melody: Melody): Boolean = melody.removeMeasure(position)
 }

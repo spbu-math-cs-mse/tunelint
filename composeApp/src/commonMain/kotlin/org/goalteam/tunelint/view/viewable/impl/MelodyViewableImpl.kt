@@ -48,9 +48,10 @@ class MelodyViewableImpl(
         takeSnapshot()
     }
 
-    override fun removeMeasure(position: Int) {
-        melody.removeMeasure(position)
+    override fun removeMeasure(position: Int): Boolean {
+        val success = melody.removeMeasure(position)
         takeSnapshot()
+        return success
     }
 
     override fun setMeasures(measures: Collection<Measure>) {
