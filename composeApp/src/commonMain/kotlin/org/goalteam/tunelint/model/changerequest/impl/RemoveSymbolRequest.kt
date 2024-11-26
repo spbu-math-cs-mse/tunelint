@@ -9,7 +9,7 @@ class RemoveSymbolRequest(
     private val notePointer: NotePointer,
 ) : ChangeRequest {
     private var _removed: Symbol? = null
-    val removed = _removed
+    val removed get() = _removed
 
     override fun toString(): String = "remove symbol in position $notePointer"
 

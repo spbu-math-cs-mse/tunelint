@@ -4,11 +4,11 @@ import org.goalteam.tunelint.model.changerequest.PersistentRequest
 import org.goalteam.tunelint.model.core.NotePointer
 
 class RemoveSymbolPersistentRequest(
-    notePointer: NotePointer,
+    private val notePointer: NotePointer,
 ) : PersistentRequest {
     override val directRequest = RemoveSymbolRequest(notePointer)
 
-    override val reverseRequest =
+    override val reverseRequest get() =
         AddSymbolRequest(
             notePointer,
             directRequest.removed
