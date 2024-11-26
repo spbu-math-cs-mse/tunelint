@@ -8,8 +8,6 @@ import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 
 
-
-
 class InteractorImpl(
     private val manager: PersistenceManager,
 ) : Interactor {
@@ -21,9 +19,11 @@ class InteractorImpl(
         configuration.setValue(value)
     }
 
+    override fun getValue(): PrimaryNoteValue = configuration.getValue()
+
     override fun setMode(mode: Mode) {
         configuration.setMode(mode)
-        for(subscriber in modeSubscribers){
+        for (subscriber in modeSubscribers) {
             subscriber.notify(CurrentMode(configuration.getMode()))
         }
     }
@@ -40,7 +40,8 @@ class InteractorImpl(
         side: Side,
         action: Action,
     ) {
-        val event = EventFactory().createStaffInteractionData(stage, position, measure, side, action)
+        val event =
+            EventFactory().createStaffInteractionData(stage, position, measure, side, action)
         receiver.handleAction(event)
     }
 

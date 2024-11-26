@@ -11,6 +11,8 @@ import org.goalteam.tunelint.model.core.PrimaryNoteValue
 interface Interactor : Subscribable<CurrentMode> {
     fun setValue(value: PrimaryNoteValue)
 
+    fun getValue() : PrimaryNoteValue
+
     fun setMode(mode: Mode)
 
     fun handleButton(command: CommandType)

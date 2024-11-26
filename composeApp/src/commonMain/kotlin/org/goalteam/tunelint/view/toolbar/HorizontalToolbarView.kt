@@ -20,6 +20,7 @@ import org.goalteam.tunelint.interaction.events.Mode
 import org.goalteam.tunelint.model.changerequest.Notifiable
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
+import kotlin.math.pow
 
 
 @Composable
@@ -37,7 +38,7 @@ fun HorizontalToolbarView(vm: RedactorScreenViewModel) {
 
     val fixedHeight = 56.dp
 
-    Row (modifier = Modifier.height(fixedHeight)){
+    Row(modifier = Modifier.height(fixedHeight)) {
         when (currentMode) {
             Mode.Add -> HorizontalAddToolbarView(vm)
             Mode.Insert -> TODO("Not implemented yet")
@@ -55,6 +56,7 @@ fun HorizontalAddToolbarView(vm: RedactorScreenViewModel) {
         val expanded = remember { mutableStateOf(false) }
 
         val options = listOf(
+            Value(-4, "Sixteenth"),
             Value(-3, "Eighth"),
             Value(-2, "Quarter"),
             Value(-1, "Half"),
@@ -62,16 +64,19 @@ fun HorizontalAddToolbarView(vm: RedactorScreenViewModel) {
             Value(1, "Double"),
         )
 
-        val selectedOption = remember { mutableStateOf(Value(0, "Select value")) }
+        val noteValue: PrimaryNoteValue = vm.interactor.getValue()
+        val magicalShift = 8
+        val selectedOption = remember {
+            mutableStateOf(options.find {
+                2.0.pow(it.log.toDouble() + magicalShift) == noteValue.value().value.toDouble()
+            } ?: Value(0, "Select option"))
+        }
 
         Column(modifier = Modifier.padding(padding, 0.dp)) {
             Button(onClick = { expanded.value = !expanded.value }) {
                 Text(text = selectedOption.value.text)
             }
-            DropdownMenu(
-                expanded = expanded.value,
-                onDismissRequest = { expanded.value = false }
-            ) {
+            DropdownMenu(expanded = expanded.value, onDismissRequest = { expanded.value = false }) {
                 options.forEach { option ->
                     DropdownMenuItem(onClick = {
                         selectedOption.value = option
