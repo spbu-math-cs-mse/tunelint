@@ -4,9 +4,9 @@ interface MutableMeasure {
     fun addSymbol(
         position: Int,
         symbol: Symbol,
-    )
+    ): Boolean
 
-    fun removeSymbol(position: Int)
+    fun removeSymbol(position: Int): Boolean
 
     fun changeSymbol(
         position: Int,

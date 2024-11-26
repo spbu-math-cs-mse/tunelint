@@ -9,7 +9,8 @@ class UpdateMelodyRequest(
 ) : ChangeRequest {
     override fun toString() = "Update melody to $melody"
 
-    override fun execute(melody: Melody) {
+    override fun execute(melody: Melody): Boolean {
         melody.syncWith(this.melody)
+        return true
     }
 }
