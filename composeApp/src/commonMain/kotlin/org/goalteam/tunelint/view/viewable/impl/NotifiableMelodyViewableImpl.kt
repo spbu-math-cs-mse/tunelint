@@ -7,7 +7,5 @@ import org.goalteam.tunelint.view.viewable.MelodyViewable
 class NotifiableMelodyViewableImpl(
     private val melodyViewable: MelodyViewable,
 ) : Notifiable<ChangeRequest> {
-    override fun notify(notification: ChangeRequest) {
-        notification.execute(melodyViewable)
-    }
+    override fun notify(notification: ChangeRequest): Boolean = notification.execute(melodyViewable)
 }
