@@ -17,9 +17,12 @@ import org.jdom2.output.Format
 import org.jdom2.output.XMLOutputter
 import java.io.File
 import kotlin.math.log2
+import kotlin.math.pow
 
 class XMLParser : Parser {
     private val musicFactory = MusicFactory()
+    private val shift = 8
+    private val version = "3.1"
 
     private fun readNote(note: Element): Symbol? {
         val pitch = note.getChildText("pitch").toIntOrNull()
@@ -31,9 +34,22 @@ class XMLParser : Parser {
         }
     }
 
-    private fun readMeasure(measure: Element): Measure? {
+    private fun readMeasure(measure: Element, timeSignature: TimeSignature?): Measure? {
         val measureNumber = measure.getAttributeValue("number")
         println("  Measure number: $measureNumber")
+
+        val measureAttributes = measure.getChild("attributes")
+        val thisTimeSignature : TimeSignature?
+
+        if (measureAttributes != null) {
+            val measureTime = measureAttributes.getChild("time")
+            val count = measureTime.getChildText("beats").toInt()
+            val order = log2(measureTime.getChildText("beat-type").toInt().toDouble()).toInt() * (-1)
+            thisTimeSignature = TimeSignature(count, PrimaryNoteValue(order))
+        }
+        else {
+            thisTimeSignature = timeSignature
+        }
 
         val noteList = mutableListOf<Symbol>()
 
@@ -49,7 +65,11 @@ class XMLParser : Parser {
                 return null
             }
         }
-        return musicFactory.createMeasure(TimeSignature(2, PrimaryNoteValue.Whole), noteList)
+
+        if (thisTimeSignature != null) {
+            return musicFactory.createMeasure(thisTimeSignature, noteList)
+        }
+        return musicFactory.createMeasure(TimeSignature.standardTime, noteList)
     }
 
     private fun readMelody(melody: Element): Melody? {
@@ -57,10 +77,20 @@ class XMLParser : Parser {
         println("Processing melody: $melodyId")
 
         val measureList = mutableListOf<Measure>()
+        var timeSignature : TimeSignature? = null
 
         val measures = melody.getChildren("measure")
-        measures.forEach { measure ->
-            val measureModel = readMeasure(measure)
+        measures.forEachIndexed { i, measure ->
+            val measureModel : Measure?
+            if (i == 0) {
+                measureModel = readMeasure(measure, null)
+                if (measureModel != null) {
+                    timeSignature = measureModel.timeSignature
+                }
+            }
+            else {
+                measureModel = readMeasure(measure, timeSignature)
+            }
             if (measureModel != null) {
                 measureList.add(measureModel)
             } else {
@@ -69,6 +99,10 @@ class XMLParser : Parser {
                 )
                 return null
             }
+        }
+
+        if (timeSignature != null) {
+            return musicFactory.createMelody(melodyId, timeSignature!!, measureList)
         }
         return musicFactory.createMelody(melodyId, TimeSignature.standardTime, measureList)
     }
@@ -104,7 +138,7 @@ class XMLParser : Parser {
             val pitch = Element("pitch").setText(symbol.stage().value.toString())
             element.addContent(pitch)
         }
-        val value = Element("value").setText((log2(symbol.value().value.toDouble()).toInt() - 8).toString())
+        val value = Element("value").setText((log2(symbol.value().value.toDouble()).toInt() - shift).toString())
         element.addContent(value)
         return element
     }
@@ -119,8 +153,27 @@ class XMLParser : Parser {
 
     private fun writeMelody(melody: ImmutableMelody): Element {
         val element = Element("part")
+        val beats = Element("beats")
+        val beatType = Element("beat-type")
+        val time = Element("time")
+        time.addContent(beats)
+        time.addContent(beatType)
+        val attributes = Element("attributes")
+        attributes.addContent(time)
         melody.measures.forEachIndexed { i, measure ->
-            element.addContent(writeMeasure(measure).setAttribute("number", "${i + 1}"))
+            if (i == 0) {
+                val currentMeasure = writeMeasure(measure)
+                val beatsValue = measure.timeSignature.count
+                val order = (log2(measure.timeSignature.primary.value().value.toDouble()).toInt() - shift) * (-1)
+                val beatTypeValue = 2.toDouble().pow(order).toInt()
+                attributes.getChild("time").getChild("beats").setText(beatsValue.toString())
+                attributes.getChild("time").getChild("beat-type").setText(beatTypeValue.toString())
+                currentMeasure.addContent(attributes)
+                element.addContent(currentMeasure.setAttribute("number", "1"))
+            }
+            else {
+                element.addContent(writeMeasure(measure).setAttribute("number", "${i + 1}"))
+            }
         }
         return element
     }
@@ -130,7 +183,7 @@ class XMLParser : Parser {
         melodyList: List<Melody>,
     ) {
         val file = File(path)
-        val scorePartwise = Element("score-partwise").setAttribute("version", "3.1")
+        val scorePartwise = Element("score-partwise").setAttribute("version", version)
 
         val work = Element(file.nameWithoutExtension)
         work.addContent(Element("work-title").setText(file.nameWithoutExtension))

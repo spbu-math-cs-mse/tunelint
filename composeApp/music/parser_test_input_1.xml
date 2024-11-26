@@ -6,9 +6,15 @@
     </part-list>
     <part id="P1">
         <measure number="1">
+            <attributes>
+                <time>
+                    <beats>4</beats>
+                    <beat-type>4</beat-type>
+                </time>
+            </attributes>
             <note>
                 <pitch>7</pitch>
-                <value>1</value>
+                <value>0</value>
             </note>
         </measure>
     </part>
