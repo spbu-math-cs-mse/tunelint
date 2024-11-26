@@ -3,6 +3,7 @@ package org.goalteam.tunelint
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -10,7 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.view.MusicSheetView
-import org.goalteam.tunelint.view.toolbar.ToolbarView
+import org.goalteam.tunelint.view.toolbar.HorizontalToolbarView
+import org.goalteam.tunelint.view.toolbar.VerticalToolbarView
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -21,17 +23,20 @@ fun App() {
         // TODO: create main view
 
         val vm = RedactorScreenViewModel()
-        Column {
-            ToolbarView(vm)
-            Box(
-                modifier =
+        Row {
+            VerticalToolbarView(vm)
+            Column {
+                HorizontalToolbarView(vm)
+                Box(
+                    modifier =
                     Modifier
                         .border(
                             width = 5.dp,
                             color = Color.Black,
                         ).padding(all = 50.dp),
-            ) {
-                MusicSheetView(vm)
+                ) {
+                    MusicSheetView(vm)
+                }
             }
         }
     }

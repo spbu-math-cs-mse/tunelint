@@ -1,13 +1,13 @@
 package org.goalteam.tunelint.model.changerequest
 
-interface PersistenceManager : Notifiable<PersistentRequest> {
+interface PersistenceManager : Notifiable<PersistentRequest>, Subscribable<UndoRedoAvailable> {
     val subscribableMelody: SubscribableMelody
 
     fun undo()
 
-    fun undoAvailable(): Boolean
-
     fun redo()
-
-    fun redoAvailable(): Boolean
 }
+
+data class UndoRedoAvailable(val undoAvailable: Boolean, val redoAvailable: Boolean)
+
+

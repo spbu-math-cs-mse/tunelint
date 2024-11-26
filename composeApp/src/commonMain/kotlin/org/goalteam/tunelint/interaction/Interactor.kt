@@ -1,32 +1,19 @@
 package org.goalteam.tunelint.interaction
 
-import org.goalteam.tunelint.interaction.events.*
-import org.goalteam.tunelint.interaction.handlers.InteractionHandlerFactory
-import org.goalteam.tunelint.model.changerequest.PersistenceManager
+import org.goalteam.tunelint.interaction.events.Action
+import org.goalteam.tunelint.interaction.events.CommandType
+import org.goalteam.tunelint.interaction.events.Mode
+import org.goalteam.tunelint.interaction.events.Side
+import org.goalteam.tunelint.model.changerequest.Subscribable
 import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 
-/**
- * Ready to use tool for frontend to communicate with model
- */
-class Interactor(
-    private val manager: PersistenceManager,
-) {
-    private val configuration = InteractionHandlerFactory().createConfiguration()
-    private val receiver = InteractionHandlerFactory().createReceiver(configuration, manager)
+interface Interactor : Subscribable<CurrentMode> {
+    fun setValue(value: PrimaryNoteValue)
 
-    fun setValue(value: PrimaryNoteValue) {
-        configuration.setValue(value)
-    }
+    fun setMode(mode: Mode)
 
-    fun setMode(mode: Mode) {
-        configuration.setMode(mode)
-    }
-
-    fun handleButton(command: CommandType) {
-        val event = EventFactory().createCommandButtonInteractionData(command)
-        receiver.handleButton(event)
-    }
+    fun handleButton(command: CommandType)
 
     fun handleAction(
         stage: NoteOffset,
@@ -34,8 +21,7 @@ class Interactor(
         measure: Int,
         side: Side,
         action: Action,
-    ) {
-        val event = EventFactory().createStaffInteractionData(stage, position, measure, side, action)
-        receiver.handleAction(event)
-    }
+    )
 }
+
+data class CurrentMode(val mode: Mode)

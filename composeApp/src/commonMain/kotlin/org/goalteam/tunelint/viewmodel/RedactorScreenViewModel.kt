@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import org.goalteam.tunelint.interaction.Interactor
+import org.goalteam.tunelint.interaction.InteractorImpl
 import org.goalteam.tunelint.model.changerequest.impl.PushFrontEmptyMeasurePersistentRequest
 import org.goalteam.tunelint.model.changerequest.subscribeAndSynchronize
 import org.goalteam.tunelint.model.core.MusicFactory
@@ -15,7 +16,7 @@ import org.goalteam.tunelint.view.viewable.impl.MelodyViewableImpl
 
 class RedactorScreenViewModel : ViewModel() {
     val musicSheet = MusicSheet("music/test.xml")
-    val interactor = Interactor(musicSheet.persistenceManager)
+    val interactor : Interactor = InteractorImpl(musicSheet.persistenceManager)
     val melody: MelodyViewable by mutableStateOf(
         MelodyViewableImpl(
             MusicFactory().createMelody("", TimeSignature.standardTime),
