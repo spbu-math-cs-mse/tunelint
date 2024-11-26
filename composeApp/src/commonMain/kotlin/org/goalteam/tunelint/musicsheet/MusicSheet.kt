@@ -3,10 +3,7 @@ package org.goalteam.tunelint.musicsheet
 import org.goalteam.tunelint.filesupport.Parser
 import org.goalteam.tunelint.filesupport.ParserFactory
 import org.goalteam.tunelint.filesupport.ParserProperty
-import org.goalteam.tunelint.filesupport.XMLParser
-import org.goalteam.tunelint.model.changerequest.PersistenceManager
 import org.goalteam.tunelint.model.changerequest.PersistenceManagerFactory
-import org.goalteam.tunelint.model.core.Melody
 import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.core.TimeSignature
 import org.goalteam.tunelint.property.PathProperty
@@ -47,6 +44,8 @@ class MusicSheet(
     fun makeDirty() {
         modified = true
     }
+
+    fun location() = path
 
     private fun parser(properties: Collection<Property<*>>): Parser =
         properties.filterIsInstance<ParserProperty>().firstOrNull()?.value() ?: ParserFactory().fake().value()

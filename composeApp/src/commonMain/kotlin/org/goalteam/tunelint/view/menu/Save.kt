@@ -10,15 +10,15 @@ import org.goalteam.tunelint.musicsheet.MusicSheet
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-internal fun SaveButton(sheet: MusicSheet) =
+internal fun SaveButton(sheet: () -> MusicSheet) =
     Button(
         onClick = {
-            sheet.save(emptyList())
+            sheet().save(emptyList())
         },
         colors = MenuColors(),
         shape = menuButtonShape(),
         elevation = menuButtonElevation(),
-        enabled = sheet.modified(),
+        enabled = sheet().modified(),
     ) {
         Text("Save", color = Color.Black)
         KeyShortcut(Key.S, ctrl = true)

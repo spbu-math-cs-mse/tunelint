@@ -45,7 +45,7 @@ private fun LoadDialog(
     hide: () -> Unit,
     handle: (String?) -> Unit,
 ) = AwtWindow(
-    create = { LoadFileDialog(parent, handle) },
+    create = { LoadFileDialog(parent, handle, hide) },
     dispose = {
         it.dispose()
         hide()
@@ -55,9 +55,13 @@ private fun LoadDialog(
 private class LoadFileDialog(
     parent: Frame? = null,
     private val handle: (String?) -> Unit,
+    private val hide: () -> Unit,
 ) : FileDialog(parent, "Choose a file", LOAD) {
     override fun setVisible(visible: Boolean) {
         super.setVisible(visible)
-        if (!visible) handle(file)
+        if (!visible) {
+            handle(file)
+            hide.invoke()
+        }
     }
 }

@@ -15,8 +15,8 @@ import org.goalteam.tunelint.property.PathProperty
 @Suppress("ktlint:standard:function-naming")
 @Composable
 internal fun ExportButton(
-    sheet: MusicSheet,
     format: ParserProperty,
+    sheet: () -> MusicSheet,
 ) {
     val show = remember { mutableStateOf(false) }
     Button(
@@ -32,7 +32,7 @@ internal fun ExportButton(
     }
     if (show.value) {
         SaveAsDialog(hide = { show.value = false }) {
-            sheet.save(listOf(format, PathProperty(it)))
+            sheet().save(listOf(format, PathProperty(it)))
         }
     }
 }

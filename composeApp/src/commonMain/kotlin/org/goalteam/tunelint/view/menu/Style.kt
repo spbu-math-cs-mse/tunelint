@@ -20,8 +20,8 @@ internal fun menuButtonShape() = CutCornerShape(0.dp)
 internal fun menuButtonElevation() =
     ButtonDefaults.elevation(
         defaultElevation = 0.dp,
-        pressedElevation = 1.dp,
+        pressedElevation = 0.dp,
         disabledElevation = 0.dp,
         hoveredElevation = 0.dp,
-        focusedElevation = 1.dp,
+        focusedElevation = 0.dp,
     )

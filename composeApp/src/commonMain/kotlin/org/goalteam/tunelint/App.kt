@@ -24,7 +24,7 @@ fun App() {
     var vm = RedactorScreenViewModel(MusicSheet(""))
     MaterialTheme {
         Column {
-            Menu(vm) { vm = it }
+            Menu({ vm }) { vm = it }
             Row {
                 VerticalToolbarView(vm)
                 Column {

@@ -13,7 +13,7 @@ internal fun SaveAsDialog(
     handle: (String) -> Unit,
 ) = AwtWindow(
     create = {
-        SaveFileDialog(parent) { if (it != null) handle(it) }
+        SaveFileDialog(parent, hide) { if (it != null) handle(it) }
     },
     dispose = {
         it.dispose()
@@ -23,12 +23,14 @@ internal fun SaveAsDialog(
 
 private class SaveFileDialog(
     parent: Frame? = null,
+    private val hide: () -> Unit,
     private val handle: (String?) -> Unit,
 ) : FileDialog(parent, "Choose a file", SAVE) {
     override fun setVisible(visible: Boolean) {
         super.setVisible(visible)
-        if (!visible && directory != null && file != null) {
-            handle(directory + file)
+        if (!visible) {
+            hide.invoke()
+            if (directory != null && file != null) handle(directory + file)
         }
     }
 }
