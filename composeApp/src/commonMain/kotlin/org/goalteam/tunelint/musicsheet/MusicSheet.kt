@@ -1,6 +1,7 @@
 package org.goalteam.tunelint.musicsheet
 
 import org.goalteam.tunelint.filesupport.XMLParser
+import org.goalteam.tunelint.model.changerequest.PersistenceManager
 import org.goalteam.tunelint.model.changerequest.PersistenceManagerFactory
 import org.goalteam.tunelint.model.core.Melody
 import org.goalteam.tunelint.model.core.MusicFactory
@@ -18,7 +19,7 @@ class MusicSheet(
             ?: musicFactory.createMelody("", TimeSignature.standardTime)
     }
 
-    val persistenceManager = PersistenceManagerFactory().persistenceManager(melody)
+    val persistenceManager : PersistenceManager = PersistenceManagerFactory().persistenceManager(melody)
 
     fun save(format: String) {
         val parser = XMLParser()
