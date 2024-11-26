@@ -9,9 +9,9 @@ import org.goalteam.tunelint.model.changerequest.subscribeAndSynchronize
 import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.core.TimeSignature
 import org.goalteam.tunelint.musicsheet.MusicSheet
-import org.goalteam.tunelint.view.viewable.MelodyViewable
-import org.goalteam.tunelint.view.viewable.ViewableMusicFactory
-import org.goalteam.tunelint.view.viewable.impl.MelodyViewableImpl
+import org.goalteam.tunelint.view.musicsheet.viewable.MelodyViewable
+import org.goalteam.tunelint.view.musicsheet.viewable.ViewableMusicFactory
+import org.goalteam.tunelint.view.musicsheet.viewable.impl.MelodyViewableImpl
 
 class RedactorScreenViewModel : ViewModel() {
     val musicSheet = MusicSheet("music/test.xml")
