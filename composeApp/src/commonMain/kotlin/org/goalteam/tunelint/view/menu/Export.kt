@@ -5,6 +5,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyShortcut
 import org.goalteam.tunelint.filesupport.ParserProperty
@@ -22,8 +23,11 @@ internal fun ExportButton(
         onClick = {
             show.value = true
         },
+        colors = MenuColors(),
+        shape = menuButtonShape(),
+        elevation = menuButtonElevation(),
     ) {
-        Text("Export")
+        Text("Export", color = Color.Black)
         KeyShortcut(Key.S, ctrl = true, shift = true)
     }
     if (show.value) {

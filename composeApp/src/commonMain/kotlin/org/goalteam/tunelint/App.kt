@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import org.goalteam.tunelint.musicsheet.MusicSheet
+import org.goalteam.tunelint.view.menu.Menu
 import org.goalteam.tunelint.view.musicsheet.MusicSheetView
 import org.goalteam.tunelint.view.toolbar.HorizontalToolbarView
 import org.goalteam.tunelint.view.toolbar.VerticalToolbarView
@@ -19,23 +21,24 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 @Preview
 fun App() {
+    var vm = RedactorScreenViewModel(MusicSheet(""))
     MaterialTheme {
-        // TODO: create main view
-
-        val vm = RedactorScreenViewModel()
-        Row {
-            VerticalToolbarView(vm)
-            Column {
-                HorizontalToolbarView(vm)
-                Box(
-                    modifier =
-                    Modifier
-                        .border(
-                            width = 5.dp,
-                            color = Color.Black,
-                        ).padding(all = 50.dp),
-                ) {
-                    MusicSheetView(vm)
+        Column {
+            Menu(vm) { vm = it }
+            Row {
+                VerticalToolbarView(vm)
+                Column {
+                    HorizontalToolbarView(vm)
+                    Box(
+                        modifier =
+                            Modifier
+                                .border(
+                                    width = 5.dp,
+                                    color = Color.Black,
+                                ).padding(all = 50.dp),
+                    ) {
+                        MusicSheetView(vm)
+                    }
                 }
             }
         }

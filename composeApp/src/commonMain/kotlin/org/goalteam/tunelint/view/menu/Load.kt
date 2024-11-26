@@ -5,6 +5,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.AwtWindow
 import org.goalteam.tunelint.musicsheet.MusicSheet
 import java.awt.FileDialog
@@ -18,8 +19,11 @@ internal fun LoadButton(handle: (MusicSheet?) -> Unit) {
         onClick = {
             show.value = true
         },
+        colors = MenuColors(),
+        shape = menuButtonShape(),
+        elevation = menuButtonElevation(),
     ) {
-        Text("Open")
+        Text("Open", color = Color.Black)
     }
     if (show.value) {
         LoadDialog(hide = { show.value = false }) {

@@ -13,7 +13,7 @@ fun Menu(
     vm: RedactorScreenViewModel,
     update: (RedactorScreenViewModel) -> Unit,
 ) {
-    Row(modifier = Modifier.padding(0.dp, 8.dp)) {
+    Row(modifier = Modifier.padding(0.dp, 0.dp)) {
         NewButton { update(RedactorScreenViewModel(it)) }
         SaveButton(vm.musicSheet)
         LoadButton { if (it != null) update(RedactorScreenViewModel(it)) }

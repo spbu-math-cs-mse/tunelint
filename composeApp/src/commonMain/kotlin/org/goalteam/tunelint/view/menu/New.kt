@@ -1,10 +1,10 @@
 package org.goalteam.tunelint.view.menu
 
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyShortcut
 import org.goalteam.tunelint.musicsheet.MusicSheet
@@ -17,8 +17,11 @@ internal fun NewButton(handle: (MusicSheet) -> Unit) {
         onClick = {
             show.value = true
         },
+        colors = MenuColors(),
+        shape = menuButtonShape(),
+        elevation = menuButtonElevation(),
     ) {
-        Text("New")
+        Text("New", color = Color.Black)
         KeyShortcut(Key.N, ctrl = true)
     }
     if (show.value) {
