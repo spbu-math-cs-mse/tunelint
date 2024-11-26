@@ -30,7 +30,6 @@ class PersistenceManagerImpl(
         executed.pop()
         requestableMelody.notify(lastExecuted.reverseRequest)
         reverted.push(lastExecuted)
-        println(executed)
         sendUndoRedoNotification()
     }
 
@@ -46,11 +45,14 @@ class PersistenceManagerImpl(
 
     override fun redoAvailable(): Boolean = reverted.isNotEmpty()
 
-    override fun notify(notification: PersistentRequest) {
-        reverted.clear()
-        executed.push(notification)
-        requestableMelody.notify(notification.directRequest)
-        sendUndoRedoNotification()
+    override fun notify(notification: PersistentRequest): Boolean {
+        val success = requestableMelody.notify(notification.directRequest)
+        if (success) {
+            reverted.clear()
+            executed.push(notification)
+            sendUndoRedoNotification()
+        }
+        return success
     }
 
     override fun subscribe(subscriber: Notifiable<UndoRedoAvailable>) {
