@@ -5,5 +5,5 @@ import org.goalteam.tunelint.model.core.Melody
 interface ChangeRequest {
     override fun toString(): String
 
-    fun execute(melody: Melody)
+    fun execute(melody: Melody): Boolean
 }

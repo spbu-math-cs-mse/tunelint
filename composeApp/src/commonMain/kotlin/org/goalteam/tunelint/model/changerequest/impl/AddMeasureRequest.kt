@@ -10,5 +10,8 @@ class AddMeasureRequest(
 ) : ChangeRequest {
     override fun toString() = "add measure $measure on position $position"
 
-    override fun execute(melody: Melody) = melody.addMeasure(position, measure)
+    override fun execute(melody: Melody): Boolean {
+        melody.addMeasure(position, measure)
+        return true
+    }
 }

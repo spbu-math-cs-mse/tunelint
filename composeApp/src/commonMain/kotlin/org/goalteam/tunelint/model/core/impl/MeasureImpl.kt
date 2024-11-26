@@ -31,18 +31,23 @@ class MeasureImpl(
     override fun addSymbol(
         position: Int,
         symbol: Symbol,
-    ) {
+    ): Boolean {
         if (symbol.value() > remainingValue) {
-            return
+            return false
         }
 
         _symbols.add(position, symbol)
         _remainingValue -= symbol.value()
+        return true
     }
 
-    override fun removeSymbol(position: Int) {
+    override fun removeSymbol(position: Int): Boolean {
+        if (position < 0 || position >= _symbols.size) {
+            return false
+        }
         val removed = _symbols.removeAt(position)
         _remainingValue += removed.value()
+        return true
     }
 
     override fun changeSymbol(
