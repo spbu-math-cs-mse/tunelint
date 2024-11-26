@@ -15,4 +15,6 @@ interface MutableMelody {
     fun setTimeSignature(timeSignature: TimeSignature)
 
     fun mutableMeasures(): List<Measure>
+
+    fun mutateMeasures(block: (List<Measure>) -> Unit)
 }

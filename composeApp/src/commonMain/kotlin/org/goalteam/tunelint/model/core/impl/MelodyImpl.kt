@@ -57,5 +57,9 @@ internal class MelodyImpl(
         _measures.forEach { it.setTimeSignature(timeSignature) }
     }
 
-    override fun mutableMeasures(): List<Measure> = _measures
+    override fun mutableMeasures(): List<Measure> = measures.map { it.clone() }
+
+    override fun mutateMeasures(block: (List<Measure>) -> Unit) {
+        block(measures)
+    }
 }

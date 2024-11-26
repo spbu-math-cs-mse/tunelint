@@ -10,16 +10,17 @@ import java.util.Stack
 
 class PersistenceManagerImpl(
     private val requestableMelody: RequestableMelody,
-) : PersistenceManager, Subscribable<UndoRedoAvailable> {
+) : PersistenceManager,
+    Subscribable<UndoRedoAvailable> {
     override val subscribableMelody = requestableMelody as SubscribableMelody
 
     private val executed = Stack<PersistentRequest>()
     private val reverted = Stack<PersistentRequest>()
-    private val subscribers : MutableList<Notifiable<UndoRedoAvailable>> = mutableListOf()
+    private val subscribers: MutableList<Notifiable<UndoRedoAvailable>> = mutableListOf()
 
-    private fun sendUndoRedoNotification(){
+    private fun sendUndoRedoNotification() {
         val notification = UndoRedoAvailable(undoAvailable(), redoAvailable())
-        for(subscriber in subscribers) {
+        for (subscriber in subscribers) {
             subscriber.notify(notification)
         }
     }
@@ -29,6 +30,7 @@ class PersistenceManagerImpl(
         executed.pop()
         requestableMelody.notify(lastExecuted.reverseRequest)
         reverted.push(lastExecuted)
+        println(executed)
         sendUndoRedoNotification()
     }
 
@@ -64,4 +66,7 @@ class PersistenceManagerImpl(
     }
 }
 
-data class UndoRedoAvailable(val undoAvailable: Boolean, val redoAvailable: Boolean)
+data class UndoRedoAvailable(
+    val undoAvailable: Boolean,
+    val redoAvailable: Boolean,
+)
