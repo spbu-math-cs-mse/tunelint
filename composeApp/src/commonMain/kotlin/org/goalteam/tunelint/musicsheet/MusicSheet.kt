@@ -46,7 +46,7 @@ class MusicSheet(
     }
 
     private fun parser(properties: Collection<Property<*>>): Parser =
-        properties.filterIsInstance<ParserProperty>().map { it.value() }.firstOrNull() ?: ParserFactory().fake().value()
+        properties.filterIsInstance<ParserProperty>().firstOrNull()?.value() ?: ParserFactory().fake().value()
 
     private fun path(properties: Collection<Property<*>>): String =
         properties.filterIsInstance<PathProperty>().firstOrNull()?.value() ?: path
