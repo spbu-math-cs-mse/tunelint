@@ -16,6 +16,8 @@ import org.jdom2.input.SAXBuilder
 import org.jdom2.output.Format
 import org.jdom2.output.XMLOutputter
 import java.io.File
+import kotlin.io.path.Path
+import kotlin.io.path.exists
 import kotlin.math.log2
 import kotlin.math.pow
 
@@ -109,6 +111,9 @@ class XMLParser : Parser {
     }
 
     override fun readMusic(path: String): List<Melody> {
+        if (!Path(path).exists()) {
+            return listOf()
+        }
         val file = File(path)
         val saxBuilder = SAXBuilder()
         val document: Document = saxBuilder.build(file)
