@@ -23,13 +23,15 @@ import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 @Composable
 fun ToolbarView(vm: RedactorScreenViewModel) {
     val padding = 8.dp
-    Row (modifier = Modifier.padding(0.dp, padding)){
+    Row(modifier = Modifier.padding(0.dp, padding)) {
         var enableUndo: Boolean by remember { mutableStateOf(false) }
         var enableRedo: Boolean by remember { mutableStateOf(false) }
+
         class ToolbarUndoRedoListener : Notifiable<UndoRedoAvailable> {
-            override fun notify(notification: UndoRedoAvailable) {
+            override fun notify(notification: UndoRedoAvailable): Boolean {
                 enableUndo = notification.undoAvailable
                 enableRedo = notification.redoAvailable
+                return true
             }
         }
         val listener = ToolbarUndoRedoListener()
@@ -38,7 +40,7 @@ fun ToolbarView(vm: RedactorScreenViewModel) {
         Column(modifier = Modifier.padding(padding, 0.dp)) {
             Button(
                 onClick = { vm.musicSheet.persistenceManager.undo() },
-                enabled = enableUndo
+                enabled = enableUndo,
             ) {
                 Text("Undo")
             }
@@ -46,7 +48,7 @@ fun ToolbarView(vm: RedactorScreenViewModel) {
         Column(modifier = Modifier.padding(padding, 0.dp)) {
             Button(
                 onClick = { vm.musicSheet.persistenceManager.redo() },
-                enabled = enableRedo
+                enabled = enableRedo,
             ) {
                 Text("Redo")
             }
@@ -64,16 +66,19 @@ fun ToolbarView(vm: RedactorScreenViewModel) {
         val expanded = remember { mutableStateOf(false) }
 
         // List of items to show in the dropdown menu
-        data class Value(val log: Int, val text: String)
-        val options = listOf(
-            Value(-3, "Eighth"),
-            Value(-2, "Quarter"),
-            Value(-1, "Half"),
-            Value(0, "Whole"),
+        data class Value(
+            val log: Int,
+            val text: String,
         )
+        val options =
+            listOf(
+                Value(-3, "Eighth"),
+                Value(-2, "Quarter"),
+                Value(-1, "Half"),
+                Value(0, "Whole"),
+            )
 
         val selectedOption = remember { mutableStateOf(Value(0, "Select value")) }
-
 
         Column(modifier = Modifier.padding(padding, 0.dp)) {
             Button(onClick = { expanded.value = !expanded.value }) {
@@ -82,7 +87,7 @@ fun ToolbarView(vm: RedactorScreenViewModel) {
             // The dropdown menu
             DropdownMenu(
                 expanded = expanded.value,
-                onDismissRequest = { expanded.value = false }
+                onDismissRequest = { expanded.value = false },
             ) {
                 options.forEach { option ->
                     DropdownMenuItem(onClick = {
@@ -97,6 +102,3 @@ fun ToolbarView(vm: RedactorScreenViewModel) {
         }
     }
 }
-
-
-
