@@ -14,14 +14,19 @@ class RemoveSymbolRequest(
     override fun toString(): String = "remove symbol in position $notePointer"
 
     override fun execute(melody: Melody): Boolean {
-        _removed =
-            melody
-                .mutableMeasures()[notePointer.measure(melody)]
-                .symbols[notePointer.position(melody)]
-                .clone()
+        melody.mutateMeasures { mutableMeasures ->
+            _removed =
+                mutableMeasures[notePointer.measure(melody)]
+                    .symbols[notePointer.position(melody)]
+                    .clone()
+        }
 
-        return melody
-            .mutableMeasures()[notePointer.measure(melody)]
-            .removeSymbol(notePointer.position(melody))
+        var success = false
+        melody.mutateMeasures { mutableMeasures ->
+            success =
+                mutableMeasures[notePointer.measure(melody)]
+                    .removeSymbol(notePointer.position(melody))
+        }
+        return success
     }
 }
