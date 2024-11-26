@@ -8,11 +8,13 @@ interface MutableMelody {
         measure: Measure,
     )
 
-    fun removeMeasure(position: Int)
+    fun removeMeasure(position: Int): Boolean
 
     fun setMeasures(measures: Collection<Measure>)
 
     fun setTimeSignature(timeSignature: TimeSignature)
 
     fun mutableMeasures(): List<Measure>
+
+    fun mutateMeasures(block: (List<Measure>) -> Unit)
 }

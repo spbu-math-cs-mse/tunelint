@@ -1,7 +1,7 @@
 package org.goalteam.tunelint.model.core
 
-import org.goalteam.tunelint.model.core.impl.NotePointerLastMeasure
-import org.goalteam.tunelint.model.core.impl.NotePointerLastMelody
+import org.goalteam.tunelint.model.core.impl.NotePointerMeasureEternalLast
+import org.goalteam.tunelint.model.core.impl.NotePointerMelodyEternalLast
 import org.goalteam.tunelint.model.core.impl.NotePointerSimple
 
 class PointerFactory {
@@ -10,7 +10,7 @@ class PointerFactory {
         position: Int,
     ): NotePointer = NotePointerSimple(measure, position)
 
-    fun createNotePointerLastMelody(): NotePointer = NotePointerLastMelody()
+    fun createNotePointerLastMelody(): NotePointer = NotePointerMelodyEternalLast()
 
-    fun createNotePointerLastMeasure(measure: Int): NotePointer = NotePointerLastMeasure(measure)
+    fun createNotePointerLastMeasure(measure: Int): NotePointer = NotePointerMeasureEternalLast(measure)
 }

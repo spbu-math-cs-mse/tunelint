@@ -31,9 +31,9 @@ class MelodyViewableImpl(
     override fun clone() = MelodyViewableImpl(melody.clone())
 
     override fun measureHorizontalSteps() =
-        measures.maxOf {
+        measures.maxOfOrNull {
             (it as MeasureViewable).horizontalSteps()
-        }
+        } ?: 1
 
     override fun setName(name: String) {
         melody.setName(name)
@@ -48,9 +48,10 @@ class MelodyViewableImpl(
         takeSnapshot()
     }
 
-    override fun removeMeasure(position: Int) {
-        melody.removeMeasure(position)
+    override fun removeMeasure(position: Int): Boolean {
+        val success = melody.removeMeasure(position)
         takeSnapshot()
+        return success
     }
 
     override fun setMeasures(measures: Collection<Measure>) {
@@ -64,6 +65,11 @@ class MelodyViewableImpl(
     }
 
     override fun mutableMeasures() = melody.mutableMeasures()
+
+    override fun mutateMeasures(block: (List<Measure>) -> Unit) {
+        melody.mutateMeasures(block)
+        takeSnapshot()
+    }
 
     private fun takeSnapshot() {
         snapshot = ImmutableMelodyViewableImpl(this)

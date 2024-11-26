@@ -3,7 +3,7 @@ package org.goalteam.tunelint.model.core.impl
 import org.goalteam.tunelint.model.core.Melody
 import org.goalteam.tunelint.model.core.NotePointer
 
-class NotePointerLastMeasure(
+class NotePointerMeasureEternalLast(
     private val measure: Int,
 ) : NotePointer {
     override fun measure(melody: Melody): Int = measure

@@ -9,7 +9,7 @@ import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 import org.goalteam.tunelint.model.core.Symbol
-import org.goalteam.tunelint.model.core.impl.NotePointerMelodyEnd
+import org.goalteam.tunelint.model.core.impl.NotePointerMelodyInstantEnd
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import kotlin.random.Random
 
@@ -37,7 +37,7 @@ fun randomQuarter() = MusicFactory().createNote(randomPitch(), PrimaryNoteValue(
 
 fun requestOf(symbol: Symbol) =
     PersistentRequestFactory()
-        .addSymbol(NotePointerMelodyEnd(), symbol)
+        .addSymbol(NotePointerMelodyInstantEnd(), symbol)
 
 fun someEighth(stage: Int): Symbol = MusicFactory().createNote(NoteOffset(stage), PrimaryNoteValue.Eighth)
 
