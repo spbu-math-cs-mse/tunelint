@@ -41,7 +41,7 @@ fun MeasureLine(
                                     geometryData.verticalStep.toPx() * 2,
                             ).toInt() - 1,
                         )
-                    val left = it.changes[0].position.x < width.toPx() / 2
+                    val left = it.changes[0].position.x < geometryData.horizontalStep.toPx() / 2
                     val side = if (left) Side.Left else Side.Right
                     println("$stage, $left")
                     vm.interactor.handleAction(

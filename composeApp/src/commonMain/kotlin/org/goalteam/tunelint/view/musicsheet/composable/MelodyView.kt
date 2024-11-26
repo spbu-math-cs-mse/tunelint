@@ -36,7 +36,7 @@ fun MelodyView(
                 .measures
                 .forEachIndexed { i, it ->
                     (it as MeasureViewable).view(vm, i, geometryData)
-                    MeasureLine(vm, i, it.symbols.size, geometryData, 5.dp)
+                    MeasureLine(vm, it.symbols.size, i, geometryData, 5.dp)
                 }
         }
     }
