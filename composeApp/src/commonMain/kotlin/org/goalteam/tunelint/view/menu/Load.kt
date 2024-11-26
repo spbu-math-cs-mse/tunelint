@@ -3,6 +3,8 @@ package org.goalteam.tunelint.view.menu
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.window.AwtWindow
 import org.goalteam.tunelint.musicsheet.MusicSheet
 import java.awt.FileDialog
@@ -10,31 +12,40 @@ import java.awt.Frame
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun LoadButton(handle: (MusicSheet?) -> Unit) =
+internal fun LoadButton(handle: (MusicSheet?) -> Unit) {
+    val show = remember { mutableStateOf(false) }
     Button(
         onClick = {
-            LoadDialog {
-                if (it != null) {
-                    val sheet = MusicSheet(it)
-                    sheet.load(emptyList())
-                    handle(sheet)
-                } else {
-                    handle(null)
-                }
-            }
+            show.value = true
         },
     ) {
         Text("Open")
     }
+    if (show.value) {
+        LoadDialog(hide = { show.value = false }) {
+            if (it != null) {
+                val sheet = MusicSheet(it)
+                sheet.load(emptyList())
+                handle(sheet)
+            } else {
+                handle(null)
+            }
+        }
+    }
+}
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
 private fun LoadDialog(
     parent: Frame? = null,
+    hide: () -> Unit,
     handle: (String?) -> Unit,
 ) = AwtWindow(
     create = { LoadFileDialog(parent, handle) },
-    dispose = FileDialog::dispose,
+    dispose = {
+        it.dispose()
+        hide()
+    },
 )
 
 private class LoadFileDialog(

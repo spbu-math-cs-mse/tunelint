@@ -9,12 +9,16 @@ import java.awt.Frame
 @Composable
 internal fun SaveAsDialog(
     parent: Frame? = null,
+    hide: () -> Unit,
     handle: (String) -> Unit,
 ) = AwtWindow(
     create = {
         SaveFileDialog(parent) { if (it != null) handle(it) }
     },
-    dispose = FileDialog::dispose,
+    dispose = {
+        it.dispose()
+        hide()
+    },
 )
 
 private class SaveFileDialog(

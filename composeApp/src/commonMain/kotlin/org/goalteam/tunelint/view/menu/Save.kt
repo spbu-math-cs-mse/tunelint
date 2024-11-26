@@ -9,7 +9,7 @@ import org.goalteam.tunelint.musicsheet.MusicSheet
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun SaveButton(sheet: MusicSheet) =
+internal fun SaveButton(sheet: MusicSheet) =
     Button(
         onClick = {
             sheet.save(emptyList())
