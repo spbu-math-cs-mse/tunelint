@@ -33,11 +33,13 @@ class MeasureViewableImpl(
     override fun view(
         vm: RedactorScreenViewModel,
         index: Int,
+        steps: Int,
         geometryData: GeometryData,
     ) = MeasureView(
         vm,
         index,
         snapshot,
+        steps,
         geometryData,
     )
 

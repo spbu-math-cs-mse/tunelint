@@ -10,6 +10,7 @@ interface ImmutableMeasureViewable : ImmutableMeasure {
     fun view(
         vm: RedactorScreenViewModel,
         index: Int,
+        steps: Int,
         geometryData: GeometryData,
     )
 

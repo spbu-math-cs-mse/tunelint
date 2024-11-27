@@ -4,7 +4,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import org.goalteam.tunelint.interaction.InteractorImpl
-import org.goalteam.tunelint.model.changerequest.impl.PushFrontEmptyMeasurePersistentRequest
 import org.goalteam.tunelint.model.changerequest.subscribeAndSynchronize
 import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.core.TimeSignature
@@ -27,7 +26,7 @@ class RedactorScreenViewModel(
     init {
         val viewable = ViewableMusicFactory().melody(melody)
         sheet.persistenceManager.subscribableMelody.subscribeAndSynchronize(viewable)
-        sheet.persistenceManager.notify(PushFrontEmptyMeasurePersistentRequest())
+        // sheet.persistenceManager.notify(PushFrontEmptyMeasurePersistentRequest())
         println()
     }
 }

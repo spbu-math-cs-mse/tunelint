@@ -28,14 +28,14 @@ fun MelodyView(
                     height = geometryData.fullHeight,
                 ),
     ) {
-        Staff(geometryData, 3.dp)
+        Staff(geometryData, horizontalSize, 3.dp)
 
         Row {
             FullHeightBox(geometryData, 1) {}
             melody
                 .measures
                 .forEachIndexed { i, it ->
-                    (it as MeasureViewable).view(vm, i, geometryData)
+                    (it as MeasureViewable).view(vm, i, melody.measureHorizontalSteps(), geometryData)
                     MeasureLine(vm, it.symbols.size, i, geometryData, 5.dp)
                 }
         }

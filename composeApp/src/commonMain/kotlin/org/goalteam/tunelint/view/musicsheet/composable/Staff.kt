@@ -15,13 +15,14 @@ import org.goalteam.tunelint.view.musicsheet.GeometryData
 @Composable
 fun StaffLine(
     geometryData: GeometryData,
+    steps: Int,
     width: Dp,
 ) {
     Box(
         modifier =
             Modifier
                 .padding(vertical = 0.5 * (geometryData.verticalStep - width))
-                .size(width = geometryData.horizontalStep * 28, height = width)
+                .size(width = steps * geometryData.horizontalStep, height = width)
                 .background(Color.Black),
     )
 }
@@ -29,6 +30,7 @@ fun StaffLine(
 @Composable
 fun Staff(
     geometryData: GeometryData,
+    steps: Int,
     width: Dp,
 ) {
     Box(
@@ -42,7 +44,7 @@ fun Staff(
                     Modifier
                         .offset(y = i * geometryData.verticalStep),
             ) {
-                StaffLine(geometryData, width)
+                StaffLine(geometryData, steps, width)
             }
         }
     }
