@@ -4,17 +4,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.interaction.CurrentMode
 import org.goalteam.tunelint.interaction.events.Mode
@@ -24,27 +21,29 @@ import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
 @Composable
 fun VerticalToolbarView(vm: RedactorScreenViewModel) {
-    val padding = 8.dp
-    val smallPadding = 2.dp
-    val buttonDiameter = 28.dp
+    val padding = 4.dp
+    val smallPadding = 0.dp
+    val buttonDiameter = 40.dp
     var enableUndo: Boolean by remember { mutableStateOf(false) }
     var enableRedo: Boolean by remember { mutableStateOf(false) }
     var currentMode: Mode by remember { mutableStateOf(Mode.Add) }
 
-    val availabilityListener = object : Notifiable<UndoRedoAvailable> {
-        override fun notify(notification: UndoRedoAvailable): Boolean {
-            enableUndo = notification.undoAvailable
-            enableRedo = notification.redoAvailable
-            return true
+    val availabilityListener =
+        object : Notifiable<UndoRedoAvailable> {
+            override fun notify(notification: UndoRedoAvailable): Boolean {
+                enableUndo = notification.undoAvailable
+                enableRedo = notification.redoAvailable
+                return true
+            }
         }
-    }
 
-    val modeListener = object : Notifiable<CurrentMode> {
-        override fun notify(notification: CurrentMode): Boolean {
-            currentMode = notification.mode
-            return true
+    val modeListener =
+        object : Notifiable<CurrentMode> {
+            override fun notify(notification: CurrentMode): Boolean {
+                currentMode = notification.mode
+                return true
+            }
         }
-    }
 
     vm.musicSheet.persistenceManager.subscribe(availabilityListener)
     vm.musicSheet.persistenceManager.synchronize(availabilityListener)
@@ -57,9 +56,11 @@ fun VerticalToolbarView(vm: RedactorScreenViewModel) {
                 Button(
                     onClick = { vm.musicSheet.persistenceManager.undo() },
                     enabled = enableUndo,
-                    shape = CircleShape,
+                    shape = CutCornerShape(0.dp),
                     modifier = Modifier.size(buttonDiameter),
                     contentPadding = PaddingValues(0.dp),
+                    colors = undoRedoButtonColors(),
+                    elevation = editButtonElevation(),
                 ) {
                     Text("\u27F2")
                 }
@@ -68,9 +69,11 @@ fun VerticalToolbarView(vm: RedactorScreenViewModel) {
                 Button(
                     onClick = { vm.musicSheet.persistenceManager.redo() },
                     enabled = enableRedo,
-                    shape = CircleShape,
+                    shape = CutCornerShape(0.dp),
                     modifier = Modifier.size(buttonDiameter),
                     contentPadding = PaddingValues(0.dp),
+                    colors = undoRedoButtonColors(),
+                    elevation = editButtonElevation(),
                 ) {
                     Text("\u27F3")
                 }
@@ -81,14 +84,11 @@ fun VerticalToolbarView(vm: RedactorScreenViewModel) {
                 Button(
                     onClick = { vm.interactor.setMode(Mode.Add) },
                     enabled = currentMode != Mode.Add,
-                    shape = CircleShape,
+                    shape = CutCornerShape(0.dp),
                     modifier = Modifier.size(buttonDiameter),
                     contentPadding = PaddingValues(0.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = Color(0xFF00BB00),
-                        disabledBackgroundColor = Color(0xFF77BB77),
-                        contentColor = Color.White
-                    ),
+                    colors = editButtonColors(),
+                    elevation = editButtonElevation(),
                 ) {
                     Text("+")
                 }
@@ -97,14 +97,11 @@ fun VerticalToolbarView(vm: RedactorScreenViewModel) {
                 Button(
                     onClick = { vm.interactor.setMode(Mode.Delete) },
                     enabled = currentMode != Mode.Delete,
-                    shape = CircleShape,
+                    shape = CutCornerShape(0.dp),
                     modifier = Modifier.size(buttonDiameter),
                     contentPadding = PaddingValues(0.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = Color(0xFFCC0000),
-                        disabledBackgroundColor = Color(0xFFBB7777),
-                        contentColor = Color.White
-                    ),
+                    colors = editButtonColors(),
+                    elevation = editButtonElevation(),
                 ) {
                     Text("-")
                 }
