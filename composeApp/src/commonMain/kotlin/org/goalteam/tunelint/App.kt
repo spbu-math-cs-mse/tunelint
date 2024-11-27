@@ -26,10 +26,10 @@ fun App() {
     MaterialTheme {
         Column {
             Menu(vm::value) { vm.value = it }
+            HorizontalToolbarView(vm.value)
             Row {
                 VerticalToolbarView(vm.value)
                 Column {
-                    HorizontalToolbarView(vm.value)
                     Box(
                         modifier =
                             Modifier
