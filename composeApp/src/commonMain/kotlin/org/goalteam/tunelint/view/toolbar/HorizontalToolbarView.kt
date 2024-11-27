@@ -22,17 +22,17 @@ import org.goalteam.tunelint.model.core.PrimaryNoteValue
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import kotlin.math.pow
 
-
 @Composable
 fun HorizontalToolbarView(vm: RedactorScreenViewModel) {
     var currentMode: Mode by remember { mutableStateOf(Mode.Add) }
 
-    val modeListener = object : Notifiable<CurrentMode> {
-        override fun notify(notification: CurrentMode): Boolean {
-            currentMode = notification.mode
-            return true
+    val modeListener =
+        object : Notifiable<CurrentMode> {
+            override fun notify(notification: CurrentMode): Boolean {
+                currentMode = notification.mode
+                return true
+            }
         }
-    }
 
     vm.interactor.subscribe(modeListener)
     vm.interactor.synchronize(modeListener)
@@ -52,38 +52,51 @@ fun HorizontalToolbarView(vm: RedactorScreenViewModel) {
 fun HorizontalAddToolbarView(vm: RedactorScreenViewModel) {
     val padding = 8.dp
     Row(modifier = Modifier.padding(0.dp, padding)) {
-        data class Value(val log: Int, val text: String)
+        data class Value(
+            val log: Int,
+            val text: String,
+        )
 
         val expanded = remember { mutableStateOf(false) }
 
-        val options = listOf(
-            Value(-4, "Sixteenth"),
-            Value(-3, "Eighth"),
-            Value(-2, "Quarter"),
-            Value(-1, "Half"),
-            Value(0, "Whole"),
-            Value(1, "Double"),
-        )
+        val options =
+            listOf(
+                Value(-4, "Sixteenth"),
+                Value(-3, "Eighth"),
+                Value(-2, "Quarter"),
+                Value(-1, "Half"),
+                Value(0, "Whole"),
+                Value(1, "Double"),
+            )
 
         val noteValue: PrimaryNoteValue = vm.interactor.getValue()
         val magicalShift = 8
-        val selectedOption = remember {
-            mutableStateOf(options.find {
-                2.0.pow(it.log.toDouble() + magicalShift) == noteValue.value().value.toDouble()
-            } ?: Value(0, "Select option"))
-        }
+        val selectedOption =
+            remember {
+                mutableStateOf(
+                    options.find {
+                        2.0.pow(it.log.toDouble() + magicalShift) == noteValue.value().value.toDouble()
+                    } ?: Value(0, "Select option"),
+                )
+            }
 
         Column(modifier = Modifier.padding(padding, 0.dp)) {
-            Button(onClick = { expanded.value = !expanded.value }) {
+            Button(
+                onClick = { expanded.value = !expanded.value },
+                colors = undoRedoButtonColors(),
+                elevation = editButtonElevation(),
+            ) {
                 Text(text = selectedOption.value.text)
             }
             DropdownMenu(expanded = expanded.value, onDismissRequest = { expanded.value = false }) {
                 options.forEach { option ->
-                    DropdownMenuItem(onClick = {
-                        selectedOption.value = option
-                        expanded.value = false
-                        vm.interactor.setValue(PrimaryNoteValue(option.log))
-                    }) {
+                    DropdownMenuItem(
+                        onClick = {
+                            selectedOption.value = option
+                            expanded.value = false
+                            vm.interactor.setValue(PrimaryNoteValue(option.log))
+                        },
+                    ) {
                         Text(text = option.text)
                     }
                 }
@@ -94,6 +107,4 @@ fun HorizontalAddToolbarView(vm: RedactorScreenViewModel) {
 
 @Composable
 fun HorizontalDeleteToolbarView(vm: RedactorScreenViewModel) {
-
 }
-
