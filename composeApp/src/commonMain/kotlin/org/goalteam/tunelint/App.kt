@@ -25,7 +25,7 @@ fun App() {
     val vm = mutableStateOf(RedactorScreenViewModel(MusicSheet("")))
     MaterialTheme {
         Column {
-            Menu(vm::value) { vm.value = it }
+            Menu(vm.value) { vm.value = it }
             HorizontalToolbarView(vm.value)
             Row {
                 VerticalToolbarView(vm.value)
@@ -34,7 +34,7 @@ fun App() {
                         modifier =
                             Modifier
                                 .border(
-                                    width = 5.dp,
+                                    width = 0.dp,
                                     color = Color.Black,
                                 ).padding(all = 50.dp),
                     ) {
