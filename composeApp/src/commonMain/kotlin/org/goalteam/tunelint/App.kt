@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -21,14 +22,14 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 @Preview
 fun App() {
-    var vm = RedactorScreenViewModel(MusicSheet(""))
+    val vm = mutableStateOf(RedactorScreenViewModel(MusicSheet("")))
     MaterialTheme {
         Column {
-            Menu({ vm }) { vm = it }
+            Menu(vm::value) { vm.value = it }
             Row {
-                VerticalToolbarView(vm)
+                VerticalToolbarView(vm.value)
                 Column {
-                    HorizontalToolbarView(vm)
+                    HorizontalToolbarView(vm.value)
                     Box(
                         modifier =
                             Modifier
@@ -37,7 +38,7 @@ fun App() {
                                     color = Color.Black,
                                 ).padding(all = 50.dp),
                     ) {
-                        MusicSheetView(vm)
+                        MusicSheetView(vm.value)
                     }
                 }
             }

@@ -20,7 +20,7 @@ class RedactorScreenViewModel(
     val interactor = InteractorImpl(sheet.persistenceManager)
     val melody: MelodyViewable by mutableStateOf(
         MelodyViewableImpl(
-            MusicFactory().createMelody(sheet.location(), TimeSignature.standardTime),
+            MusicFactory().createMelody("", TimeSignature.standardTime),
         ),
     )
 

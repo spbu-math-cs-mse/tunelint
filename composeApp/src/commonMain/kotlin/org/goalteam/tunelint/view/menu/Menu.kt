@@ -17,6 +17,6 @@ fun Menu(
         NewButton { update(RedactorScreenViewModel(it)) }
         SaveButton { vm().musicSheet }
         LoadButton { if (it != null) update(RedactorScreenViewModel(it)) }
-        ExportButton(ParserFactory().fake()) { vm().musicSheet }
+        ExportButton(ParserFactory().xml()) { vm().musicSheet }
     }
 }

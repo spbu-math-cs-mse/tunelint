@@ -60,8 +60,8 @@ private class LoadFileDialog(
     override fun setVisible(visible: Boolean) {
         super.setVisible(visible)
         if (!visible) {
-            handle(file)
             hide.invoke()
+            if (directory != null && file != null) handle(directory + file)
         }
     }
 }
