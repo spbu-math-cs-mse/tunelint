@@ -25,6 +25,10 @@ class MeasureViewableImpl(
     override var snapshot: ImmutableMeasureViewable
         by mutableStateOf(ImmutableMeasureViewableImpl(this))
 
+    init {
+        setSymbols(measure.symbols)
+    }
+
     @Composable
     override fun view(
         vm: RedactorScreenViewModel,
@@ -65,9 +69,7 @@ class MeasureViewableImpl(
     }
 
     override fun setSymbols(symbolCollection: Collection<Symbol>) {
-        val decorated = mutableListOf<SymbolViewable>()
-        symbolCollection.forEach { decorated.add(viewableSymbolOf(it)) }
-        measure.setSymbols(decorated)
+        measure.setSymbols(symbolCollection.map { viewableSymbolOf(it) })
         takeSnapshot()
     }
 

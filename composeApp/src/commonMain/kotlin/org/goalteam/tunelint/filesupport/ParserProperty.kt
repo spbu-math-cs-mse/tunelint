@@ -1,6 +1,6 @@
-package org.goalteam.tunelint.model.core.property
+package org.goalteam.tunelint.filesupport
 
-import org.goalteam.tunelint.filesupport.Parser
+import org.goalteam.tunelint.property.Property
 
 class ParserProperty(
     private val parser: Parser,

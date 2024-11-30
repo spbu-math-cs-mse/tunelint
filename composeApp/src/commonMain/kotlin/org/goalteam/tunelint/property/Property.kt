@@ -1,4 +1,4 @@
-package org.goalteam.tunelint.model.core.property
+package org.goalteam.tunelint.property
 
 interface Property<T> {
     fun identifier(): String

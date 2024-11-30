@@ -59,7 +59,7 @@ class MelodyViewableImpl(
     }
 
     override fun setMeasures(measures: Collection<Measure>) {
-        melody.setMeasures(measures)
+        melody.setMeasures(measures.map { MeasureViewableImpl(it) })
         takeSnapshot()
     }
 
