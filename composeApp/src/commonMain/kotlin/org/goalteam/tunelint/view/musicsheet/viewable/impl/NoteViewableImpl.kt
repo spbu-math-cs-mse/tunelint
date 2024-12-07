@@ -2,7 +2,7 @@ package org.goalteam.tunelint.view.musicsheet.viewable.impl
 
 import androidx.compose.runtime.Composable
 import org.goalteam.tunelint.model.core.Note
-import org.goalteam.tunelint.view.musicsheet.GeometryData
+import org.goalteam.tunelint.view.musicsheet.InternalGeometryData
 import org.goalteam.tunelint.view.musicsheet.composable.NoteView
 import org.goalteam.tunelint.view.musicsheet.viewable.NoteViewable
 import org.goalteam.tunelint.view.musicsheet.viewable.hasFlag
@@ -32,7 +32,7 @@ class NoteViewableImpl(
         vm: RedactorScreenViewModel,
         position: Int,
         measure: Int,
-        geometryData: GeometryData,
+        geometryData: InternalGeometryData,
     ) = NoteView(
         vm,
         position,

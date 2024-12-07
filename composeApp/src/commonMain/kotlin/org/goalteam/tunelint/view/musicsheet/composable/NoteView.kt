@@ -11,7 +11,9 @@ import androidx.compose.ui.input.pointer.onPointerEvent
 import org.goalteam.tunelint.interaction.events.Action
 import org.goalteam.tunelint.interaction.events.Side
 import org.goalteam.tunelint.model.core.NoteOffset
-import org.goalteam.tunelint.view.musicsheet.GeometryData
+import org.goalteam.tunelint.view.musicsheet.InternalGeometryData
+import org.goalteam.tunelint.view.musicsheet.firstLineOffset
+import org.goalteam.tunelint.view.musicsheet.fullHeight
 import org.goalteam.tunelint.view.musicsheet.viewable.NoteViewable
 import org.goalteam.tunelint.view.musicsheet.viewable.horizontalSteps
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
@@ -24,7 +26,7 @@ fun NoteView(
     position: Int,
     measure: Int,
     note: NoteViewable,
-    geometryData: GeometryData,
+    geometryData: InternalGeometryData,
 ) {
     val topOffset =
         geometryData.firstLineOffset -
@@ -49,7 +51,7 @@ fun NoteView(
                         val left =
                             it.changes[0].position.x < note.stepsBeforeMiddle() * geometryData.horizontalStep.toPx()
                         val side = if (left) Side.Left else Side.Right
-                        println("$stage, $left")
+                        println("$stage, $left, $measure")
                         vm.interactor.handleAction(
                             stage,
                             position,

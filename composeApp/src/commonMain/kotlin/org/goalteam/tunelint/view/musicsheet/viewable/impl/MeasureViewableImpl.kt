@@ -10,7 +10,7 @@ import org.goalteam.tunelint.model.core.Note
 import org.goalteam.tunelint.model.core.Rest
 import org.goalteam.tunelint.model.core.Symbol
 import org.goalteam.tunelint.model.core.TimeSignature
-import org.goalteam.tunelint.view.musicsheet.GeometryData
+import org.goalteam.tunelint.view.musicsheet.InternalGeometryData
 import org.goalteam.tunelint.view.musicsheet.composable.MeasureView
 import org.goalteam.tunelint.view.musicsheet.viewable.ImmutableMeasureViewable
 import org.goalteam.tunelint.view.musicsheet.viewable.MeasureViewable
@@ -33,7 +33,7 @@ class MeasureViewableImpl(
     override fun view(
         vm: RedactorScreenViewModel,
         index: Int,
-        geometryData: GeometryData,
+        geometryData: InternalGeometryData,
     ) = MeasureView(
         vm,
         index,

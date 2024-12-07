@@ -10,25 +10,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.times
-import org.goalteam.tunelint.view.musicsheet.GeometryData
+import org.goalteam.tunelint.view.musicsheet.ExternalGeometryData
+import org.goalteam.tunelint.view.musicsheet.staffWidth
 
 @Composable
 fun StaffLine(
-    geometryData: GeometryData,
+    geometryData: ExternalGeometryData,
     width: Dp,
 ) {
     Box(
         modifier =
             Modifier
                 .padding(vertical = 0.5 * (geometryData.verticalStep - width))
-                .size(width = geometryData.horizontalStep * 28, height = width)
+                .size(width = geometryData.staffWidth, height = width)
                 .background(Color.Black),
     )
 }
 
 @Composable
 fun Staff(
-    geometryData: GeometryData,
+    geometryData: ExternalGeometryData,
     width: Dp,
 ) {
     Box(

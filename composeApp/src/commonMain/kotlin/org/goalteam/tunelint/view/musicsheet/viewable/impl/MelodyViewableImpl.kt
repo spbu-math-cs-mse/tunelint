@@ -8,10 +8,9 @@ import org.goalteam.tunelint.model.core.ImmutableMelody
 import org.goalteam.tunelint.model.core.Measure
 import org.goalteam.tunelint.model.core.Melody
 import org.goalteam.tunelint.model.core.TimeSignature
-import org.goalteam.tunelint.view.musicsheet.GeometryData
+import org.goalteam.tunelint.view.musicsheet.ExternalEvaluatableGeometryData
 import org.goalteam.tunelint.view.musicsheet.composable.MelodyView
 import org.goalteam.tunelint.view.musicsheet.viewable.ImmutableMelodyViewable
-import org.goalteam.tunelint.view.musicsheet.viewable.MeasureViewable
 import org.goalteam.tunelint.view.musicsheet.viewable.MelodyViewable
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
@@ -25,7 +24,7 @@ class MelodyViewableImpl(
     @Composable
     override fun view(
         vm: RedactorScreenViewModel,
-        geometryData: GeometryData,
+        geometryData: ExternalEvaluatableGeometryData,
     ) = MelodyView(
         vm,
         snapshot,
@@ -33,11 +32,6 @@ class MelodyViewableImpl(
     )
 
     override fun clone() = MelodyViewableImpl(melody.clone())
-
-    override fun measureHorizontalSteps() =
-        measures.maxOfOrNull {
-            (it as MeasureViewable).horizontalSteps()
-        } ?: 1
 
     override fun setName(name: String) {
         melody.setName(name)
