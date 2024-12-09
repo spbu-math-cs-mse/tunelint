@@ -15,14 +15,11 @@ import org.goalteam.tunelint.view.musicsheet.viewable.ImmutableMelodyViewable
 import org.goalteam.tunelint.view.musicsheet.viewable.MeasureViewable
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
-@Composable
-fun MelodyView(
-    vm: RedactorScreenViewModel,
+internal fun splitMeasuresOnLines(
     melody: ImmutableMelodyViewable,
     geometryData: ExternalEvaluatableGeometryData,
-) {
+): List<List<MeasureViewable>> {
     val lines = mutableListOf(mutableListOf<MeasureViewable>())
-    val internals = mutableListOf<InternalGeometryData>()
 
     var stepsOnLine = 0
 
@@ -43,6 +40,17 @@ fun MelodyView(
         }
     }
 
+    return lines
+}
+
+@Composable
+fun MelodyView(
+    vm: RedactorScreenViewModel,
+    melody: ImmutableMelodyViewable,
+    geometryData: ExternalEvaluatableGeometryData,
+) {
+    val lines = splitMeasuresOnLines(melody, geometryData)
+    val internals = mutableListOf<InternalGeometryData>()
     lines.forEach {
         internals.add(geometryData.evaluated(it.sumOf { m -> m.horizontalSteps() + 1 }))
     }
