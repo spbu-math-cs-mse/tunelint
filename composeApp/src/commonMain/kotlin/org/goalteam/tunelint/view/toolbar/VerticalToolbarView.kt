@@ -27,7 +27,7 @@ fun VerticalToolbarView(vm: RedactorScreenViewModel) {
     val buttonDiameter = 40.dp
     var enableUndo: Boolean by remember { mutableStateOf(false) }
     var enableRedo: Boolean by remember { mutableStateOf(false) }
-    var currentMode: Mode by remember { mutableStateOf(Mode.Add) }
+    var currentMode: Mode by remember { mutableStateOf(Mode.AddNote) }
 
     val availabilityListener =
         object : Notifiable<UndoRedoAvailable> {
@@ -39,9 +39,9 @@ fun VerticalToolbarView(vm: RedactorScreenViewModel) {
         }
 
     val modeListener =
-        object : Notifiable<CurrentMode> {
-            override fun notify(notification: CurrentMode): Boolean {
-                currentMode = notification.mode
+        object : Notifiable<Boolean> {
+            override fun notify(notification: Boolean): Boolean {
+                currentMode = vm.interactor.getMode()
                 return true
             }
         }
@@ -52,61 +52,7 @@ fun VerticalToolbarView(vm: RedactorScreenViewModel) {
     vm.interactor.synchronize(modeListener)
 
     Column(modifier = Modifier.padding(padding)) {
-        Column(modifier = Modifier.padding(0.dp, padding)) {
-            Column(modifier = Modifier.padding(0.dp, smallPadding)) {
-                Button(
-                    onClick = { vm.musicSheet.persistenceManager.undo() },
-                    enabled = enableUndo,
-                    shape = CutCornerShape(0.dp),
-                    modifier = Modifier.size(buttonDiameter),
-                    contentPadding = PaddingValues(0.dp),
-                    colors = undoRedoButtonColors(),
-                    elevation = editButtonElevation(),
-                ) {
-                    Text("\u27F2", fontWeight = FontWeight.ExtraBold)
-                }
-            }
-            Column(modifier = Modifier.padding(0.dp, smallPadding)) {
-                Button(
-                    onClick = { vm.musicSheet.persistenceManager.redo() },
-                    enabled = enableRedo,
-                    shape = CutCornerShape(0.dp),
-                    modifier = Modifier.size(buttonDiameter),
-                    contentPadding = PaddingValues(0.dp),
-                    colors = undoRedoButtonColors(),
-                    elevation = editButtonElevation(),
-                ) {
-                    Text("\u27F3", fontWeight = FontWeight.ExtraBold)
-                }
-            }
-        }
-        Column(modifier = Modifier.padding(0.dp, padding)) {
-            Column(modifier = Modifier.padding(0.dp, smallPadding)) {
-                Button(
-                    onClick = { vm.interactor.setMode(Mode.Add) },
-                    enabled = currentMode != Mode.Add,
-                    shape = CutCornerShape(0.dp),
-                    modifier = Modifier.size(buttonDiameter),
-                    contentPadding = PaddingValues(0.dp),
-                    colors = editButtonColors(),
-                    elevation = editButtonElevation(),
-                ) {
-                    Text("+", fontWeight = FontWeight.ExtraBold)
-                }
-            }
-            Column(modifier = Modifier.padding(0.dp, smallPadding)) {
-                Button(
-                    onClick = { vm.interactor.setMode(Mode.Delete) },
-                    enabled = currentMode != Mode.Delete,
-                    shape = CutCornerShape(0.dp),
-                    modifier = Modifier.size(buttonDiameter),
-                    contentPadding = PaddingValues(0.dp),
-                    colors = editButtonColors(),
-                    elevation = editButtonElevation(),
-                ) {
-                    Text("－", fontWeight = FontWeight.ExtraBold)
-                }
-            }
-        }
+        RedoUndoButtons(padding, smallPadding, vm, enableUndo, buttonDiameter, enableRedo)
+        ModeButtons(padding, smallPadding, vm, currentMode, buttonDiameter)
     }
 }

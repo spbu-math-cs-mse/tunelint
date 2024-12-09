@@ -8,12 +8,14 @@ import org.goalteam.tunelint.model.changerequest.Subscribable
 import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 
-interface Interactor : Subscribable<CurrentMode> {
+interface Interactor : Subscribable<Boolean> {
     fun setValue(value: PrimaryNoteValue)
 
-    fun getValue() : PrimaryNoteValue
+    fun getValue(): PrimaryNoteValue
 
     fun setMode(mode: Mode)
+
+    fun getMode(): Mode
 
     fun handleButton(command: CommandType)
 
@@ -26,4 +28,6 @@ interface Interactor : Subscribable<CurrentMode> {
     )
 }
 
-data class CurrentMode(val mode: Mode)
+data class CurrentMode(
+    val mode: Mode,
+)

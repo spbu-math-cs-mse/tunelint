@@ -21,14 +21,15 @@ class PrimaryNoteValue(
 
     fun value() = NoteValue(1 shl (order - MINIMUM_ORDER))
 
+    fun order() = order
+
     fun next() = PrimaryNoteValue(order + 1)
 
     fun prev() = PrimaryNoteValue(order - 1)
 
     fun denominator(): Int {
         if (order > 0) {
-            throw
-            UnsupportedOperationException(
+            throw UnsupportedOperationException(
                 "cannot take denominator of primary note value more, than a full note",
             )
         }
