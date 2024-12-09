@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -63,6 +61,7 @@ fun undoRedoButtons(
 ) {
     var enableUndo: Boolean by remember { mutableStateOf(false) }
     var enableRedo: Boolean by remember { mutableStateOf(false) }
+    var currentMode: Mode by remember { mutableStateOf(Mode.AddNote) }
 
     val availabilityListener =
         object : Notifiable<UndoRedoAvailable> {
@@ -73,8 +72,18 @@ fun undoRedoButtons(
             }
         }
 
+    val modeListener =
+        object : Notifiable<Boolean> {
+            override fun notify(notification: Boolean): Boolean {
+                currentMode = vm.interactor.getMode()
+                return true
+            }
+        }
+
     vm.musicSheet.persistenceManager.subscribe(availabilityListener)
     vm.musicSheet.persistenceManager.synchronize(availabilityListener)
+    vm.interactor.subscribe(modeListener)
+    vm.interactor.synchronize(modeListener)
 
     TooltipArea(
         modifier = Modifier.padding(0.dp, smallPadding),

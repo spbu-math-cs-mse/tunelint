@@ -7,16 +7,19 @@ import org.goalteam.tunelint.model.changerequest.PersistenceManager
 import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 
-
 class InteractorImpl(
     private val manager: PersistenceManager,
 ) : Interactor {
     private val configuration = InteractionHandlerFactory().createConfiguration()
     private val receiver = InteractionHandlerFactory().createReceiver(configuration, manager)
 
-    private val modeSubscribers = mutableListOf<Notifiable<CurrentMode>>()
+    private val modeSubscribers = mutableListOf<Notifiable<Boolean>>()
+
     override fun setValue(value: PrimaryNoteValue) {
         configuration.setValue(value)
+        for (subscriber in modeSubscribers) {
+            subscriber.notify(true)
+        }
     }
 
     override fun getValue(): PrimaryNoteValue = configuration.getValue()
@@ -24,9 +27,11 @@ class InteractorImpl(
     override fun setMode(mode: Mode) {
         configuration.setMode(mode)
         for (subscriber in modeSubscribers) {
-            subscriber.notify(CurrentMode(configuration.getMode()))
+            subscriber.notify(true)
         }
     }
+
+    override fun getMode(): Mode = configuration.getMode()
 
     override fun handleButton(command: CommandType) {
         val event = EventFactory().createCommandButtonInteractionData(command)
@@ -45,15 +50,15 @@ class InteractorImpl(
         receiver.handleAction(event)
     }
 
-    override fun subscribe(subscriber: Notifiable<CurrentMode>) {
+    override fun subscribe(subscriber: Notifiable<Boolean>) {
         modeSubscribers.add(subscriber)
     }
 
-    override fun unsubscribe(subscriber: Notifiable<CurrentMode>) {
+    override fun unsubscribe(subscriber: Notifiable<Boolean>) {
         modeSubscribers.remove(subscriber)
     }
 
-    override fun synchronize(caller: Notifiable<CurrentMode>) {
-        caller.notify(CurrentMode(configuration.getMode()))
+    override fun synchronize(caller: Notifiable<Boolean>) {
+        caller.notify(true)
     }
 }
