@@ -9,6 +9,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.interaction.events.Mode
@@ -33,7 +34,7 @@ fun ModeButtons(
                 colors = editButtonColors(),
                 elevation = editButtonElevation(),
             ) {
-                Text("+")
+                Text("+", fontWeight = FontWeight.ExtraBold)
             }
         }
         Column(modifier = Modifier.padding(0.dp, smallPadding)) {
@@ -46,7 +47,7 @@ fun ModeButtons(
                 colors = editButtonColors(),
                 elevation = editButtonElevation(),
             ) {
-                Text("-")
+                Text("－", fontWeight = FontWeight.ExtraBold)
             }
         }
         Column(modifier = Modifier.padding(0.dp, smallPadding)) {
@@ -59,7 +60,7 @@ fun ModeButtons(
                 colors = editButtonColors(),
                 elevation = editButtonElevation(),
             ) {
-                Text(text = "M")
+                Text(text = "M", fontWeight = FontWeight.ExtraBold)
             }
         }
         Column(modifier = Modifier.padding(0.dp, smallPadding)) {
@@ -74,7 +75,7 @@ fun ModeButtons(
                 colors = editButtonColors(),
                 elevation = editButtonElevation(),
             ) {
-                Text(text = "D")
+                Text(text = "DM", fontWeight = FontWeight.ExtraBold)
             }
         }
     }
