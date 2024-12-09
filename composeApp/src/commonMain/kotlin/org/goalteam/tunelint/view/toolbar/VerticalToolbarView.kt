@@ -1,34 +1,19 @@
 package org.goalteam.tunelint.view.toolbar
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.TooltipArea
-import androidx.compose.foundation.TooltipPlacement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import org.goalteam.tunelint.interaction.CurrentMode
 import org.goalteam.tunelint.interaction.events.Mode
 import org.goalteam.tunelint.model.changerequest.Notifiable
 import org.goalteam.tunelint.model.changerequest.UndoRedoAvailable
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
-import org.jetbrains.compose.resources.painterResource
-import tunelint.composeapp.generated.resources.Res
-import tunelint.composeapp.generated.resources.eraser
-import tunelint.composeapp.generated.resources.quill
-import tunelint.composeapp.generated.resources.redo
-import tunelint.composeapp.generated.resources.undo
 
 @Composable
 fun VerticalToolbarView(vm: RedactorScreenViewModel) {
