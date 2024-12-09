@@ -6,7 +6,7 @@ import org.goalteam.tunelint.model.core.PrimaryNoteValue
 
 class RedactorConfigurationImpl(
     private var value: PrimaryNoteValue = PrimaryNoteValue.Quarter,
-    private var mode: Mode = Mode.Add,
+    private var mode: Mode = Mode.AddNote,
 ) : RedactorConfiguration {
     override fun getValue(): PrimaryNoteValue = value
 
