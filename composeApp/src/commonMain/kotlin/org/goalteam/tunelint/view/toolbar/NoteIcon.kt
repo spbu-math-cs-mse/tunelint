@@ -1,10 +1,16 @@
 package org.goalteam.tunelint.view.toolbar
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
+import org.goalteam.tunelint.view.musicsheet.GeometryData
 import org.goalteam.tunelint.view.musicsheet.composable.UnleveredNoteView
+import org.goalteam.tunelint.view.musicsheet.viewable.horizontalSteps
 import org.goalteam.tunelint.view.musicsheet.viewable.impl.NoteViewableImpl
 
 @Composable
