@@ -4,6 +4,7 @@ import org.goalteam.tunelint.filesupport.Parser
 import org.goalteam.tunelint.filesupport.ParserFactory
 import org.goalteam.tunelint.filesupport.ParserProperty
 import org.goalteam.tunelint.model.changerequest.PersistenceManagerFactory
+import org.goalteam.tunelint.model.core.Melody
 import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.core.TimeSignature
 import org.goalteam.tunelint.model.core.syncWith
@@ -53,4 +54,6 @@ class MusicSheet(
 
     private fun path(properties: Collection<Property<*>>): String =
         properties.filterIsInstance<PathProperty>().firstOrNull()?.value() ?: path
+
+    fun contents(): Melody = melody
 }
