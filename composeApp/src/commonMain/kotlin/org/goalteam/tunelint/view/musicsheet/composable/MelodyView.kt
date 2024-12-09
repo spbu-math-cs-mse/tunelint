@@ -20,8 +20,9 @@ internal fun splitMeasuresOnLines(
     geometryData: ExternalEvaluatableGeometryData,
 ): List<List<MeasureViewable>> {
     val lines = mutableListOf(mutableListOf<MeasureViewable>())
+    val additionalSteps = 1
 
-    var stepsOnLine = 0
+    var stepsOnLine = 2
 
     melody.measures.forEach {
         val mv = it as MeasureViewable
@@ -30,11 +31,11 @@ internal fun splitMeasuresOnLines(
             throw Exception("too long measure")
         }
 
-        if (stepsOnLine + mv.horizontalSteps() + 1 <= geometryData.maxSteps) {
-            stepsOnLine += mv.horizontalSteps() + 1
+        if (stepsOnLine + mv.horizontalSteps() + additionalSteps <= geometryData.maxSteps) {
+            stepsOnLine += mv.horizontalSteps() + additionalSteps
             lines.last().add(mv)
         } else {
-            stepsOnLine = mv.horizontalSteps() + 1
+            stepsOnLine = mv.horizontalSteps() + additionalSteps
             lines.add(mutableListOf())
             lines.last().add(mv)
         }
@@ -50,9 +51,10 @@ fun MelodyView(
     geometryData: ExternalEvaluatableGeometryData,
 ) {
     val lines = splitMeasuresOnLines(melody, geometryData)
+    val additionalSteps = 1
     val internals = mutableListOf<InternalGeometryData>()
     lines.forEach {
-        internals.add(geometryData.evaluated(it.sumOf { m -> m.horizontalSteps() + 1 }))
+        internals.add(geometryData.evaluated(2 + it.sumOf { m -> m.horizontalSteps() + additionalSteps }))
     }
 
     Box(
@@ -75,6 +77,7 @@ fun MelodyView(
                     Staff(geometryData, 3.dp)
                     val internal = internals[index]
                     Row {
+                        ClefView(internal)
                         line
                             .forEach {
                                 it.view(vm, globalIndex, internal)
