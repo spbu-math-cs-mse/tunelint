@@ -40,6 +40,7 @@ fun HorizontalToolbarView(vm: RedactorScreenViewModel) {
     val fixedHeight = 56.dp
 
     Row(modifier = Modifier.height(fixedHeight)) {
+        LintButton(vm.musicSheet)
         when (currentMode) {
             Mode.Add -> HorizontalAddToolbarView(vm)
             Mode.Insert -> TODO("Not implemented yet")
