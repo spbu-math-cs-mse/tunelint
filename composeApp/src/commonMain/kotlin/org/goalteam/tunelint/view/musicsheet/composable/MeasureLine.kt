@@ -14,7 +14,10 @@ import androidx.compose.ui.unit.Dp
 import org.goalteam.tunelint.interaction.events.Action
 import org.goalteam.tunelint.interaction.events.Side
 import org.goalteam.tunelint.model.core.NoteOffset
-import org.goalteam.tunelint.view.musicsheet.GeometryData
+import org.goalteam.tunelint.view.musicsheet.InternalGeometryData
+import org.goalteam.tunelint.view.musicsheet.firstLineOffset
+import org.goalteam.tunelint.view.musicsheet.fullHeight
+import org.goalteam.tunelint.view.musicsheet.staffShortHeight
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import kotlin.math.round
 
@@ -24,7 +27,7 @@ fun MeasureLine(
     vm: RedactorScreenViewModel,
     position: Int,
     measure: Int,
-    geometryData: GeometryData,
+    geometryData: InternalGeometryData,
     width: Dp,
 ) {
     Box(
@@ -41,13 +44,12 @@ fun MeasureLine(
                                     geometryData.verticalStep.toPx() * 2,
                             ).toInt() - 1,
                         )
-                    val left = it.changes[0].position.x < geometryData.horizontalStep.toPx() / 2
-                    val side = if (left) Side.Left else Side.Right
-                    println("$stage, $left")
+                    val side = Side.Left
+                    println("$stage")
                     vm.interactor.handleAction(
                         stage,
-                        if (left) position else -1,
-                        measure + if (left) 0 else 1,
+                        position,
+                        measure,
                         side,
                         action = Action.Click,
                     )
@@ -60,7 +62,7 @@ fun MeasureLine(
                         width = width,
                         height = geometryData.staffShortHeight,
                     ).align(
-                        alignment = Alignment.Center,
+                        alignment = Alignment.CenterEnd,
                     ).background(
                         Color.Black,
                     ),

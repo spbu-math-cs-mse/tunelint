@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.times
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
-import org.goalteam.tunelint.view.musicsheet.GeometryData
+import org.goalteam.tunelint.view.musicsheet.InternalGeometryData
 import org.goalteam.tunelint.view.musicsheet.viewable.NoteViewable
 import org.goalteam.tunelint.view.musicsheet.viewable.hasFlag
 import org.goalteam.tunelint.view.musicsheet.viewable.hasStem
@@ -24,7 +24,7 @@ import tunelint.composeapp.generated.resources.note_stem
 
 @Composable
 fun NoteStem(
-    geometryData: GeometryData,
+    geometryData: InternalGeometryData,
     note: NoteViewable,
 ) {
     Box(
@@ -52,7 +52,7 @@ fun NoteStem(
 
 @Composable
 fun NoteHead(
-    geometryData: GeometryData,
+    geometryData: InternalGeometryData,
     note: NoteViewable,
 ) {
     Box(
@@ -75,7 +75,7 @@ fun NoteHead(
 
 @Composable
 fun NoteFlags(
-    geometryData: GeometryData,
+    geometryData: InternalGeometryData,
     note: NoteViewable,
 ) {
     Box(
@@ -103,7 +103,7 @@ fun NoteFlags(
 
 @Composable
 fun UnleveredNoteView(
-    geometryData: GeometryData,
+    geometryData: InternalGeometryData,
     note: NoteViewable,
 ) {
     Box(
