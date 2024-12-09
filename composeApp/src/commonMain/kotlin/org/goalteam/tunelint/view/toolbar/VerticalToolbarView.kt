@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.interaction.CurrentMode
 import org.goalteam.tunelint.interaction.events.Mode
@@ -62,7 +63,7 @@ fun VerticalToolbarView(vm: RedactorScreenViewModel) {
                     colors = undoRedoButtonColors(),
                     elevation = editButtonElevation(),
                 ) {
-                    Text("\u27F2")
+                    Text("\u27F2", fontWeight = FontWeight.ExtraBold)
                 }
             }
             Column(modifier = Modifier.padding(0.dp, smallPadding)) {
@@ -75,7 +76,7 @@ fun VerticalToolbarView(vm: RedactorScreenViewModel) {
                     colors = undoRedoButtonColors(),
                     elevation = editButtonElevation(),
                 ) {
-                    Text("\u27F3")
+                    Text("\u27F3", fontWeight = FontWeight.ExtraBold)
                 }
             }
         }
@@ -90,7 +91,7 @@ fun VerticalToolbarView(vm: RedactorScreenViewModel) {
                     colors = editButtonColors(),
                     elevation = editButtonElevation(),
                 ) {
-                    Text("+")
+                    Text("+", fontWeight = FontWeight.ExtraBold)
                 }
             }
             Column(modifier = Modifier.padding(0.dp, smallPadding)) {
@@ -103,7 +104,7 @@ fun VerticalToolbarView(vm: RedactorScreenViewModel) {
                     colors = editButtonColors(),
                     elevation = editButtonElevation(),
                 ) {
-                    Text("-")
+                    Text("－", fontWeight = FontWeight.ExtraBold)
                 }
             }
         }
