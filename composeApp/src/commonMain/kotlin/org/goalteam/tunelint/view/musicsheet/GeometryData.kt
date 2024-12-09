@@ -5,10 +5,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import kotlin.math.floor
 
-object Constants {
-    const val STAFF_LINES = 5
-}
-
 interface ExternalGeometryData {
     val verticalStep: Dp
     val topMargin: Dp

@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.times
+import org.goalteam.tunelint.view.musicsheet.Constants
 import org.goalteam.tunelint.view.musicsheet.ExternalGeometryData
 import org.goalteam.tunelint.view.musicsheet.staffWidth
 
@@ -37,7 +38,7 @@ fun Staff(
             Modifier
                 .offset(y = geometryData.topMargin),
     ) {
-        for (i in 0..4) {
+        for (i in 0..<Constants.STAFF_LINES) {
             Box(
                 modifier =
                     Modifier
