@@ -12,6 +12,8 @@ interface MutableMelody {
 
     fun setMeasures(measures: Collection<Measure>)
 
+    fun setClef(clef: Clef)
+
     fun setTimeSignature(timeSignature: TimeSignature)
 
     fun mutableMeasures(): List<Measure>

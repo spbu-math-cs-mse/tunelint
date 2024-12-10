@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import org.goalteam.tunelint.model.core.Clef
 import org.goalteam.tunelint.model.core.ImmutableMelody
 import org.goalteam.tunelint.model.core.Measure
 import org.goalteam.tunelint.model.core.Melody
@@ -54,6 +55,11 @@ class MelodyViewableImpl(
 
     override fun setMeasures(measures: Collection<Measure>) {
         melody.setMeasures(measures.map { MeasureViewableImpl(it) })
+        takeSnapshot()
+    }
+
+    override fun setClef(clef: Clef) {
+        melody.setClef(clef)
         takeSnapshot()
     }
 
