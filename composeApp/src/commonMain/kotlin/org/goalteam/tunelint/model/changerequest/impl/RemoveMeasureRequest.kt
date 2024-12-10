@@ -13,7 +13,7 @@ class RemoveMeasureRequest(
     override fun toString() = "remove measure from position $position"
 
     override fun execute(melody: Melody): Boolean {
-        _removed = melody.mutableMeasures()[position].clone()
+        _removed = melody.mutableMeasures().getOrNull(position)?.clone()
         return melody.removeMeasure(position)
     }
 }
