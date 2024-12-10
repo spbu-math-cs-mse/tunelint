@@ -17,8 +17,9 @@ class RemoveSymbolRequest(
         melody.mutateMeasures { mutableMeasures ->
             _removed =
                 mutableMeasures[notePointer.measure(melody)]
-                    .symbols[notePointer.position(melody)]
-                    .clone()
+                    .symbols
+                    .getOrNull(notePointer.position(melody))
+                    ?.clone()
         }
 
         var success = false
