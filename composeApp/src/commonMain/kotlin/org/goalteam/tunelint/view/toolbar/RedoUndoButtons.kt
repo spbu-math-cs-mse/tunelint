@@ -24,15 +24,12 @@ import tunelint.composeapp.generated.resources.Res
 import tunelint.composeapp.generated.resources.redo
 import tunelint.composeapp.generated.resources.undo
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun undoRedoButtons(
     vm: RedactorScreenViewModel,
     buttonDiameter: Dp,
-    smallPadding: Dp,
     iconSize: Dp,
-    tipOffset: DpOffset,
-    tipDelay: Int,
+    buttonTip : @Composable (String, @Composable () -> Unit) -> Unit,
 ) {
     var enableUndo: Boolean by remember { mutableStateOf(false) }
     var enableRedo: Boolean by remember { mutableStateOf(false) }
@@ -60,12 +57,7 @@ fun undoRedoButtons(
     vm.interactor.subscribe(modeListener)
     vm.interactor.synchronize(modeListener)
 
-    TooltipArea(
-        modifier = Modifier.padding(0.dp, smallPadding),
-        tooltip = { Text("undo") },
-        tooltipPlacement = TooltipPlacement.CursorPoint(offset = tipOffset),
-        delayMillis = tipDelay,
-    ) {
+    buttonTip("Undo"){
         Button(
             onClick = { vm.musicSheet.persistenceManager.undo() },
             enabled = enableUndo,
@@ -82,12 +74,7 @@ fun undoRedoButtons(
             )
         }
     }
-    TooltipArea(
-        modifier = Modifier.padding(0.dp, smallPadding),
-        tooltip = { Text("redo") },
-        tooltipPlacement = TooltipPlacement.CursorPoint(offset = tipOffset),
-        delayMillis = tipDelay,
-    ) {
+    buttonTip("Redo"){
         Button(
             onClick = { vm.musicSheet.persistenceManager.redo() },
             enabled = enableRedo,
