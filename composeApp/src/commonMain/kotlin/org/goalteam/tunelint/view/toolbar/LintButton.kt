@@ -3,6 +3,7 @@ package org.goalteam.tunelint.view.toolbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -52,7 +53,7 @@ private fun Area(show: MutableState<Boolean>) {
             onClick = {
                 show.value = true
             },
-            modifier = Modifier.padding(0.dp, 8.dp),
+            modifier = Modifier.padding(0.dp, 8.dp).requiredSize(60.dp),
         ) {
             Icon(
                 painter = painterResource(Res.drawable.lint),
