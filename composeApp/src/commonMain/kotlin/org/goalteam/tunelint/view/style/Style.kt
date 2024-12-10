@@ -1,4 +1,4 @@
-package org.goalteam.tunelint.view.menu
+package org.goalteam.tunelint.view.style
 
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.ButtonDefaults
@@ -6,18 +6,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-@Suppress("ktlint:standard:function-naming")
 @Composable
-internal fun MenuColors() =
+internal fun colors() =
     ButtonDefaults.textButtonColors(
         disabledContentColor = Color.Transparent,
         contentColor = Color.LightGray,
     )
 
-internal fun menuButtonShape() = CutCornerShape(0.dp)
+internal fun buttonShape() = CutCornerShape(0.dp)
 
 @Composable
-internal fun menuButtonElevation() =
+internal fun buttonElevation() =
     ButtonDefaults.elevation(
         defaultElevation = 0.dp,
         pressedElevation = 0.dp,

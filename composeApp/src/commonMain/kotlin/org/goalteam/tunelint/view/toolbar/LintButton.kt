@@ -32,36 +32,26 @@ import tunelint.composeapp.generated.resources.lint
 @Composable
 fun LintButton(sheet: MusicSheet) {
     val show = remember { mutableStateOf(false) }
-    val tipDelay = 750
-    TooltipArea(
-        tooltip = {
-            Card(shape = CutCornerShape(3.dp)) {
-                Box(modifier = Modifier.background(Color.LightGray)) {
-                    Text(text = "Lint", modifier = Modifier.padding(4.dp))
-                }
-            }
-        },
-        tooltipPlacement = TooltipPlacement.ComponentRect(),
-        delayMillis = tipDelay,
-    ) {
-        Button(
+    Area(show)
+    if (show.value) {
+        LintDialog(
+            statuses(rules.value),
+            hide = {
+                rules.value = Rules(sheet.contents())
+                show.value = false
+            },
+        )
+    }
+}
+
+@Suppress("ktlint:standard:function-naming")
+@Composable
+private fun Area(show: MutableState<Boolean>) {
+    StyledTooltipArea(hint = "Lint") {
+        StyledButton(
             onClick = {
                 show.value = true
             },
-            colors =
-            ButtonDefaults.textButtonColors(
-                disabledContentColor = Color.Transparent,
-                contentColor = Color.Black,
-            ),
-            shape = CutCornerShape(0.dp),
-            elevation =
-            ButtonDefaults.elevation(
-                defaultElevation = 0.dp,
-                pressedElevation = 0.dp,
-                disabledElevation = 0.dp,
-                hoveredElevation = 0.dp,
-                focusedElevation = 0.dp,
-            ),
             modifier = Modifier.padding(0.dp, 8.dp),
         ) {
             Icon(

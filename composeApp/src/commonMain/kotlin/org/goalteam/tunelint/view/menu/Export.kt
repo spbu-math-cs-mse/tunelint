@@ -1,6 +1,5 @@
 package org.goalteam.tunelint.view.menu
 
-import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -11,6 +10,7 @@ import androidx.compose.ui.input.key.KeyShortcut
 import org.goalteam.tunelint.filesupport.ParserProperty
 import org.goalteam.tunelint.musicsheet.MusicSheet
 import org.goalteam.tunelint.property.PathProperty
+import org.goalteam.tunelint.view.style.StyledButton
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
@@ -19,13 +19,10 @@ internal fun ExportButton(
     sheet: () -> MusicSheet,
 ) {
     val show = remember { mutableStateOf(false) }
-    Button(
+    StyledButton(
         onClick = {
             show.value = true
         },
-        colors = MenuColors(),
-        shape = menuButtonShape(),
-        elevation = menuButtonElevation(),
     ) {
         Text("Export", color = Color.Black)
         KeyShortcut(Key.S, ctrl = true, shift = true)
