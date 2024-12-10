@@ -12,7 +12,7 @@ internal class MelodyImpl(
     measures: Collection<Measure>,
 ) : Melody {
     private var _name = name
-    private val _clef = clef
+    private var _clef = clef
     private var _timeSignature = timeSignature
     private val _measures: MutableList<Measure> = measures.toMutableList()
 
@@ -54,6 +54,10 @@ internal class MelodyImpl(
         _measures.clear()
         _measures.addAll(measures)
         _measures.forEach { it.setTimeSignature(timeSignature) }
+    }
+
+    override fun setClef(clef: Clef) {
+        _clef = clef
     }
 
     override fun setTimeSignature(timeSignature: TimeSignature) {
