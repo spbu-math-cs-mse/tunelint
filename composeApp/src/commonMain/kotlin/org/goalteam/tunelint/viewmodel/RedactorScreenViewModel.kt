@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import org.goalteam.tunelint.interaction.InteractorImpl
 import org.goalteam.tunelint.model.changerequest.impl.PushFrontEmptyMeasurePersistentRequest
 import org.goalteam.tunelint.model.changerequest.subscribeAndSynchronize
+import org.goalteam.tunelint.model.core.Clef
 import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.core.TimeSignature
 import org.goalteam.tunelint.musicsheet.MusicSheet
@@ -20,7 +21,7 @@ class RedactorScreenViewModel(
     val interactor = InteractorImpl(sheet.persistenceManager)
     val melody: MelodyViewable by mutableStateOf(
         MelodyViewableImpl(
-            MusicFactory().createMelody("", TimeSignature.standardTime),
+            MusicFactory().createMelody("", Clef(Clef.ClefType.F), TimeSignature.standardTime),
         ),
     )
 

@@ -1,7 +1,7 @@
 package org.goalteam.tunelint.model.core
 
 class NaturalNote(
-    private val value: Int,
+    val value: Int,
 ) {
     init {
         require(value >= 0 && value < Constants.OCTAVE_NOTES)

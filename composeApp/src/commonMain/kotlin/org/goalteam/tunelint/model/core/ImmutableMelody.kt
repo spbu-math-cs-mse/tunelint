@@ -5,5 +5,7 @@ interface ImmutableMelody : Cloneable {
 
     val timeSignature: TimeSignature
 
+    val clef: Clef
+
     val measures: List<ImmutableMeasure>
 }
