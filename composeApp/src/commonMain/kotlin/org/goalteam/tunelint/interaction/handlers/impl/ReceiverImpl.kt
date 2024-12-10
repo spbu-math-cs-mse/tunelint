@@ -38,18 +38,20 @@ class ReceiverImpl(
             TODO("Preview is not supported yet")
         }
         when (configuration.getMode()) {
-            Mode.Add -> {
+            Mode.AddNote -> {
                 if (action.side() == Side.Right) {
                     return requestFactory.addSymbol(
                         pointer.next(),
                         note,
-                    ) // TODO Change +1 to call of some method
+                    )
                 }
 
                 return requestFactory.addSymbol(pointer, note)
             }
-            Mode.Insert -> TODO("Insert is not supported yet")
-            Mode.Delete -> return requestFactory.removeSymbol(pointer)
+            Mode.InsertNote -> TODO("Insert is not supported yet")
+            Mode.DeleteNote -> return requestFactory.removeSymbol(pointer)
+            Mode.AddMeasure -> return requestFactory.addMeasure(action.measure())
+            Mode.DeleteMeasure -> return requestFactory.removeMeasure(action.measure())
         }
     }
 }

@@ -1,5 +1,6 @@
 package org.goalteam.tunelint.filesupport
 
+import org.goalteam.tunelint.model.core.Clef
 import org.goalteam.tunelint.model.core.ImmutableMeasure
 import org.goalteam.tunelint.model.core.ImmutableMelody
 import org.goalteam.tunelint.model.core.Measure
@@ -105,9 +106,9 @@ class XMLParser : Parser {
         }
 
         if (timeSignature != null) {
-            return musicFactory.createMelody(melodyId, timeSignature!!, measureList)
+            return musicFactory.createMelody(melodyId, Clef(Clef.ClefType.G), timeSignature!!, measureList)
         }
-        return musicFactory.createMelody(melodyId, TimeSignature.standardTime, measureList)
+        return musicFactory.createMelody(melodyId, Clef(Clef.ClefType.G), TimeSignature.standardTime, measureList)
     }
 
     override fun readMusic(path: String): List<Melody> {

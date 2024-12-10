@@ -29,7 +29,7 @@ import tunelint.composeapp.generated.resources.lint
 fun LintButton(sheet: MusicSheet) {
     val show = remember { mutableStateOf(false) }
     TooltipArea(
-        tooltip = { Text("Lint") },
+        tooltip = { Text("lint") },
         delayMillis = 750,
     ) {
         Button(

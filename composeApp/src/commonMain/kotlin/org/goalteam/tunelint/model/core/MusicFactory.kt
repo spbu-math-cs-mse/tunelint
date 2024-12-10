@@ -26,12 +26,14 @@ class MusicFactory {
 
     fun createMelody(
         name: String,
+        clef: Clef,
         timeSignature: TimeSignature,
-    ): Melody = MelodyImpl(name, timeSignature, listOf())
+    ): Melody = MelodyImpl(name, clef, timeSignature, listOf())
 
     fun createMelody(
         name: String,
+        clef: Clef,
         timeSignature: TimeSignature,
         measures: Collection<Measure>,
-    ): Melody = MelodyImpl(name, timeSignature, measures)
+    ): Melody = MelodyImpl(name, clef, timeSignature, measures)
 }

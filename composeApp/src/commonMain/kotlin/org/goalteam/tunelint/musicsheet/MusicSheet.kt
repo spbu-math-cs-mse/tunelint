@@ -4,6 +4,7 @@ import org.goalteam.tunelint.filesupport.Parser
 import org.goalteam.tunelint.filesupport.ParserFactory
 import org.goalteam.tunelint.filesupport.ParserProperty
 import org.goalteam.tunelint.model.changerequest.PersistenceManagerFactory
+import org.goalteam.tunelint.model.core.Clef
 import org.goalteam.tunelint.model.core.Melody
 import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.core.TimeSignature
@@ -15,7 +16,7 @@ import java.io.IOException
 class MusicSheet(
     private val path: String,
 ) {
-    private val melody = MusicFactory().createMelody("", TimeSignature.standardTime)
+    private val melody = MusicFactory().createMelody("", Clef(Clef.ClefType.G), TimeSignature.standardTime)
     private var modified = true
     val persistenceManager = PersistenceManagerFactory().persistenceManager(melody)
 

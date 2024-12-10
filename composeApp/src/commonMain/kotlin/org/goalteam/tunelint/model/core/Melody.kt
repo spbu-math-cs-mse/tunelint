@@ -11,4 +11,5 @@ fun Melody.syncWith(other: Melody) {
     setName(other.name)
     setTimeSignature(other.timeSignature)
     setMeasures(other.mutableMeasures())
+    setClef(other.clef)
 }
