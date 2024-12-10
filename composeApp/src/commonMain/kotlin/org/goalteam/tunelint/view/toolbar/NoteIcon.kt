@@ -8,7 +8,6 @@ import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
-import org.goalteam.tunelint.view.musicsheet.GeometryData
 import org.goalteam.tunelint.view.musicsheet.composable.UnleveredNoteView
 import org.goalteam.tunelint.view.musicsheet.viewable.horizontalSteps
 import org.goalteam.tunelint.view.musicsheet.viewable.impl.NoteViewableImpl
