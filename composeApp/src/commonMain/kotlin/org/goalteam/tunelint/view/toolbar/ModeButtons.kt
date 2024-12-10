@@ -21,18 +21,17 @@ import org.goalteam.tunelint.model.changerequest.Notifiable
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import org.jetbrains.compose.resources.painterResource
 import tunelint.composeapp.generated.resources.Res
+import tunelint.composeapp.generated.resources.add_measure
+import tunelint.composeapp.generated.resources.delete_measure
 import tunelint.composeapp.generated.resources.eraser
 import tunelint.composeapp.generated.resources.quill
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun modeButtons(
     vm: RedactorScreenViewModel,
     buttonDiameter: Dp,
-    smallPadding: Dp,
     iconSize: Dp,
-    tipOffset: DpOffset,
-    tipDelay: Int,
+    buttonTip: @Composable (String, @Composable () -> Unit) -> Unit,
 ) {
     var currentMode: Mode by remember { mutableStateOf(Mode.AddNote) }
 
@@ -46,12 +45,7 @@ fun modeButtons(
     vm.interactor.subscribe(modeListener)
     vm.interactor.synchronize(modeListener)
 
-    TooltipArea(
-        modifier = Modifier.padding(0.dp, smallPadding),
-        tooltip = { Text("write") },
-        tooltipPlacement = TooltipPlacement.CursorPoint(offset = tipOffset),
-        delayMillis = tipDelay,
-    ) {
+    buttonTip("Write") {
         Button(
             onClick = { vm.interactor.setMode(Mode.AddNote) },
             enabled = currentMode != Mode.AddNote,
@@ -69,12 +63,7 @@ fun modeButtons(
         }
     }
 
-    TooltipArea(
-        modifier = Modifier.padding(0.dp, smallPadding),
-        tooltip = { Text("erase") },
-        tooltipPlacement = TooltipPlacement.CursorPoint(offset = tipOffset),
-        delayMillis = tipDelay,
-    ) {
+    buttonTip("Erase") {
         Button(
             onClick = { vm.interactor.setMode(Mode.DeleteNote) },
             enabled = currentMode != Mode.DeleteNote,
@@ -92,12 +81,7 @@ fun modeButtons(
         }
     }
 
-    TooltipArea(
-        modifier = Modifier.padding(0.dp, smallPadding),
-        tooltip = { Text("AddMeasure") },
-        tooltipPlacement = TooltipPlacement.CursorPoint(offset = tipOffset),
-        delayMillis = tipDelay,
-    ) {
+    buttonTip("Add measure") {
         Button(
             onClick = { vm.interactor.setMode(Mode.AddMeasure) },
             enabled = currentMode != Mode.AddMeasure,
@@ -107,16 +91,15 @@ fun modeButtons(
             colors = editButtonColors(),
             elevation = editButtonElevation(),
         ) {
-            Text(text = "M", fontWeight = FontWeight.ExtraBold)
+            Icon(
+                painter = painterResource(Res.drawable.add_measure),
+                contentDescription = "add measure",
+                modifier = Modifier.size(iconSize),
+            )
         }
     }
 
-    TooltipArea(
-        modifier = Modifier.padding(0.dp, smallPadding),
-        tooltip = { Text("AddMeasure") },
-        tooltipPlacement = TooltipPlacement.CursorPoint(offset = tipOffset),
-        delayMillis = tipDelay,
-    ) {
+    buttonTip("Delete measure") {
         Button(
             onClick = {
                 vm.interactor.setMode(Mode.DeleteMeasure)
@@ -128,7 +111,11 @@ fun modeButtons(
             colors = editButtonColors(),
             elevation = editButtonElevation(),
         ) {
-            Text(text = "DM", fontWeight = FontWeight.ExtraBold)
+            Icon(
+                painter = painterResource(Res.drawable.delete_measure),
+                contentDescription = "delete measure",
+                modifier = Modifier.size(iconSize),
+            )
         }
     }
 }
