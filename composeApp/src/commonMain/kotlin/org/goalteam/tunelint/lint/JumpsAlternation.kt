@@ -25,9 +25,9 @@ class JumpsAlternation(
     }
 
     private fun sameDirection(triple: Triple<Note, Note, Note>): Boolean {
-        val first = triple.first.value()
-        val second = triple.second.value()
-        val third = triple.third.value()
+        val first = triple.first.stage().value
+        val second = triple.second.stage().value
+        val third = triple.third.stage().value
         return first.compareTo(second).sign == second.compareTo(third).sign
     }
 
