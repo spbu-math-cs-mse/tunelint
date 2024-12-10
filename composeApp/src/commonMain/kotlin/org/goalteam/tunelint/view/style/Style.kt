@@ -13,6 +13,15 @@ internal fun colors() =
         contentColor = Color.LightGray,
     )
 
+@Composable
+internal fun selectableButtonColors() =
+    ButtonDefaults.buttonColors(
+        backgroundColor = Color.White,
+        disabledBackgroundColor = Color.LightGray,
+        contentColor = Color.Black,
+        disabledContentColor = Color.Black,
+    )
+
 internal fun buttonShape() = CutCornerShape(0.dp)
 
 @Composable

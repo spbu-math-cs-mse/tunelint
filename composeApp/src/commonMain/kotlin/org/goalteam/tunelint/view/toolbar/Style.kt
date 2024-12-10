@@ -6,15 +6,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun editButtonColors() =
-    ButtonDefaults.buttonColors(
-        backgroundColor = Color.White,
-        disabledBackgroundColor = Color.LightGray,
-        contentColor = Color.Black,
-        disabledContentColor = Color.Black,
-    )
-
-@Composable
 internal fun undoRedoButtonColors() =
     ButtonDefaults.buttonColors(
         backgroundColor = Color.White,

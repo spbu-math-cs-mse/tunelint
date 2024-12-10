@@ -1,23 +1,14 @@
 package org.goalteam.tunelint.view.toolbar
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.TooltipArea
-import androidx.compose.foundation.TooltipPlacement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpOffset
-import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.interaction.events.Mode
 import org.goalteam.tunelint.model.changerequest.Notifiable
+import org.goalteam.tunelint.view.style.StyledButton
+import org.goalteam.tunelint.view.style.selectableButtonColors
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import org.jetbrains.compose.resources.painterResource
 import tunelint.composeapp.generated.resources.Res
@@ -46,14 +37,11 @@ fun modeButtons(
     vm.interactor.synchronize(modeListener)
 
     buttonTip("Write") {
-        Button(
+        StyledButton(
             onClick = { vm.interactor.setMode(Mode.AddNote) },
             enabled = currentMode != Mode.AddNote,
-            shape = CutCornerShape(0.dp),
             modifier = Modifier.size(buttonDiameter),
-            contentPadding = PaddingValues(0.dp),
-            colors = editButtonColors(),
-            elevation = editButtonElevation(),
+            colors = selectableButtonColors(),
         ) {
             Icon(
                 painter = painterResource(Res.drawable.quill),
@@ -64,14 +52,11 @@ fun modeButtons(
     }
 
     buttonTip("Erase") {
-        Button(
+        StyledButton(
             onClick = { vm.interactor.setMode(Mode.DeleteNote) },
             enabled = currentMode != Mode.DeleteNote,
-            shape = CutCornerShape(0.dp),
             modifier = Modifier.size(buttonDiameter),
-            contentPadding = PaddingValues(0.dp),
-            colors = editButtonColors(),
-            elevation = editButtonElevation(),
+            colors = selectableButtonColors(),
         ) {
             Icon(
                 painter = painterResource(Res.drawable.eraser),
@@ -82,14 +67,11 @@ fun modeButtons(
     }
 
     buttonTip("Add measure") {
-        Button(
+        StyledButton(
             onClick = { vm.interactor.setMode(Mode.AddMeasure) },
             enabled = currentMode != Mode.AddMeasure,
-            shape = CutCornerShape(0.dp),
             modifier = Modifier.size(buttonDiameter),
-            contentPadding = PaddingValues(0.dp),
-            colors = editButtonColors(),
-            elevation = editButtonElevation(),
+            colors = selectableButtonColors(),
         ) {
             Icon(
                 painter = painterResource(Res.drawable.add_measure),
@@ -100,16 +82,13 @@ fun modeButtons(
     }
 
     buttonTip("Delete measure") {
-        Button(
+        StyledButton(
             onClick = {
                 vm.interactor.setMode(Mode.DeleteMeasure)
             },
             enabled = currentMode != Mode.DeleteMeasure,
-            shape = CutCornerShape(0.dp),
             modifier = Modifier.size(buttonDiameter),
-            contentPadding = PaddingValues(0.dp),
-            colors = editButtonColors(),
-            elevation = editButtonElevation(),
+            colors = selectableButtonColors(),
         ) {
             Icon(
                 painter = painterResource(Res.drawable.delete_measure),

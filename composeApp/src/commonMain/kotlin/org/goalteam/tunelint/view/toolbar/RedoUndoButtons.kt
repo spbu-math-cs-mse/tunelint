@@ -1,23 +1,14 @@
 package org.goalteam.tunelint.view.toolbar
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.TooltipArea
-import androidx.compose.foundation.TooltipPlacement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpOffset
-import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.interaction.events.Mode
 import org.goalteam.tunelint.model.changerequest.Notifiable
 import org.goalteam.tunelint.model.changerequest.UndoRedoAvailable
+import org.goalteam.tunelint.view.style.StyledButton
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import org.jetbrains.compose.resources.painterResource
 import tunelint.composeapp.generated.resources.Res
@@ -29,7 +20,7 @@ fun undoRedoButtons(
     vm: RedactorScreenViewModel,
     buttonDiameter: Dp,
     iconSize: Dp,
-    buttonTip : @Composable (String, @Composable () -> Unit) -> Unit,
+    buttonTip: @Composable (String, @Composable () -> Unit) -> Unit,
 ) {
     var enableUndo: Boolean by remember { mutableStateOf(false) }
     var enableRedo: Boolean by remember { mutableStateOf(false) }
@@ -57,15 +48,12 @@ fun undoRedoButtons(
     vm.interactor.subscribe(modeListener)
     vm.interactor.synchronize(modeListener)
 
-    buttonTip("Undo"){
-        Button(
+    buttonTip("Undo") {
+        StyledButton(
             onClick = { vm.musicSheet.persistenceManager.undo() },
             enabled = enableUndo,
-            shape = CutCornerShape(0.dp),
             modifier = Modifier.size(buttonDiameter),
-            contentPadding = PaddingValues(0.dp),
             colors = undoRedoButtonColors(),
-            elevation = editButtonElevation(),
         ) {
             Icon(
                 painter = painterResource(Res.drawable.undo),
@@ -74,15 +62,12 @@ fun undoRedoButtons(
             )
         }
     }
-    buttonTip("Redo"){
-        Button(
+    buttonTip("Redo") {
+        StyledButton(
             onClick = { vm.musicSheet.persistenceManager.redo() },
             enabled = enableRedo,
-            shape = CutCornerShape(0.dp),
             modifier = Modifier.size(buttonDiameter),
-            contentPadding = PaddingValues(0.dp),
             colors = undoRedoButtonColors(),
-            elevation = editButtonElevation(),
         ) {
             Icon(
                 painter = painterResource(Res.drawable.redo),

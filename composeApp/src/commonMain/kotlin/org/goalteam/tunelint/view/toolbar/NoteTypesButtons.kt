@@ -1,12 +1,19 @@
 package org.goalteam.tunelint.view.toolbar
 
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.model.changerequest.Notifiable
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
+import org.goalteam.tunelint.view.style.StyledButton
+import org.goalteam.tunelint.view.style.selectableButtonColors
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
+import tunelint.composeapp.generated.resources.*
+import tunelint.composeapp.generated.resources.Res
 import kotlin.math.pow
 
+@Suppress("ktlint:standard:function-naming")
 @Composable
 fun NoteTypesButtons(vm: RedactorScreenViewModel) {
     data class Value(
@@ -17,24 +24,18 @@ fun NoteTypesButtons(vm: RedactorScreenViewModel) {
 
     val options =
         listOf(
-            Value(-4, "Sixteenth", {
-                NoteIcon(-4)
-            }),
-            Value(-3, "Eighth", {
-                NoteIcon(-3)
-            }),
-            Value(-2, "Quarter", {
-                NoteIcon(-2)
-            }),
-            Value(-1, "Half", {
-                NoteIcon(-1)
-            }),
-            Value(0, "Whole", {
-                NoteIcon(0)
-            }),
-            Value(1, "Double", {
-                NoteIcon(1)
-            }),
+            Value(-3, "Eighth") {
+                NoteIcon(Res.drawable.eighth_note, "Eighth")
+            },
+            Value(-2, "Quarter") {
+                NoteIcon(Res.drawable.quarter_note, "Quarter")
+            },
+            Value(-1, "Half") {
+                NoteIcon(Res.drawable.half_note, "Half")
+            },
+            Value(0, "Whole") {
+                NoteIcon(Res.drawable.WholeNote, "Whole", 10.dp)
+            },
         )
 
     val noteValue: PrimaryNoteValue = vm.interactor.getValue()
@@ -59,17 +60,16 @@ fun NoteTypesButtons(vm: RedactorScreenViewModel) {
         }
 
     options.forEach { option ->
-        Button(
+        StyledButton(
             onClick = {
                 selectedOption.value = option
                 vm.interactor.setValue(PrimaryNoteValue(option.log))
                 println(vm.interactor.getValue().order())
             },
             enabled = currentOrder != option.log,
-            colors = editButtonColors(),
-            elevation = editButtonElevation(),
+            modifier = Modifier.requiredSize(60.dp),
+            colors = selectableButtonColors(),
         ) {
-            // Text(text = option.text)
             option.func.invoke()
         }
     }
