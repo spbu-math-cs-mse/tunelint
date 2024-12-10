@@ -9,7 +9,7 @@ import org.goalteam.tunelint.model.core.PrimaryNoteValue
 class InteractionHandlerFactory {
     fun createConfiguration(
         defaultValue: PrimaryNoteValue = PrimaryNoteValue.Quarter,
-        defaultMode: Mode = Mode.Add,
+        defaultMode: Mode = Mode.AddNote,
     ): RedactorConfiguration = RedactorConfigurationImpl(defaultValue, defaultMode)
 
     fun createReceiver(
