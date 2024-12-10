@@ -44,11 +44,11 @@ fun MeasureLine(
                                     geometryData.verticalStep.toPx() * 2,
                             ).toInt() - 1,
                         )
-                    val side = Side.Left
+                    val side = Side.Right
                     println("$stage")
                     vm.interactor.handleAction(
                         stage,
-                        position,
+                        position - 1,
                         measure,
                         side,
                         action = Action.Click,
