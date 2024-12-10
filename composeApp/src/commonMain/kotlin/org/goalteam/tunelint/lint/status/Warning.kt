@@ -1,8 +1,8 @@
 package org.goalteam.tunelint.lint.status
 
-data class Warning(
-    val at: Collection<Any>,
-    val message: String,
+class Warning(
+    private val at: Collection<Any>,
+    private val message: String,
 ) : Status {
     override fun at(): Collection<Any> = at
 

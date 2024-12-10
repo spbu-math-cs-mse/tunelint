@@ -1,7 +1,7 @@
 package org.goalteam.tunelint.lint.status
 
-data class Ok(
-    val message: String,
+class Ok(
+    private val message: String,
 ) : Status {
     override fun at(): Collection<Any> = emptyList()
 

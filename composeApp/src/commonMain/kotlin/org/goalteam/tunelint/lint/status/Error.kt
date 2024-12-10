@@ -1,8 +1,8 @@
 package org.goalteam.tunelint.lint.status
 
-data class Error(
-    val at: Collection<Any>,
-    val message: String,
+class Error(
+    private val at: Collection<Any>,
+    private val message: String,
 ) : Status {
     constructor(many: Collection<Error>) : this(
         many.flatMap { it.at },
