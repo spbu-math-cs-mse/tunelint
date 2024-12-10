@@ -8,6 +8,7 @@ androidx-lifecycle = "2.8.2"
 compose-plugin = "1.6.11"
 kotlin = "2.0.20"
 kotlinx-coroutines = "1.9.0"
+mididriver = "1.25"
 
 
 [libraries]
@@ -16,6 +17,7 @@ androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", nam
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
+mididriver = { module = "com.github.billthefarmer:mididriver", version.ref = "mididriver" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

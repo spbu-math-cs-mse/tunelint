@@ -37,6 +37,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.mididriver)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -82,6 +83,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
+
+repositories {
+    google()
+    mavenCentral()
+    maven("https://jitpack.io")
 }
 
 dependencies {

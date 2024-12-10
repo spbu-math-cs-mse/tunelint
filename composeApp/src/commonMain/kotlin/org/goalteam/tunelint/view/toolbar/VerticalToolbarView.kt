@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import org.goalteam.tunelint.musicplay.MusicPlayer
+import org.goalteam.tunelint.musicplay.MusicPlayerImpl
 import org.goalteam.tunelint.view.style.StyledTooltipArea
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
@@ -28,12 +30,17 @@ fun VerticalToolbarView(vm: RedactorScreenViewModel) {
             )
         }
 
+    val player : MusicPlayer = MusicPlayerImpl()
+
     Column(modifier = Modifier.padding(padding)) {
         Column(modifier = Modifier.padding(0.dp, padding)) {
             undoRedoButtons(vm, buttonDiameter, iconSize, buttonTip)
         }
         Column(modifier = Modifier.padding(0.dp, padding)) {
             modeButtons(vm, buttonDiameter, iconSize, buttonTip)
+        }
+        Column(modifier = Modifier.padding(0.dp, padding)) {
+            playButton(vm, player, buttonDiameter, iconSize, buttonTip)
         }
     }
 }

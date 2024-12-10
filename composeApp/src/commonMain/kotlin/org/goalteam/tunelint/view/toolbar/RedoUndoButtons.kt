@@ -1,21 +1,14 @@
 package org.goalteam.tunelint.view.toolbar
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.TooltipArea
-import androidx.compose.foundation.TooltipPlacement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import org.goalteam.tunelint.interaction.events.Mode
 import org.goalteam.tunelint.model.changerequest.Notifiable
 import org.goalteam.tunelint.model.changerequest.UndoRedoAvailable
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
@@ -33,7 +26,6 @@ fun undoRedoButtons(
 ) {
     var enableUndo: Boolean by remember { mutableStateOf(false) }
     var enableRedo: Boolean by remember { mutableStateOf(false) }
-    var currentMode: Mode by remember { mutableStateOf(Mode.AddNote) }
 
     val availabilityListener =
         object : Notifiable<UndoRedoAvailable> {
@@ -44,18 +36,8 @@ fun undoRedoButtons(
             }
         }
 
-    val modeListener =
-        object : Notifiable<Boolean> {
-            override fun notify(notification: Boolean): Boolean {
-                currentMode = vm.interactor.getMode()
-                return true
-            }
-        }
-
     vm.musicSheet.persistenceManager.subscribe(availabilityListener)
     vm.musicSheet.persistenceManager.synchronize(availabilityListener)
-    vm.interactor.subscribe(modeListener)
-    vm.interactor.synchronize(modeListener)
 
     buttonTip("Undo"){
         Button(
