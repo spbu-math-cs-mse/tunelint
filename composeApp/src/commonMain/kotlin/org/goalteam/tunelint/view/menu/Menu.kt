@@ -15,7 +15,7 @@ fun Menu(
 ) {
     Row(modifier = Modifier.padding(0.dp, 0.dp)) {
         NewButton { update(RedactorScreenViewModel(it)) }
-        SaveButton { vm.musicSheet }
+        SaveButton(vm::musicSheet) { update(RedactorScreenViewModel(it)) }
         LoadButton { if (it != null) update(RedactorScreenViewModel(it)) }
         ExportButton(ParserFactory().xml()) { vm.musicSheet }
     }
