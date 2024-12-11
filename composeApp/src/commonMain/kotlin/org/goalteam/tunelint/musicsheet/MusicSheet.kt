@@ -15,8 +15,8 @@ import java.io.IOException
 
 class MusicSheet(
     private val path: String,
+    private val melody: Melody = defaultMelody(),
 ) {
-    private val melody = MusicFactory().createMelody("", Clef(Clef.ClefType.G), TimeSignature.standardTime)
     private var modified = true
     val persistenceManager = PersistenceManagerFactory().persistenceManager(melody)
 
@@ -58,3 +58,11 @@ class MusicSheet(
 
     fun contents(): Melody = melody
 }
+
+fun defaultMelody() =
+    MusicFactory().createMelody(
+        "",
+        Clef(Clef.ClefType.G),
+        TimeSignature.standardTime,
+        listOf(MusicFactory().createMeasure(TimeSignature.standardTime)),
+    )

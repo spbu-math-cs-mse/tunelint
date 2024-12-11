@@ -5,17 +5,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.goalteam.tunelint.model.changerequest.impl.PushFrontEmptyMeasurePersistentRequest
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
 @Composable
 fun MusicSheetView(vm: RedactorScreenViewModel) {
     val melody = vm.melody
-
-    vm.musicSheet.persistenceManager.notify(PushFrontEmptyMeasurePersistentRequest())
-    vm.musicSheet.persistenceManager.notify(PushFrontEmptyMeasurePersistentRequest())
-    vm.musicSheet.persistenceManager.notify(PushFrontEmptyMeasurePersistentRequest())
-    vm.musicSheet.persistenceManager.notify(PushFrontEmptyMeasurePersistentRequest())
 
     Box(modifier = Modifier.verticalScroll(rememberScrollState())) {
         melody.view(
