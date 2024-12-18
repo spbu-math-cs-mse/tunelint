@@ -83,7 +83,7 @@ fun MelodyView(
                     Staff(geometryData, 3.dp)
                     val internal = internals[index]
                     Row {
-                        ClefView(melody, internal)
+                        ClefView(vm, melody, internal, globalIndex)
                         line
                             .forEach {
                                 it.view(vm, globalIndex, internal)
