@@ -18,6 +18,9 @@ class RestViewableImpl(
         measure: Int,
         geometryData: InternalGeometryData,
     ) = RestView(
+        vm,
+        position,
+        measure,
         this,
         geometryData,
     )
