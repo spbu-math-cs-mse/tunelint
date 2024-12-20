@@ -9,3 +9,5 @@ interface ImmutableMelody : Cloneable {
 
     val measures: List<ImmutableMeasure>
 }
+
+fun ImmutableMelody.symbols() = measures.flatMap { it.symbols }
