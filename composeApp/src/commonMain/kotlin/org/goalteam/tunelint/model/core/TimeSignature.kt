@@ -15,5 +15,13 @@ class TimeSignature(
 
     fun value() = primary.value() * count
 
+    override fun equals(other: Any?) =
+        other != null &&
+            other is TimeSignature &&
+            other.count == count &&
+            other.primary == primary
+
     override fun toString() = "$count : ${primary.denominator()}"
+
+    override fun hashCode() = count.hashCode() xor primary.hashCode()
 }

@@ -9,5 +9,10 @@ class Rules(
         listOf(
             OddMeasureCount(melody),
             JumpsAlternation(melody),
+            MelodyRange(melody),
+            PausesNumber(melody),
+            TimeSignatureConstraint(melody),
+            MinimumRepetition(melody),
+            MaximumRepetition(melody),
         )
 }
