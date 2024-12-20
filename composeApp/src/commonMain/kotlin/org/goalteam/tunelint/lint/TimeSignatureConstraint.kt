@@ -24,7 +24,7 @@ class TimeSignatureConstraint(
 
     override fun check(): Status {
         if (Constants.POSSIBLE_TIME_SIGNATURES.contains(melody.timeSignature)) {
-            return Ok("Time signature okay")
+            return Ok("Time signature OK")
         }
 
         return Error(

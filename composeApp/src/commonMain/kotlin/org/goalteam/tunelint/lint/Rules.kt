@@ -14,5 +14,7 @@ class Rules(
             TimeSignatureConstraint(melody),
             MinimumRepetition(melody),
             MaximumRepetition(melody),
+            LongJump(melody),
+            Semitone(melody),
         )
 }
