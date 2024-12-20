@@ -16,6 +16,7 @@ import org.goalteam.tunelint.view.musicsheet.InternalGeometryData
 import org.goalteam.tunelint.view.musicsheet.staffHeight
 import org.goalteam.tunelint.view.musicsheet.staffShortHeight
 import org.goalteam.tunelint.view.musicsheet.viewable.ImmutableMelodyViewable
+import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import org.jetbrains.compose.resources.painterResource
 import tunelint.composeapp.generated.resources.Res
 import tunelint.composeapp.generated.resources.c_clef
@@ -93,10 +94,19 @@ fun FClefView(geometryData: InternalGeometryData) {
 
 @Composable
 fun ClefView(
+    vm: RedactorScreenViewModel,
     melody: ImmutableMelodyViewable,
     geometryData: InternalGeometryData,
+    measure: Int,
 ) {
-    FullHeightBox(geometryData, 3) {
+    InteractableBox(
+        vm,
+        geometryData,
+        3,
+        0,
+        0,
+        measure,
+    ) {
         when (melody.clef.type) {
             Clef.ClefType.G -> GClefView(geometryData)
             Clef.ClefType.C -> CClefView(geometryData)
