@@ -95,7 +95,7 @@ private fun Status.messageColor(): Color {
         return Color.Red
     }
     if (this is Warning) {
-        return Color.Yellow
+        return Color(0xffffa500)
     }
     return Color.Black
 }
