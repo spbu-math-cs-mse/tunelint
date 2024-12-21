@@ -15,16 +15,13 @@ import org.goalteam.tunelint.view.musicsheet.viewable.ImmutableMelodyViewable
 import org.goalteam.tunelint.view.musicsheet.viewable.MeasureViewable
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
-internal fun additionalSteps(melody: ImmutableMelodyViewable): Int = 3
-
 internal fun splitMeasuresOnLines(
     melody: ImmutableMelodyViewable,
     geometryData: ExternalEvaluatableGeometryData,
 ): List<List<MeasureViewable>> {
     val lines = mutableListOf(mutableListOf<MeasureViewable>())
-    val additionalSteps = additionalSteps(melody)
 
-    var stepsOnLine = additionalSteps
+    var stepsOnLine = 0
 
     melody.measures.forEach {
         val mv = it as MeasureViewable
@@ -37,7 +34,7 @@ internal fun splitMeasuresOnLines(
             stepsOnLine += mv.horizontalSteps() + 1
             lines.last().add(mv)
         } else {
-            stepsOnLine = additionalSteps + mv.horizontalSteps() + 1
+            stepsOnLine = mv.horizontalSteps() + 1
             lines.add(mutableListOf())
             lines.last().add(mv)
         }
@@ -53,12 +50,11 @@ fun MelodyView(
     geometryData: ExternalEvaluatableGeometryData,
 ) {
     val lines = splitMeasuresOnLines(melody, geometryData)
-    val additionalSteps = additionalSteps(melody)
     val internals = mutableListOf<InternalGeometryData>()
     lines.forEach {
         internals.add(
             geometryData.evaluated(
-                additionalSteps + it.sumOf { m -> m.horizontalSteps() + 1 },
+                it.sumOf { m -> m.horizontalSteps() + 1 },
             ),
         )
     }
@@ -83,7 +79,7 @@ fun MelodyView(
                     Staff(geometryData, 3.dp)
                     val internal = internals[index]
                     Row {
-                        ClefView(vm, melody, internal, globalIndex)
+                        LineBeginView(vm, melody, internal, globalIndex)
                         line
                             .forEach {
                                 it.view(vm, globalIndex, internal)
