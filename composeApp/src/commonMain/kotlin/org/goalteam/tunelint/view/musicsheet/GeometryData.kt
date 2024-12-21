@@ -19,10 +19,6 @@ val ExternalGeometryData.staffHeight get() = Constants.STAFF_LINES * verticalSte
 val ExternalGeometryData.staffShortHeight get() = (Constants.STAFF_LINES - 1) * verticalStep
 val ExternalGeometryData.fullHeight get() = topMargin + staffHeight + bottomMargin
 val ExternalGeometryData.staffWidth get() = fullWidth - leftMargin - rightMargin
-val ExternalGeometryData.clefWidth get() = verticalStep * 3
-val ExternalGeometryData.timeSignatureWidth get() = verticalStep * 3
-val ExternalGeometryData.lineBeginMargin get() = clefWidth + timeSignatureWidth
-val ExternalGeometryData.mainWidth get() = staffWidth - lineBeginMargin
 
 interface ExternalEvaluatableGeometryData : ExternalGeometryData {
     val maxSteps: Int
@@ -50,11 +46,11 @@ class ExternalEvaluatableGeometryDataImpl(
     override val leftMargin = leftMargin.dp
     override val rightMargin = rightMargin.dp
 
-    override val maxSteps = floor(mainWidth / minimalHorizontalStep.dp).toInt()
+    override val maxSteps = floor(staffWidth / minimalHorizontalStep.dp).toInt()
 
     override fun evaluated(horizontalSteps: Int): InternalGeometryData {
         require(horizontalSteps <= maxSteps)
-        val horizontalStep = mainWidth / horizontalSteps
+        val horizontalStep = staffWidth / horizontalSteps
 
         return InternalGeometryDataImpl(this, horizontalStep)
     }
