@@ -52,6 +52,7 @@ class ReceiverImpl(
             Mode.DeleteNote -> return requestFactory.removeSymbol(pointer)
             Mode.AddMeasure -> return requestFactory.addMeasure(action.measure() + 1)
             Mode.DeleteMeasure -> return requestFactory.removeMeasure(action.measure())
+            Mode.AddRest -> TODO("Adding rest is not supported yet")
         }
     }
 }

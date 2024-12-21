@@ -39,6 +39,7 @@ fun HorizontalToolbarView(vm: RedactorScreenViewModel) {
             Mode.DeleteNote -> HorizontalDeleteToolbarView(vm)
             Mode.AddMeasure -> HorizontalDeleteToolbarView(vm)
             Mode.DeleteMeasure -> HorizontalDeleteToolbarView(vm)
+            Mode.AddRest -> HorizontalAddRestToolbarView(vm)
         }
     }
 }
@@ -48,6 +49,14 @@ fun HorizontalAddToolbarView(vm: RedactorScreenViewModel) {
     val padding = 8.dp
     Row(modifier = Modifier.padding(0.dp, padding)) {
         NoteTypesButtons(vm)
+    }
+}
+
+@Composable
+fun HorizontalAddRestToolbarView(vm: RedactorScreenViewModel) {
+    val padding = 8.dp
+    Row(modifier = Modifier.padding(0.dp, padding)) {
+        RestTypesButtons(vm)
     }
 }
 

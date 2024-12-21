@@ -6,4 +6,5 @@ enum class Mode {
     DeleteNote,
     AddMeasure,
     DeleteMeasure,
+    AddRest,
 }
