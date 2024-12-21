@@ -1,14 +1,16 @@
 package org.goalteam.tunelint.view.lint
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.lint.status.Error
 import org.goalteam.tunelint.lint.status.Status
@@ -16,16 +18,19 @@ import org.goalteam.tunelint.lint.status.Warning
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun LintView(messages: MutableState<List<Status>>) {
+fun LintView(
+    messages: MutableState<List<Status>>,
+    bottom: Dp,
+) {
     Box(
         modifier =
             Modifier
-                .border(
-                    BorderStroke(1.dp, Color.LightGray),
-                    RoundedCornerShape(4.dp),
-                ).verticalScroll(
+                .verticalScroll(
                     rememberScrollState(),
-                ).requiredSize(width = 1000.dp, height = 400.dp),
+                ).fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 10.dp)
+                .requiredHeight(bottom)
+                .background(Color.White),
         contentAlignment = Alignment.TopStart,
     ) {
         Column {

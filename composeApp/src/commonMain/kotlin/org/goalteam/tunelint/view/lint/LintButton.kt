@@ -27,7 +27,7 @@ fun LintButton(
             onClick = {
                 handle(Rules(sheet.contents()).all().map { it.check() })
             },
-            modifier = Modifier.padding(0.dp, 8.dp),
+            modifier = Modifier.padding(0.dp, 8.dp).requiredSize(60.dp),
             colors = selectableButtonColors(),
         ) {
             Icon(
