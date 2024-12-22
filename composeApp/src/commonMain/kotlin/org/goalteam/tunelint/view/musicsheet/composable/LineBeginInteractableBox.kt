@@ -44,7 +44,7 @@ fun LineBeginInteractableBox(
                             stage,
                             0,
                             measure,
-                            Side.Right,
+                            Side.Left,
                             action = Action.Click,
                         )
                     }
