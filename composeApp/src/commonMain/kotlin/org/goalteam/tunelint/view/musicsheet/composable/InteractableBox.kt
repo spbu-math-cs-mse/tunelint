@@ -4,6 +4,8 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -16,6 +18,7 @@ import org.goalteam.tunelint.interaction.events.Side
 import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.view.musicsheet.InternalGeometryData
 import org.goalteam.tunelint.view.musicsheet.firstLineOffset
+import org.goalteam.tunelint.view.musicsheet.fullHeight
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import kotlin.math.round
 
@@ -80,6 +83,23 @@ fun InteractableBox(
         Box(
             modifier =
                 Modifier
+                    .size(
+                        width = geometryData.horizontalStep * leftSteps,
+                        height = geometryData.fullHeight,
+                    ),
+        )
+        Box(
+            modifier =
+                Modifier
+                    .offset(x = geometryData.horizontalStep * leftSteps)
+                    .size(
+                        width = geometryData.horizontalStep * rightSteps,
+                        height = geometryData.fullHeight,
+                    ),
+        )
+        Box(
+            modifier =
+                Modifier
                     .fillMaxSize()
                     .composed(
                         inspectorInfo =
@@ -87,7 +107,9 @@ fun InteractableBox(
                                 name = "interactable"
                                 value = position
                             },
-                        factory = { interactable(vm, geometryData, leftSteps, rightSteps, position, measure) },
+                        factory = {
+                            interactable(vm, geometryData, leftSteps, rightSteps, position, measure)
+                        },
                     ),
         ) {
             content()
