@@ -1,5 +1,6 @@
 package org.goalteam.tunelint.model.core.impl
 
+import org.goalteam.tunelint.model.core.Accidental
 import org.goalteam.tunelint.model.core.Note
 import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
@@ -7,6 +8,7 @@ import org.goalteam.tunelint.model.core.PrimaryNoteValue
 internal class NoteImpl(
     private val stage: NoteOffset,
     private val primaryValue: PrimaryNoteValue,
+    private val accidental: Accidental?,
 ) : Note {
     override fun stage() = stage
 
@@ -14,7 +16,9 @@ internal class NoteImpl(
 
     override fun primaryValue() = primaryValue
 
-    override fun clone() = NoteImpl(stage, primaryValue)
+    override fun accidental() = accidental
+
+    override fun clone() = NoteImpl(stage, primaryValue, accidental)
 
     override fun equals(other: Any?): Boolean =
         other != null &&

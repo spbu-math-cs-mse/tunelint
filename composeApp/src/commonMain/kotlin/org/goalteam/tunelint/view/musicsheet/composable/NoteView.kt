@@ -2,18 +2,14 @@ package org.goalteam.tunelint.view.musicsheet.composable
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.times
 import org.goalteam.tunelint.view.musicsheet.InternalGeometryData
 import org.goalteam.tunelint.view.musicsheet.firstLineOffset
-import org.goalteam.tunelint.view.musicsheet.fullHeight
 import org.goalteam.tunelint.view.musicsheet.viewable.NoteViewable
-import org.goalteam.tunelint.view.musicsheet.viewable.horizontalSteps
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun NoteView(
     vm: RedactorScreenViewModel,
@@ -36,15 +32,15 @@ fun NoteView(
     ) {
         Box(
             modifier =
-                Modifier
-                    .size(
-                        width = geometryData.horizontalStep * note.horizontalSteps(),
-                        height = geometryData.fullHeight,
-                    ).offset(
-                        y = topOffset,
-                    ),
+                Modifier.offset(
+                    y = topOffset - geometryData.verticalStep / 2,
+                    x =
+                        geometryData.horizontalStep * note.stepsBeforeMiddle() -
+                            1.5 * geometryData.verticalStep,
+                ),
         ) {
-            UnleveredNoteView(geometryData, note)
+            AccidentalView(geometryData, note)
         }
+        Box(modifier = Modifier.offset(y = topOffset)) { UnleveredNoteView(geometryData, note) }
     }
 }

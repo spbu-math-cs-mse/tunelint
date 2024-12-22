@@ -9,7 +9,13 @@ class MusicFactory {
     fun createNote(
         stage: NoteOffset,
         primaryValue: PrimaryNoteValue,
-    ): Note = NoteImpl(stage, primaryValue)
+        accidental: Accidental? = null,
+    ): Note = NoteImpl(stage, primaryValue, accidental)
+
+    fun createNoteWithAccidental(
+        note: Note,
+        accidental: Accidental? = null,
+    ): Note = NoteImpl(note.stage(), note.primaryValue(), accidental)
 
     fun createRest(primaryValue: PrimaryNoteValue): Rest = RestImpl(primaryValue)
 
