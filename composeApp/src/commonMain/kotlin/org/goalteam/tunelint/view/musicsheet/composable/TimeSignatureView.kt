@@ -1,8 +1,10 @@
 package org.goalteam.tunelint.view.musicsheet.composable
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -43,7 +45,7 @@ fun TimeSignatureFontNumber(number: Int) {
             '9' to Res.drawable.music9,
         )
 
-    Row {
+    Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
         number
             .toString()
             .forEach {
@@ -66,15 +68,23 @@ fun TimeSignatureView(
             modifier =
                 Modifier
                     .height(geometryData.verticalStep * 2)
+                    .fillMaxWidth()
                     .offset(y = geometryData.topMargin + 0.5 * geometryData.verticalStep)
-                    .padding(vertical = 0.1 * geometryData.verticalStep),
+                    .padding(
+                        top = 0.2 * geometryData.verticalStep,
+                        bottom = 0.1 * geometryData.verticalStep,
+                    ),
         ) { TimeSignatureFontNumber(melody.timeSignature.count) }
         Box(
             modifier =
                 Modifier
                     .height(geometryData.verticalStep * 2)
+                    .fillMaxWidth()
                     .offset(y = geometryData.topMargin + 2.5 * geometryData.verticalStep)
-                    .padding(vertical = 0.1 * geometryData.verticalStep),
+                    .padding(
+                        top = 0.2 * geometryData.verticalStep,
+                        bottom = 0.1 * geometryData.verticalStep,
+                    ),
         ) { TimeSignatureFontNumber(melody.timeSignature.primary.denominator()) }
     }
 }
