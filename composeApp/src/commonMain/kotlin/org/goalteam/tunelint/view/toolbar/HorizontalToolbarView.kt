@@ -7,16 +7,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.interaction.events.Mode
-import org.goalteam.tunelint.lint.status.Status
 import org.goalteam.tunelint.model.changerequest.Notifiable
 import org.goalteam.tunelint.view.lint.LintButton
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
 @Composable
-fun HorizontalToolbarView(
-    vm: RedactorScreenViewModel,
-    lint: (List<Status>) -> Unit,
-) {
+fun HorizontalToolbarView(vm: RedactorScreenViewModel) {
     var currentMode: Mode by remember { mutableStateOf(Mode.AddNote) }
 
     val modeListener =
@@ -33,7 +29,7 @@ fun HorizontalToolbarView(
     val fixedHeight = 56.dp
 
     Row(modifier = Modifier.height(fixedHeight)) {
-        LintButton(vm.musicSheet, lint)
+        LintButton(vm)
         when (currentMode) {
             Mode.AddNote -> HorizontalAddToolbarView(vm)
             Mode.InsertNote -> TODO("Not implemented yet")

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import org.goalteam.tunelint.lint.status.Status
 import org.goalteam.tunelint.musicsheet.MusicSheet
 import org.goalteam.tunelint.view.Workbench
 import org.goalteam.tunelint.view.menu.Menu
@@ -18,16 +17,14 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App() {
     val vm = mutableStateOf(RedactorScreenViewModel(MusicSheet("")))
-    val lint = mutableStateOf(listOf<Status>())
+
     MaterialTheme {
         Column {
             Menu(vm.value) { vm.value = it }
-            HorizontalToolbarView(vm.value) {
-                lint.value = it
-            }
+            HorizontalToolbarView(vm.value)
             Row {
                 VerticalToolbarView(vm.value)
-                Workbench(vm, lint)
+                Workbench(vm, vm.value.lint)
             }
         }
     }
