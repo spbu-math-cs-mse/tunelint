@@ -4,14 +4,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material.Icon
 import androidx.compose.material.DropdownMenu
+import androidx.compose.material.Icon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.interaction.events.Mode
-import org.goalteam.tunelint.model.changerequest.Notifiable
 import org.goalteam.tunelint.view.style.StyledButton
 import org.goalteam.tunelint.view.style.selectableButtonColors
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
@@ -31,30 +30,24 @@ fun modeButtons(
     iconSize: Dp,
     buttonTip: @Composable (String, @Composable () -> Unit) -> Unit,
 ) {
-    var currentMode: Mode by remember { mutableStateOf(Mode.AddNote) }
+    val initial = remember { mutableStateOf(Mode.AddNote) }
+    val mode = ModeListener(vm.interactor::getMode, initial)
 
-    val modeListener =
-        object : Notifiable<Boolean> {
-            override fun notify(notification: Boolean): Boolean {
-                currentMode = vm.interactor.getMode()
-                return true
-            }
-        }
-    vm.interactor.subscribe(modeListener)
-    vm.interactor.synchronize(modeListener)
+    vm.interactor.subscribe(mode)
+    vm.interactor.synchronize(mode)
 
     AddButton(
         vm = vm,
         buttonDiameter = buttonDiameter,
         iconSize = iconSize,
-        currentMode = currentMode,
-        buttonTip = buttonTip
+        currentMode = mode.current(),
+        buttonTip = buttonTip,
     )
 
     buttonTip("Erase") {
         StyledButton(
             onClick = { vm.interactor.setMode(Mode.DeleteNote) },
-            enabled = currentMode != Mode.DeleteNote,
+            enabled = mode.current() != Mode.DeleteNote,
             modifier = Modifier.size(buttonDiameter),
             colors = selectableButtonColors(),
         ) {
@@ -69,7 +62,7 @@ fun modeButtons(
     buttonTip("Add measure") {
         StyledButton(
             onClick = { vm.interactor.setMode(Mode.AddMeasure) },
-            enabled = currentMode != Mode.AddMeasure,
+            enabled = mode.current() != Mode.AddMeasure,
             modifier = Modifier.size(buttonDiameter),
             colors = selectableButtonColors(),
         ) {
@@ -86,7 +79,7 @@ fun modeButtons(
             onClick = {
                 vm.interactor.setMode(Mode.DeleteMeasure)
             },
-            enabled = currentMode != Mode.DeleteMeasure,
+            enabled = mode.current() != Mode.DeleteMeasure,
             modifier = Modifier.size(buttonDiameter),
             colors = selectableButtonColors(),
         ) {
@@ -97,7 +90,6 @@ fun modeButtons(
             )
         }
     }
-
 }
 
 @Composable
@@ -111,7 +103,7 @@ fun AddButton(
     var expanded by remember { mutableStateOf(false) }
 
     Box(
-        modifier = Modifier.wrapContentWidth().padding(0.dp, 0.dp)
+        modifier = Modifier.wrapContentWidth().padding(0.dp, 0.dp),
     ) {
         buttonTip("Write") {
             StyledButton(
@@ -143,9 +135,8 @@ fun AddButton(
                     Icon(
                         painter = painterResource(Res.drawable.add_note),
                         contentDescription = "plus and note",
-                        modifier = Modifier.size(iconSize).padding(0.dp, 0.dp)
+                        modifier = Modifier.size(iconSize).padding(0.dp, 0.dp),
                     )
-
                 }
             }
 
