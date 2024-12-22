@@ -3,7 +3,7 @@ package org.goalteam.tunelint.model.core
 class Clef(
     val type: ClefType,
 ) {
-    fun bottomLineNote() = clefNote[type]
+    fun bottomLineNote() = clefNote[type]!!
 
     enum class ClefType {
         G,
