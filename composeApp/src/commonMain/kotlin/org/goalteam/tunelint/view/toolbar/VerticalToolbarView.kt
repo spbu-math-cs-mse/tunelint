@@ -33,7 +33,7 @@ fun VerticalToolbarView(vm: RedactorScreenViewModel) {
             undoRedoButtons(vm, buttonDiameter, iconSize, buttonTip)
         }
         Column(modifier = Modifier.padding(0.dp, padding)) {
-            modeButtons(vm, buttonDiameter, iconSize, buttonTip)
+            ModeButtons(vm, buttonDiameter, iconSize, buttonTip).compose()
         }
     }
 }

@@ -16,28 +16,56 @@ import kotlin.math.pow
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun NoteTypesButtons(vm: RedactorScreenViewModel) {
-    data class Value(
-        val log: Int,
-        val text: String,
-        val func: @Composable () -> Unit,
-    )
-
     val options =
         listOf(
-            Value(-3, "Eighth") {
+            NoteChoiceValue(-3) {
                 NoteIcon(Res.drawable.eighth_note, "Eighth")
             },
-            Value(-2, "Quarter") {
+            NoteChoiceValue(-2) {
                 NoteIcon(Res.drawable.quarter_note, "Quarter")
             },
-            Value(-1, "Half") {
+            NoteChoiceValue(-1) {
                 NoteIcon(Res.drawable.half_note, "Half")
             },
-            Value(0, "Whole") {
+            NoteChoiceValue(0) {
                 NoteIcon(Res.drawable.WholeNote, "Whole", 10.dp)
             },
         )
 
+    typeButtons(vm, options){
+        vm.interactor.setValue(it)
+    }
+}
+
+@Composable
+fun RestTypesButtons (vm: RedactorScreenViewModel) {
+    val options =
+        listOf(
+            NoteChoiceValue(-3) {
+                NoteIcon(Res.drawable.eighth_rest, "Eighth")
+            },
+            NoteChoiceValue(-2) {
+                NoteIcon(Res.drawable.quarterrest, "Quarter")
+            },
+            NoteChoiceValue(-1) {
+                NoteIcon(Res.drawable.half_rest, "Half")
+            },
+            NoteChoiceValue(0) {
+                NoteIcon(Res.drawable.whole_rest, "Whole")
+            },
+        )
+
+    typeButtons(vm, options){
+        vm.interactor.setValue(it)
+    }
+}
+
+@Composable
+fun typeButtons(
+    vm: RedactorScreenViewModel,
+    options: List<NoteChoiceValue>,
+    onClick: (PrimaryNoteValue) -> Unit
+) {
     val noteValue: PrimaryNoteValue = vm.interactor.getValue()
     val magicalShift = 8
     var currentOrder: Int by remember { mutableStateOf(-2) }
@@ -45,17 +73,17 @@ fun NoteTypesButtons(vm: RedactorScreenViewModel) {
         object : Notifiable<Boolean> {
             override fun notify(notification: Boolean): Boolean {
                 currentOrder = vm.interactor.getValue().order()
-                println(11111111113333)
                 return true
             }
         }
+
     vm.interactor.subscribe(orderListener)
     val selectedOption =
         remember {
             mutableStateOf(
                 options.find {
                     2.0.pow(it.log.toDouble() + magicalShift) == noteValue.value().value.toDouble()
-                } ?: Value(0, "Select option", {}),
+                } ?: NoteChoiceValue(0, {}),
             )
         }
 
@@ -63,8 +91,8 @@ fun NoteTypesButtons(vm: RedactorScreenViewModel) {
         StyledButton(
             onClick = {
                 selectedOption.value = option
-                vm.interactor.setValue(PrimaryNoteValue(option.log))
-                println(vm.interactor.getValue().order())
+                //vm.interactor.setValue(PrimaryNoteValue(option.log))
+                onClick(PrimaryNoteValue(option.log))
             },
             enabled = currentOrder != option.log,
             modifier = Modifier.requiredSize(60.dp),
@@ -74,3 +102,8 @@ fun NoteTypesButtons(vm: RedactorScreenViewModel) {
         }
     }
 }
+
+data class NoteChoiceValue(
+    val log: Int,
+    val func: @Composable () -> Unit,
+)

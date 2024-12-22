@@ -7,35 +7,27 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.interaction.events.Mode
-import org.goalteam.tunelint.model.changerequest.Notifiable
 import org.goalteam.tunelint.view.lint.LintButton
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
 @Composable
 fun HorizontalToolbarView(vm: RedactorScreenViewModel) {
-    var currentMode: Mode by remember { mutableStateOf(Mode.AddNote) }
+    val initial = remember { mutableStateOf(Mode.AddNote) }
+    val mode = ModeListener(vm.interactor::getMode, initial)
 
-    val modeListener =
-        object : Notifiable<Boolean> {
-            override fun notify(notification: Boolean): Boolean {
-                currentMode = vm.interactor.getMode()
-                return true
-            }
-        }
-
-    vm.interactor.subscribe(modeListener)
-    vm.interactor.synchronize(modeListener)
+    vm.interactor.subscribe(mode)
+    vm.interactor.synchronize(mode)
 
     val fixedHeight = 56.dp
 
     Row(modifier = Modifier.height(fixedHeight)) {
         LintButton(vm)
-        when (currentMode) {
+        when (mode.current()) {
             Mode.AddNote -> HorizontalAddToolbarView(vm)
-            Mode.InsertNote -> TODO("Not implemented yet")
             Mode.DeleteNote -> HorizontalDeleteToolbarView(vm)
             Mode.AddMeasure -> HorizontalDeleteToolbarView(vm)
             Mode.DeleteMeasure -> HorizontalDeleteToolbarView(vm)
+            Mode.AddRest -> HorizontalAddRestToolbarView(vm)
         }
     }
 }
@@ -45,6 +37,14 @@ fun HorizontalAddToolbarView(vm: RedactorScreenViewModel) {
     val padding = 8.dp
     Row(modifier = Modifier.padding(0.dp, padding)) {
         NoteTypesButtons(vm)
+    }
+}
+
+@Composable
+fun HorizontalAddRestToolbarView(vm: RedactorScreenViewModel) {
+    val padding = 8.dp
+    Row(modifier = Modifier.padding(0.dp, padding)) {
+        RestTypesButtons(vm)
     }
 }
 

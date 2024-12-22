@@ -7,7 +7,9 @@ import org.goalteam.tunelint.model.changerequest.PersistenceManager
 import org.goalteam.tunelint.model.changerequest.PersistentRequest
 import org.goalteam.tunelint.model.changerequest.PersistentRequestFactory
 import org.goalteam.tunelint.model.core.MusicFactory
+import org.goalteam.tunelint.model.core.NotePointer
 import org.goalteam.tunelint.model.core.PointerFactory
+import org.goalteam.tunelint.model.core.Symbol
 
 class ReceiverImpl(
     private val configuration: RedactorConfiguration,
@@ -32,26 +34,34 @@ class ReceiverImpl(
     }
 
     private fun createRequest(action: StaffInteractionData): PersistentRequest {
-        val note = musicFactory.createNote(action.stage(), configuration.getValue())
         val pointer = pointerFactory.createNotePointerSimple(action.measure(), action.position())
         if (action.action() == Action.Move) {
             TODO("Preview is not supported yet")
         }
-        when (configuration.getMode()) {
-            Mode.AddNote -> {
-                if (action.side() == Side.Right) {
-                    return requestFactory.addSymbol(
-                        pointer.next(),
-                        note,
-                    )
-                }
-
-                return requestFactory.addSymbol(pointer, note)
-            }
-            Mode.InsertNote -> TODO("Insert is not supported yet")
-            Mode.DeleteNote -> return requestFactory.removeSymbol(pointer)
-            Mode.AddMeasure -> return requestFactory.addMeasure(action.measure() + 1)
-            Mode.DeleteMeasure -> return requestFactory.removeMeasure(action.measure())
+        return when (configuration.getMode()) {
+            Mode.AddNote -> addSymbol(action, pointer, newNote(action))
+            Mode.DeleteNote -> requestFactory.removeSymbol(pointer)
+            Mode.AddMeasure -> requestFactory.addMeasure(action.measure() + 1)
+            Mode.DeleteMeasure -> requestFactory.removeMeasure(action.measure())
+            Mode.AddRest -> addSymbol(action, pointer, newRest())
         }
     }
+
+    private fun newNote(action: StaffInteractionData) = musicFactory.createNote(action.stage(), configuration.getValue())
+
+    private fun newRest() = musicFactory.createRest(configuration.getValue())
+
+    private fun addSymbol(
+        action: StaffInteractionData,
+        pointer: NotePointer,
+        symbol: Symbol,
+    ): PersistentRequest =
+        requestFactory.addSymbol(
+            if (action.side() == Side.Right) {
+                pointer.next()
+            } else {
+                pointer
+            },
+            symbol,
+        )
 }
