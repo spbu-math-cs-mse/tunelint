@@ -13,10 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import org.goalteam.tunelint.model.core.Clef
 import org.goalteam.tunelint.view.musicsheet.*
 import org.goalteam.tunelint.view.musicsheet.viewable.ImmutableMelodyViewable
+import org.goalteam.tunelint.view.style.StyledTooltipArea
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import org.jetbrains.compose.resources.painterResource
 import tunelint.composeapp.generated.resources.Res
@@ -90,18 +93,24 @@ fun ClefView(
     melody: ImmutableMelodyViewable,
     geometryData: InternalGeometryData,
 ) {
-    Box(
-        modifier =
-            Modifier.width(geometryData.clefWidth).pointerInput(Unit) {
-                detectTapGestures(onLongPress = { offset: Offset ->
-                    vm.interactor.changeClef(melody.clef)
-                })
-            },
+    StyledTooltipArea(
+        hint = "hold to change clef",
+        tipOffset = DpOffset(8.dp, -(8.dp / 2) - (15.dp)),
+        modifier = Modifier.padding(0.dp, 0.dp),
     ) {
-        when (melody.clef.type) {
-            Clef.ClefType.G -> GClefView(geometryData)
-            Clef.ClefType.C -> CClefView(geometryData)
-            Clef.ClefType.F -> FClefView(geometryData)
+        Box(
+            modifier =
+                Modifier.width(geometryData.clefWidth).pointerInput(Unit) {
+                    detectTapGestures(onLongPress = { offset: Offset ->
+                        vm.interactor.changeClef(melody.clef)
+                    })
+                },
+        ) {
+            when (melody.clef.type) {
+                Clef.ClefType.G -> GClefView(geometryData)
+                Clef.ClefType.C -> CClefView(geometryData)
+                Clef.ClefType.F -> FClefView(geometryData)
+            }
         }
     }
 }
