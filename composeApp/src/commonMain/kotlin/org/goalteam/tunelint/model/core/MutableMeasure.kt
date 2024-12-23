@@ -11,7 +11,7 @@ interface MutableMeasure {
     fun changeSymbol(
         position: Int,
         symbol: Symbol,
-    )
+    ) : Boolean
 
     fun setSymbols(symbolCollection: Collection<Symbol>)
 

@@ -6,10 +6,13 @@ import org.goalteam.tunelint.interaction.handlers.RedactorConfiguration
 import org.goalteam.tunelint.model.changerequest.PersistenceManager
 import org.goalteam.tunelint.model.changerequest.PersistentRequest
 import org.goalteam.tunelint.model.changerequest.PersistentRequestFactory
+import org.goalteam.tunelint.model.core.Accidental
 import org.goalteam.tunelint.model.core.MusicFactory
+import org.goalteam.tunelint.model.core.Note
 import org.goalteam.tunelint.model.core.NotePointer
 import org.goalteam.tunelint.model.core.PointerFactory
 import org.goalteam.tunelint.model.core.Symbol
+import org.goalteam.tunelint.view.musicsheet.composable.AccidentalView
 
 class ReceiverImpl(
     private val configuration: RedactorConfiguration,
@@ -44,6 +47,7 @@ class ReceiverImpl(
             Mode.AddMeasure -> requestFactory.addMeasure(action.measure() + 1)
             Mode.DeleteMeasure -> requestFactory.removeMeasure(action.measure())
             Mode.AddRest -> addSymbol(action, pointer, newRest())
+            Mode.ChangeAccidental -> requestFactory.changeAccidental(pointer, configuration.getAccidental())
         }
     }
 

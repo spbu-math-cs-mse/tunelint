@@ -36,8 +36,8 @@ fun undoRedoButtons(
         }
 
     val modeListener =
-        object : Notifiable<Boolean> {
-            override fun notify(notification: Boolean): Boolean {
+        object : Notifiable<Unit> {
+            override fun notify(notification: Unit): Boolean {
                 currentMode = vm.interactor.getMode()
                 return true
             }

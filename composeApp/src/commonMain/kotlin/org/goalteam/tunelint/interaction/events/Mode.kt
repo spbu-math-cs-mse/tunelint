@@ -6,4 +6,5 @@ enum class Mode {
     AddMeasure,
     DeleteMeasure,
     AddRest,
+    ChangeAccidental,
 }

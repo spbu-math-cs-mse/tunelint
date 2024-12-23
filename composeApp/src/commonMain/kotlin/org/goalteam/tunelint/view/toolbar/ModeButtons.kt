@@ -15,6 +15,7 @@ import tunelint.composeapp.generated.resources.Res
 import tunelint.composeapp.generated.resources.add_measure
 import tunelint.composeapp.generated.resources.add_note
 import tunelint.composeapp.generated.resources.add_note_rest
+import tunelint.composeapp.generated.resources.change_accidental
 import tunelint.composeapp.generated.resources.delete_measure
 import tunelint.composeapp.generated.resources.eraser
 
@@ -65,6 +66,13 @@ class ModeButtons(
             Mode.DeleteMeasure,
             Res.drawable.delete_measure,
             "minus and measure",
+            mode,
+        )
+        ModeSelectionButton(
+            "Change accidental",
+            Mode.ChangeAccidental,
+            Res.drawable.change_accidental,
+            "update sign and sharp",
             mode,
         )
     }
