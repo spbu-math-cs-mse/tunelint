@@ -14,6 +14,7 @@ import org.goalteam.tunelint.model.core.PrimaryNoteValue
 import org.goalteam.tunelint.view.musicsheet.InternalGeometryData
 import org.goalteam.tunelint.view.musicsheet.staffHeight
 import org.goalteam.tunelint.view.musicsheet.viewable.RestViewable
+import org.goalteam.tunelint.view.musicsheet.viewable.origin
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import org.jetbrains.compose.resources.painterResource
 import tunelint.composeapp.generated.resources.Res
@@ -22,7 +23,10 @@ import tunelint.composeapp.generated.resources.quarterrest
 import tunelint.composeapp.generated.resources.rect_rest
 
 @Composable
-fun BoxScope.QuarterRest(geometryData: InternalGeometryData) {
+fun BoxScope.QuarterRest(
+    geometryData: InternalGeometryData,
+    highlight: Modifier,
+) {
     Image(
         painter = painterResource(Res.drawable.quarterrest),
         contentDescription = null,
@@ -30,12 +34,16 @@ fun BoxScope.QuarterRest(geometryData: InternalGeometryData) {
             Modifier
                 .offset(y = geometryData.topMargin)
                 .size(height = geometryData.staffHeight, width = geometryData.horizontalStep * 2)
-                .align(Alignment.TopCenter),
+                .align(Alignment.TopCenter)
+                .then(highlight),
     )
 }
 
 @Composable
-fun BoxScope.EighthRest(geometryData: InternalGeometryData) {
+fun BoxScope.EighthRest(
+    geometryData: InternalGeometryData,
+    highlight: Modifier,
+) {
     Image(
         painter = painterResource(Res.drawable.eighth_rest),
         contentDescription = null,
@@ -43,7 +51,8 @@ fun BoxScope.EighthRest(geometryData: InternalGeometryData) {
             Modifier
                 .offset(y = geometryData.topMargin)
                 .size(height = geometryData.staffHeight, width = geometryData.horizontalStep * 2)
-                .align(Alignment.TopCenter),
+                .align(Alignment.TopCenter)
+                .then(highlight),
     )
 }
 
@@ -51,6 +60,7 @@ fun BoxScope.EighthRest(geometryData: InternalGeometryData) {
 fun BoxScope.HalfRest(
     rest: RestViewable,
     geometryData: InternalGeometryData,
+    highlight: Modifier,
 ) {
     Box(
         modifier =
@@ -59,7 +69,7 @@ fun BoxScope.HalfRest(
                 .offset(
                     x = rest.stepsBeforeMiddle() * geometryData.horizontalStep - geometryData.verticalStep,
                     y = geometryData.topMargin + 2.5 * geometryData.verticalStep,
-                ),
+                ).then(highlight),
     ) {
         Image(
             painter = painterResource(Res.drawable.rect_rest),
@@ -74,6 +84,7 @@ fun BoxScope.HalfRest(
 fun BoxScope.WholeRest(
     rest: RestViewable,
     geometryData: InternalGeometryData,
+    highlight: Modifier,
 ) {
     Box(
         modifier =
@@ -82,7 +93,7 @@ fun BoxScope.WholeRest(
                 .offset(
                     x = rest.stepsBeforeMiddle() * geometryData.horizontalStep - geometryData.verticalStep,
                     y = geometryData.topMargin + 2 * geometryData.verticalStep,
-                ),
+                ).then(highlight),
     ) {
         Image(
             painter = painterResource(Res.drawable.rect_rest),
@@ -109,11 +120,12 @@ fun RestView(
         position,
         measure,
     ) {
+        val highlight = vm.styles.value.find(rest.origin())
         when (rest.primaryValue()) {
-            PrimaryNoteValue.Whole -> WholeRest(rest, geometryData)
-            PrimaryNoteValue.Half -> HalfRest(rest, geometryData)
-            PrimaryNoteValue.Quarter -> QuarterRest(geometryData)
-            PrimaryNoteValue.Eighth -> EighthRest(geometryData)
+            PrimaryNoteValue.Whole -> WholeRest(rest, geometryData, highlight)
+            PrimaryNoteValue.Half -> HalfRest(rest, geometryData, highlight)
+            PrimaryNoteValue.Quarter -> QuarterRest(geometryData, highlight)
+            PrimaryNoteValue.Eighth -> EighthRest(geometryData, highlight)
         }
     }
 }

@@ -9,6 +9,7 @@ import org.goalteam.tunelint.view.musicsheet.InternalGeometryData
 import org.goalteam.tunelint.view.musicsheet.fullHeight
 import org.goalteam.tunelint.view.musicsheet.viewable.ImmutableMeasureViewable
 import org.goalteam.tunelint.view.musicsheet.viewable.SymbolViewable
+import org.goalteam.tunelint.view.musicsheet.viewable.origin
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
 @Composable
@@ -24,7 +25,7 @@ fun MeasureView(
                 .size(
                     width = geometryData.horizontalStep * (measure.horizontalSteps()),
                     height = geometryData.fullHeight,
-                ),
+                ).then(vm.styles.value.find(measure.origin())),
     ) {
         Row {
             measure.symbols.forEachIndexed { i, it ->

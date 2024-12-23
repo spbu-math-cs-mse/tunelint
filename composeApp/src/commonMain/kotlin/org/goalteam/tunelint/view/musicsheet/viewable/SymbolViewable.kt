@@ -17,6 +17,13 @@ interface SymbolViewable : Symbol {
     fun stepsBeforeMiddle(): Int
 
     fun stepsAfterMiddle(): Int
+
+    fun delegate(): Symbol
 }
 
 fun SymbolViewable.horizontalSteps() = stepsBeforeMiddle() + stepsAfterMiddle()
+
+fun SymbolViewable.origin(): Symbol =
+    delegate().run {
+        if (this is SymbolViewable) delegate() else this
+    }

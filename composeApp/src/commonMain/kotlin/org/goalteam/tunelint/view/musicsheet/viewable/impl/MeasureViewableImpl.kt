@@ -41,6 +41,8 @@ class MeasureViewableImpl(
         geometryData,
     )
 
+    override fun delegate(): Measure = measure
+
     override fun horizontalSteps() = symbols.sumOf { (it as SymbolViewable).horizontalSteps() }
 
     override fun clone() = MeasureViewableImpl(measure.clone())

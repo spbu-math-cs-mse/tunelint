@@ -105,6 +105,7 @@ fun NoteFlags(
 fun UnleveredNoteView(
     geometryData: InternalGeometryData,
     note: NoteViewable,
+    highlight: Modifier,
 ) {
     Box(
         modifier =
@@ -112,7 +113,7 @@ fun UnleveredNoteView(
                 .size(
                     height = geometryData.verticalStep,
                     width = note.horizontalSteps() * geometryData.horizontalStep,
-                ),
+                ).then(highlight),
     ) {
         Box(
             modifier =

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -15,12 +16,18 @@ import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.lint.status.Error
 import org.goalteam.tunelint.lint.status.Status
 import org.goalteam.tunelint.lint.status.Warning
+import org.goalteam.tunelint.view.style.StyledButton
+import org.goalteam.tunelint.view.style.selectableButtonColors
+import org.jetbrains.compose.resources.painterResource
+import tunelint.composeapp.generated.resources.Res
+import tunelint.composeapp.generated.resources.go_to
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun LintView(
     messages: MutableState<List<Status>>,
     bottom: Dp,
+    highlight: (Status, Color) -> Unit,
 ) {
     Box(
         modifier =
@@ -35,8 +42,31 @@ fun LintView(
     ) {
         Column {
             statuses(messages.value).forEach {
-                it.first.text(it.second)
+                Row {
+                    it.apply {
+                        first.text(second)
+                        GoToButton(highlight)
+                    }
+                }
             }
+        }
+    }
+}
+
+@Suppress("ktlint:standard:function-naming")
+@Composable
+private fun Pair<Status, Color>.GoToButton(highlight: (Status, Color) -> Unit) {
+    StyledButton(
+        onClick = { highlight(first, second) },
+        modifier = Modifier.requiredSize(20.dp).offset(y = 8.dp),
+        colors = selectableButtonColors(),
+    ) {
+        Box(modifier = Modifier.align(Alignment.CenterVertically)) {
+            Icon(
+                modifier = Modifier.fillMaxSize(),
+                painter = painterResource(Res.drawable.go_to),
+                contentDescription = "go to",
+            )
         }
     }
 }
