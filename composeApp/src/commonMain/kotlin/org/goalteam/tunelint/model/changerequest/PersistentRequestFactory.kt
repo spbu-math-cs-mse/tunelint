@@ -1,9 +1,7 @@
 package org.goalteam.tunelint.model.changerequest
 
-import org.goalteam.tunelint.model.changerequest.impl.AddMeasurePersistentRequest
-import org.goalteam.tunelint.model.changerequest.impl.AddSymbolPersistentRequest
-import org.goalteam.tunelint.model.changerequest.impl.RemoveMeasurePersistentRequest
-import org.goalteam.tunelint.model.changerequest.impl.RemoveSymbolPersistentRequest
+import org.goalteam.tunelint.model.changerequest.impl.*
+import org.goalteam.tunelint.model.core.Clef
 import org.goalteam.tunelint.model.core.NotePointer
 import org.goalteam.tunelint.model.core.Symbol
 
@@ -18,4 +16,6 @@ class PersistentRequestFactory {
     fun addMeasure(position: Int): PersistentRequest = AddMeasurePersistentRequest(position)
 
     fun removeMeasure(position: Int): PersistentRequest = RemoveMeasurePersistentRequest(position)
+
+    fun setClef(clef: Clef): PersistentRequest = SetClefPersistentRequest(clef)
 }

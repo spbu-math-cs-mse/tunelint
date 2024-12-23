@@ -15,8 +15,8 @@ fun LineBeginView(
 ) {
     LineBeginInteractableBox(vm, geometryData, measure) {
         Row {
-            ClefView(melody, geometryData)
-            TimeSignatureView(melody, geometryData)
+            ClefView(vm, melody, geometryData)
+            TimeSignatureView(vm, melody, geometryData)
         }
     }
 }

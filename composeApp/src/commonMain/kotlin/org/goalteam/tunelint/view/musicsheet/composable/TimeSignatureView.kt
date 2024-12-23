@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.times
 import org.goalteam.tunelint.view.musicsheet.InternalGeometryData
 import org.goalteam.tunelint.view.musicsheet.timeSignatureWidth
 import org.goalteam.tunelint.view.musicsheet.viewable.ImmutableMelodyViewable
+import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 import org.jetbrains.compose.resources.painterResource
 import tunelint.composeapp.generated.resources.Res
 import tunelint.composeapp.generated.resources.music0
@@ -60,6 +61,7 @@ fun TimeSignatureFontNumber(number: Int) {
 
 @Composable
 fun TimeSignatureView(
+    vm: RedactorScreenViewModel,
     melody: ImmutableMelodyViewable,
     geometryData: InternalGeometryData,
 ) {
