@@ -10,6 +10,7 @@ import org.goalteam.tunelint.model.core.Clef
 import org.goalteam.tunelint.model.core.MusicFactory
 import org.goalteam.tunelint.model.core.TimeSignature
 import org.goalteam.tunelint.musicsheet.MusicSheet
+import org.goalteam.tunelint.view.musicsheet.SheetStyles
 import org.goalteam.tunelint.view.musicsheet.viewable.MelodyViewable
 import org.goalteam.tunelint.view.musicsheet.viewable.ViewableMusicFactory
 import org.goalteam.tunelint.view.musicsheet.viewable.impl.MelodyViewableImpl
@@ -20,6 +21,7 @@ class RedactorScreenViewModel(
     val musicSheet = sheet
     val interactor = InteractorImpl(sheet.persistenceManager)
     val lint = mutableStateOf(listOf<Status>())
+    val styles = mutableStateOf(SheetStyles())
     val melody: MelodyViewable by mutableStateOf(
         MelodyViewableImpl(
             MusicFactory().createMelody("", Clef(Clef.ClefType.F), TimeSignature.standardTime),

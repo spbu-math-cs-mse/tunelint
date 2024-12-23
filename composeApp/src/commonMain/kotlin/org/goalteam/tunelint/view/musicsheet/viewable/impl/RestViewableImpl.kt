@@ -2,13 +2,14 @@ package org.goalteam.tunelint.view.musicsheet.viewable.impl
 
 import androidx.compose.runtime.Composable
 import org.goalteam.tunelint.model.core.Rest
+import org.goalteam.tunelint.model.core.Symbol
 import org.goalteam.tunelint.view.musicsheet.InternalGeometryData
 import org.goalteam.tunelint.view.musicsheet.composable.RestView
 import org.goalteam.tunelint.view.musicsheet.viewable.RestViewable
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
 class RestViewableImpl(
-    rest: Rest,
+    private val rest: Rest,
 ) : RestViewable,
     Rest by rest {
     @Composable
@@ -24,6 +25,8 @@ class RestViewableImpl(
         this,
         geometryData,
     )
+
+    override fun delegate(): Symbol = rest
 
     override fun stepsBeforeMiddle() = 1
 

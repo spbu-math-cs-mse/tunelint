@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.times
 import org.goalteam.tunelint.view.musicsheet.InternalGeometryData
 import org.goalteam.tunelint.view.musicsheet.firstLineOffset
 import org.goalteam.tunelint.view.musicsheet.viewable.NoteViewable
+import org.goalteam.tunelint.view.musicsheet.viewable.origin
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
 @Composable
@@ -30,17 +31,21 @@ fun NoteView(
         position,
         measure,
     ) {
+        val styles = vm.styles.value
         Box(
             modifier =
-                Modifier.offset(
-                    y = topOffset - geometryData.verticalStep / 2,
-                    x =
-                        geometryData.horizontalStep * note.stepsBeforeMiddle() -
-                            1.5 * geometryData.verticalStep,
-                ),
+                Modifier
+                    .offset(
+                        y = topOffset - geometryData.verticalStep / 2,
+                        x =
+                            geometryData.horizontalStep * note.stepsBeforeMiddle() -
+                                1.5 * geometryData.verticalStep,
+                    ).then(styles.find(note.accidental())),
         ) {
             AccidentalView(geometryData, note)
         }
-        Box(modifier = Modifier.offset(y = topOffset)) { UnleveredNoteView(geometryData, note) }
+        Box(modifier = Modifier.offset(y = topOffset)) {
+            UnleveredNoteView(geometryData, note, styles.find(note.origin()))
+        }
     }
 }

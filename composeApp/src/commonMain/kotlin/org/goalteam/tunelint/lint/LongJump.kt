@@ -30,7 +30,7 @@ class LongJump(
                                     (melody.clef.bottomLineNote() + (it.first as Note).stage()).pitch(),
                             )
                         )
-                }
+                }.flatMap { it.toList() }
 
         if (jumps.isEmpty()) {
             return Ok("No jumps more than the perfect fifth")

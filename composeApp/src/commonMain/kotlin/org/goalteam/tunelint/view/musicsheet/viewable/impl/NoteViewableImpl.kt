@@ -2,6 +2,7 @@ package org.goalteam.tunelint.view.musicsheet.viewable.impl
 
 import androidx.compose.runtime.Composable
 import org.goalteam.tunelint.model.core.Note
+import org.goalteam.tunelint.model.core.Symbol
 import org.goalteam.tunelint.view.musicsheet.InternalGeometryData
 import org.goalteam.tunelint.view.musicsheet.composable.NoteView
 import org.goalteam.tunelint.view.musicsheet.viewable.NoteViewable
@@ -10,7 +11,7 @@ import org.goalteam.tunelint.view.musicsheet.viewable.isStemDown
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
 class NoteViewableImpl(
-    note: Note,
+    private val note: Note,
 ) : NoteViewable,
     Note by note {
     override fun stepsBeforeMiddle(): Int {
@@ -26,6 +27,8 @@ class NoteViewableImpl(
         }
         return 2
     }
+
+    override fun delegate(): Symbol = note
 
     @Composable
     override fun view(

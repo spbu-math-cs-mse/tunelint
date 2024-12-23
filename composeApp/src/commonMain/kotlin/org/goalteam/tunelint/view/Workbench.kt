@@ -20,7 +20,9 @@ import androidx.compose.ui.unit.min
 import org.goalteam.tunelint.lint.status.Status
 import org.goalteam.tunelint.view.lint.LintView
 import org.goalteam.tunelint.view.musicsheet.MusicSheetView
+import org.goalteam.tunelint.view.musicsheet.SheetStyles
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
+import java.util.IdentityHashMap
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
@@ -66,7 +68,16 @@ fun Workbench(
                         startDragImmediately = true,
                     ).background(Color.LightGray),
             )
-            LintView(lint, height - divider - thickness)
+            LintView(lint, height - divider - thickness) { status, color ->
+                vm.value.styles.value =
+                    SheetStyles(
+                        status
+                            .at()
+                            .zip(
+                                status.at().map { Modifier.background(color.copy(alpha = 0.5f)) },
+                            ).toMap(IdentityHashMap()),
+                    )
+            }
         }
     }
 }
