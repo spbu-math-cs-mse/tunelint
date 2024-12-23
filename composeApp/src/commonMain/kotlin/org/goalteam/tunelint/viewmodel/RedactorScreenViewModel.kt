@@ -3,6 +3,7 @@ package org.goalteam.tunelint.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import org.goalteam.tunelint.interaction.Interactor
 import org.goalteam.tunelint.interaction.InteractorImpl
 import org.goalteam.tunelint.lint.status.Status
 import org.goalteam.tunelint.model.changerequest.subscribeAndSynchronize
@@ -19,7 +20,7 @@ class RedactorScreenViewModel(
     sheet: MusicSheet,
 ) : ViewModel() {
     val musicSheet = sheet
-    val interactor = InteractorImpl(sheet.persistenceManager)
+    val interactor : Interactor = InteractorImpl(sheet.persistenceManager)
     val lint = mutableStateOf(listOf<Status>())
     val styles = mutableStateOf(SheetStyles())
     val melody: MelodyViewable by mutableStateOf(

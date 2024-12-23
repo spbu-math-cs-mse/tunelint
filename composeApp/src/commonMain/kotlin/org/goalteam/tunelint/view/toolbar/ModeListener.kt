@@ -7,10 +7,10 @@ import org.goalteam.tunelint.model.changerequest.Notifiable
 internal class ModeListener(
     private val updated: () -> Mode,
     initial: MutableState<Mode>,
-) : Notifiable<Boolean> {
+) : Notifiable<Unit> {
     private val current = initial
 
-    override fun notify(notification: Boolean): Boolean {
+    override fun notify(notification: Unit): Boolean {
         current.value = updated()
         return true
     }

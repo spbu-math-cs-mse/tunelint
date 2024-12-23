@@ -53,11 +53,13 @@ class MeasureImpl(
     override fun changeSymbol(
         position: Int,
         symbol: Symbol,
-    ) {
+    ) : Boolean{
         if (remainingValue >= symbol.value() - symbols[position].value()) {
             _symbols[position] = symbol
             _remainingValue -= symbol.value() - symbols[position].value()
+            return true
         }
+        return false
     }
 
     override fun setSymbols(symbolCollection: Collection<Symbol>) {

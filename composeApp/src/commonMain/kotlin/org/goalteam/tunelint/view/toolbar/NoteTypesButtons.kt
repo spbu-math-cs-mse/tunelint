@@ -66,32 +66,20 @@ fun typeButtons(
     options: List<NoteChoiceValue>,
     onClick: (PrimaryNoteValue) -> Unit
 ) {
-    val noteValue: PrimaryNoteValue = vm.interactor.getValue()
-    val magicalShift = 8
     var currentOrder: Int by remember { mutableStateOf(-2) }
     val orderListener =
-        object : Notifiable<Boolean> {
-            override fun notify(notification: Boolean): Boolean {
+        object : Notifiable<Unit> {
+            override fun notify(notification: Unit): Boolean {
                 currentOrder = vm.interactor.getValue().order()
                 return true
             }
         }
 
     vm.interactor.subscribe(orderListener)
-    val selectedOption =
-        remember {
-            mutableStateOf(
-                options.find {
-                    2.0.pow(it.log.toDouble() + magicalShift) == noteValue.value().value.toDouble()
-                } ?: NoteChoiceValue(0, {}),
-            )
-        }
 
     options.forEach { option ->
         StyledButton(
             onClick = {
-                selectedOption.value = option
-                //vm.interactor.setValue(PrimaryNoteValue(option.log))
                 onClick(PrimaryNoteValue(option.log))
             },
             enabled = currentOrder != option.log,

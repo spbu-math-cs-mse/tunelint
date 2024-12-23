@@ -28,6 +28,7 @@ fun HorizontalToolbarView(vm: RedactorScreenViewModel) {
             Mode.AddMeasure -> HorizontalDeleteToolbarView(vm)
             Mode.DeleteMeasure -> HorizontalDeleteToolbarView(vm)
             Mode.AddRest -> HorizontalAddRestToolbarView(vm)
+            Mode.ChangeAccidental -> HorizontalAccidentalToolbarView(vm)
         }
     }
 }
@@ -50,4 +51,12 @@ fun HorizontalAddRestToolbarView(vm: RedactorScreenViewModel) {
 
 @Composable
 fun HorizontalDeleteToolbarView(vm: RedactorScreenViewModel) {
+}
+
+@Composable
+fun HorizontalAccidentalToolbarView(vm: RedactorScreenViewModel) {
+    val padding = 8.dp
+    Row(modifier = Modifier.padding(0.dp, padding)) {
+        AccidentalTypesButtons(vm)
+    }
 }

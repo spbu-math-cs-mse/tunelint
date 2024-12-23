@@ -65,9 +65,10 @@ class MeasureViewableImpl(
     override fun changeSymbol(
         position: Int,
         symbol: Symbol,
-    ) {
-        measure.changeSymbol(position, viewableSymbolOf(symbol))
+    ) : Boolean {
+        val success = measure.changeSymbol(position, viewableSymbolOf(symbol))
         takeSnapshot()
+        return success
     }
 
     override fun setSymbols(symbolCollection: Collection<Symbol>) {

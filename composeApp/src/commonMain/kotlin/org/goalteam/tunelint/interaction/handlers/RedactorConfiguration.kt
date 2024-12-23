@@ -1,6 +1,7 @@
 package org.goalteam.tunelint.interaction.handlers
 
 import org.goalteam.tunelint.interaction.events.Mode
+import org.goalteam.tunelint.model.core.Accidental
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 
 /**
@@ -15,4 +16,8 @@ interface RedactorConfiguration {
     fun getMode(): Mode
 
     fun setMode(mode: Mode)
+
+    fun getAccidental(): Accidental?
+
+    fun setAccidental(accidental: Accidental?)
 }
