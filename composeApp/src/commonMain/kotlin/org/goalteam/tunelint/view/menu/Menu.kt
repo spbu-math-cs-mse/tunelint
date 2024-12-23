@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.goalteam.tunelint.filesupport.ParserFactory
+import org.goalteam.tunelint.view.sheetsettings.SheetSettings
 import org.goalteam.tunelint.viewmodel.RedactorScreenViewModel
 
 @Suppress("ktlint:standard:function-naming")
@@ -18,5 +19,6 @@ fun Menu(
         SaveButton(vm::musicSheet) { update(RedactorScreenViewModel(it)) }
         LoadButton { if (it != null) update(RedactorScreenViewModel(it)) }
         ExportButton(ParserFactory().xml()) { vm.musicSheet }
+        SheetSettings(vm)
     }
 }
