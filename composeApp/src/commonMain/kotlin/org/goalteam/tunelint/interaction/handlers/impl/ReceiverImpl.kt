@@ -6,10 +6,7 @@ import org.goalteam.tunelint.interaction.handlers.RedactorConfiguration
 import org.goalteam.tunelint.model.changerequest.PersistenceManager
 import org.goalteam.tunelint.model.changerequest.PersistentRequest
 import org.goalteam.tunelint.model.changerequest.PersistentRequestFactory
-import org.goalteam.tunelint.model.core.MusicFactory
-import org.goalteam.tunelint.model.core.NotePointer
-import org.goalteam.tunelint.model.core.PointerFactory
-import org.goalteam.tunelint.model.core.Symbol
+import org.goalteam.tunelint.model.core.*
 
 class ReceiverImpl(
     private val configuration: RedactorConfiguration,
@@ -30,6 +27,22 @@ class ReceiverImpl(
 
     override fun handleAction(action: StaffInteractionData) {
         val request = createRequest(action)
+        persistenceManager.notify(request)
+    }
+
+    override fun changeClef(oldClef: Clef) {
+        var newClef = oldClef
+        if (oldClef.type == Clef.ClefType.G)
+            {
+                newClef = Clef(Clef.ClefType.C)
+            } else if (oldClef.type == Clef.ClefType.C)
+            {
+                newClef = Clef(Clef.ClefType.F)
+            } else if (oldClef.type == Clef.ClefType.F)
+            {
+                newClef = Clef(Clef.ClefType.G)
+            }
+        val request = requestFactory.setClef(newClef)
         persistenceManager.notify(request)
     }
 

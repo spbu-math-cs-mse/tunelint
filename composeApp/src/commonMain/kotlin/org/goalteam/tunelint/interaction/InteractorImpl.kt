@@ -4,6 +4,7 @@ import org.goalteam.tunelint.interaction.events.*
 import org.goalteam.tunelint.interaction.handlers.InteractionHandlerFactory
 import org.goalteam.tunelint.model.changerequest.Notifiable
 import org.goalteam.tunelint.model.changerequest.PersistenceManager
+import org.goalteam.tunelint.model.core.Clef
 import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 
@@ -48,6 +49,10 @@ class InteractorImpl(
         val event =
             EventFactory().createStaffInteractionData(stage, position, measure, side, action)
         receiver.handleAction(event)
+    }
+
+    override fun changeClef(oldClef: Clef) {
+        receiver.changeClef(oldClef)
     }
 
     override fun subscribe(subscriber: Notifiable<Boolean>) {

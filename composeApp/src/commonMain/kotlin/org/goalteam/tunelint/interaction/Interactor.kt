@@ -5,6 +5,7 @@ import org.goalteam.tunelint.interaction.events.CommandType
 import org.goalteam.tunelint.interaction.events.Mode
 import org.goalteam.tunelint.interaction.events.Side
 import org.goalteam.tunelint.model.changerequest.Subscribable
+import org.goalteam.tunelint.model.core.Clef
 import org.goalteam.tunelint.model.core.NoteOffset
 import org.goalteam.tunelint.model.core.PrimaryNoteValue
 
@@ -26,6 +27,8 @@ interface Interactor : Subscribable<Boolean> {
         side: Side,
         action: Action,
     )
+
+    fun changeClef(oldClef: Clef)
 }
 
 data class CurrentMode(
